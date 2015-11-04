@@ -1,9 +1,12 @@
 var map = null,
-mapGroup = null,
-level0 = null,
-level1 = null,
-player = null,
-cursors = null;
+	mapGroup = null,
+	level0 = null,
+	level1 = null,
+	player = null,
+	cursors = null,
+	spaceBar = null;
+
+let isMouseWheel = true;
 
 
 class Game {
@@ -30,7 +33,7 @@ class Game {
         //mapGroup.add(level0);
         mapGroup.add(level1);
 
-        map.setLayer(level1);
+        map.setLayer(level1); 
         map.setCollisionBetween(1, 16);
 
 	    //  This resizes the game world to match the layer dimensions
@@ -53,43 +56,74 @@ class Game {
 	    player.body.linearDamping = 1;
 	    player.body.collideWorldBounds = true;
 	    player.body.width = 80;
-	    player.body.height = 150;
+	    player.body.height = 135;
 	    player.body.offset.x = 20;
-	    player.body.offset.y = 100;
+	    player.body.offset.y = 120;
 
 	    console.log(player.body)
 
     	this.camera.follow(player);
 
     	cursors = this.game.input.keyboard.createCursorKeys();
+    	spaceBar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    	spaceBar.onDown.add(function(key){
+    		isMouseWheel = !isMouseWheel;
+    	});
+
+    	this.game.input.mouse.mouseWheelCallback = this.onMouseWheel;
+
 
 	    //this.camera.setPosition(128*5, 91*128)
+    }
+
+    onMouseWheel (e) {
+    	e.preventDefault();
     }
 
     update () {
     	this.physics.arcade.collide(player, level1);
 
-    	player.body.velocity.x = 0;
+    	if(isMouseWheel){
+    		this.updateWheel();
+    	} else {
 
-    	if (cursors.up.isDown){
-	        if (player.body.onFloor())
-	        {
-	            player.body.velocity.y = -800;
-	        }
-	    }
+	    	player.body.velocity.x = 0;
 
-	    if (cursors.left.isDown){
-	        player.body.velocity.x = -150;
-	    }
-	    else if (cursors.right.isDown){
-	        player.body.velocity.x = 150;
-	    }
-    	//
+	    	if (cursors.up.isDown){
+		        if (player.body.onFloor())
+		        {
+		            player.body.velocity.y = -800;
+		        }
+		    }
+
+		    if (cursors.left.isDown){
+		        player.body.velocity.x = -250;
+		    }
+		    else if (cursors.right.isDown){
+		        player.body.velocity.x = 250;
+		    }
+    	}
     }
+
+    updateWheel () {
+    	let wheel = this.input.mouse.wheelDelta;
+    	
+    	if(wheel){
+    		player.body.velocity.x = 250 * wheel;
+    	} else {
+    		player.body.velocity.x = 0;
+    	}
+
+    	if(player.body.blocked.right || player.body.blocked.left){
+    		player.body.velocity.y = -350;
+    	}
+    }
+
 
     render() {
 
-	    this.game.debug.body(player);
+	    //this.game.debug.body(player);
 	    this.game.debug.bodyInfo(player, 32, 320);
 	}
 
