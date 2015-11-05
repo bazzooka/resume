@@ -1,12 +1,12 @@
 var map = null,
-	mapGroup = null,
 	level0 = null,
 	level1 = null,
 	player = null,
 	cursors = null,
 	spaceBar = null;
 
-let isMouseWheel = true;
+let isMouseWheel = true,
+	mouseWheeling = false;
 
 
 class Game {
@@ -20,7 +20,7 @@ class Game {
 
     create() {
     	this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.game.stage.backgroundColor = '#787878';
+        this.game.stage.backgroundColor = '#00bff3';
         this.game.world.setBounds(0, 0, 100*128, 100*128);
 
         map = this.game.add.tilemap('map');
@@ -28,10 +28,6 @@ class Game {
 
         //level0 = map.createLayer('level0');
         level1 = map.createLayer('level1');
-        mapGroup = this.add.group();
-
-        //mapGroup.add(level0);
-        mapGroup.add(level1);
 
         map.setLayer(level1); 
         map.setCollisionBetween(1, 16);
@@ -53,12 +49,14 @@ class Game {
 	    this.physics.arcade.gravity.y = 1000;
 
 	    player.body.bounce.y = 0.2;
+	    player.body.bounce.x = 0.2;
 	    player.body.linearDamping = 1;
 	    player.body.collideWorldBounds = true;
 	    player.body.width = 80;
 	    player.body.height = 135;
 	    player.body.offset.x = 20;
 	    player.body.offset.y = 120;
+	    player.body.tilePadding.set(50,50);
 
 	    console.log(player.body)
 
@@ -78,6 +76,7 @@ class Game {
     }
 
     onMouseWheel (e) {
+    	mouseWheeling = true;
     	e.preventDefault();
     }
 
@@ -93,15 +92,15 @@ class Game {
 	    	if (cursors.up.isDown){
 		        if (player.body.onFloor())
 		        {
-		            player.body.velocity.y = -800;
+		            player.body.velocity.y = -600;
 		        }
 		    }
 
 		    if (cursors.left.isDown){
-		        player.body.velocity.x = -250;
+		        player.body.velocity.x = -500;
 		    }
 		    else if (cursors.right.isDown){
-		        player.body.velocity.x = 250;
+		        player.body.velocity.x = 500;
 		    }
     	}
     }
@@ -109,13 +108,25 @@ class Game {
     updateWheel () {
     	let wheel = this.input.mouse.wheelDelta;
     	
-    	if(wheel){
-    		player.body.velocity.x = 250 * wheel;
+    	if(wheel && mouseWheeling){
+    		player.body.velocity.x = 1000 * wheel;
+    		mouseWheeling = false;
     	} else {
-    		player.body.velocity.x = 0;
+    		if(wheel === 1){
+    			player.body.velocity.x = Math.max(0, player.body.velocity.x - 100 );
+    		} else if(wheel === -1){
+				player.body.velocity.x = Math.min(0, player.body.velocity.x + 100 );
+    		}
+    		
     	}
 
     	if(player.body.blocked.right || player.body.blocked.left){
+    		if(player.body.blocked.right) {
+    			player.body.velocity.x = -150;
+    		} else {
+    			player.body.velocity.x = +150;
+    		}
+    		
     		player.body.velocity.y = -350;
     	}
     }
@@ -123,7 +134,7 @@ class Game {
 
     render() {
 
-	    //this.game.debug.body(player);
+	    this.game.debug.body(player);
 	    this.game.debug.bodyInfo(player, 32, 320);
 	}
 
