@@ -3,9 +3,10 @@ var map = null,
 	platformLayer = null,
 	player = null,
 	cursors = null,
-	spaceBar = null;
+	spaceBar = null,
+    tiles = [];
 
-let isMouseWheel = true,
+let isMouseWheel = false,
 	mouseWheeling = false;
 
 
@@ -23,21 +24,13 @@ class Game {
     }
 
     create() {
-    	this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    	this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.stage.backgroundColor = '#00bff3';
         this.game.world.setBounds(0, 0, 100*128, 100*128); 
 
         // Background
         this.background = this.game.add.tileSprite(0, 0, 1700, 1200, 'background');
         this.background.fixedToCamera = true;
-        //this.background.y = 90*128;
-        // this.background.scrollFactorX = 0;
-        // let bgRatio = this.background.height / this.game.height;
-        // this.background.setScale(bgRatio);
-        // console.log(this.background.height, this.game.height);
-        // this.background.y = 100;
-
-        console.log(this.background.y);
 
         map = this.game.add.tilemap('map');
         map.addTilesetImage('ground', 'ground');
@@ -48,35 +41,40 @@ class Game {
         // this.grass = this.game.add.tileSprite(128, 95.5*128, 100*128, this.game.cache.getImage('grass').height, 'grass');
 
         map.setLayer(platformLayer); 
-        map.setCollisionBetween(1, 200);
 
 	    //  This resizes the game world to match the layer dimensions
 	    //level0.debug = true;
-	    cloudLayer.resizeWorld();
-	    cloudLayer.wrap = true;
-	    cloudLayer.scrollFactorX = 1.15;
+	    // cloudLayer.resizeWorld();
+	    // cloudLayer.wrap = true;
+	    // cloudLayer.scrollFactorX = 1.15;
 
 		//level1.debug = true;
 	    platformLayer.resizeWorld();
-	    platformLayer.wrap = true;
+	    //platformLayer.wrap = true;
 	    //level1.scrollFactorX = 1.15;
 
+        map.setCollisionBetween(0, 200);
+        // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
+        tiles = this.game.physics.p2.convertCollisionObjects(map, platformLayer, true);
+        this.game.physics.p2.restitution = 0.1;
+        this.game.physics.p2.gravity.y = 300;
+
 		//mapGroup.x = -100;
-	    player = this.game.add.sprite(128*5, 92*128, 'player', 5);
+	    player = this.game.add.sprite(128*5, 94*128, 'player', 5);
 	    player.frame = 5;
 
-	    this.game.physics.enable(player);
-	    this.physics.arcade.gravity.y = 1000;
+	    this.game.physics.p2.enable(player);
+        player.body.fixedRotation = true;
 
-	    player.body.bounce.y = 0.2;
-	    player.body.bounce.x = 0.2;
-	    player.body.linearDamping = 1;
-	    player.body.collideWorldBounds = true;
-	    player.body.width = 80;
-	    player.body.height = 135;
-	    player.body.offset.x = 20;
-	    player.body.offset.y = 120;
-	    player.body.immovable = true;
+	    // player.body.bounce.y = 0.2;
+	    // player.body.bounce.x = 0.2;
+	    // player.body.linearDamping = 1;
+	    // player.body.collideWorldBounds = true;
+	    // player.body.width = 80;
+	    // player.body.height = 135;
+	    // player.body.offset.x = 20;
+	    // player.body.offset.y = 120;
+	    // player.body.immovable = true;
 
     	this.camera.follow(player);
 
@@ -99,62 +97,66 @@ class Game {
     }
 
     update () {
-    	this.physics.arcade.collide(player, platformLayer);
+    	//this.physics.arcade.collide(player, platformLayer);
 
-    	if(isMouseWheel){
-    		this.updateWheel();
-    	} else {
+    	// if(isMouseWheel){
+    	// 	this.updateWheel();
+    	// } else {
 
-	    	player.body.velocity.x = 0;
+	    // 	player.body.velocity.x = 0;
 
-	    	if (cursors.up.isDown){
-		        if (player.body.onFloor())
-		        {
-		            player.body.velocity.y = -600;
-		        }
+	    	if (cursors && cursors.up.isDown){
+                player.body.moveUp(50);
+		   //      if (player.body.onFloor())
+		   //      {
+		   //          player.body.velocity.y = -600;
+		   //      }
 		    }
 
-		    if (cursors.left.isDown){
-		        player.body.velocity.x = -500;
+		    if (cursors && cursors.left.isDown){
+		        player.body.moveLeft(200);
+                //player.body.velocity.x = -500;
 		        // this.grass.tilePosition.x -= 10;
 		    }
-		    else if (cursors.right.isDown){
+		    else if (cursors && cursors.right.isDown){
 		        player.body.velocity.x = 500;
 		        // this.grass.tilePosition.x += 10;
 		    }
-    	}
+    	// }
     }
 
     updateWheel () {
-    	let wheel = this.input.mouse.wheelDelta;
+    // 	let wheel = this.input.mouse.wheelDelta;
     	
-    	if(wheel && mouseWheeling){
-    		player.body.velocity.x = 1000 * wheel;
-    		mouseWheeling = false;
-    	} else {
-    		if(wheel === 1){
-    			player.body.velocity.x = Math.max(0, player.body.velocity.x - 100 );
-    		} else if(wheel === -1){
-				player.body.velocity.x = Math.min(0, player.body.velocity.x + 100 );
-    		}
+    // 	if(wheel && mouseWheeling){
+    // 		player.body.velocity.x = 1000 * wheel;
+    // 		mouseWheeling = false;
+    // 	} else {
+    // 		if(wheel === 1){
+    // 			player.body.velocity.x = Math.max(0, player.body.velocity.x - 100 );
+    // 		} else if(wheel === -1){
+				// player.body.velocity.x = Math.min(0, player.body.velocity.x + 100 );
+    // 		}
     		
-    	}
+    // 	}
 
-    	if(player.body.blocked.right || player.body.blocked.left){
-    		if(player.body.blocked.right) {
-    			player.body.velocity.x = -150;
-    		} else {
-    			player.body.velocity.x = +150;
-    		}
+    // 	if(player.body.blocked.right || player.body.blocked.left){
+    // 		if(player.body.blocked.right) {
+    // 			player.body.velocity.x = -150;
+    // 		} else {
+    // 			player.body.velocity.x = +150;
+    // 		}
     		
-    		player.body.velocity.y = -350;
-    	}
+    // 		player.body.velocity.y = -350;
+    // 	}
     }
 
 
     render() {
 
-	    // this.game.debug.body(player);
+	    //this.game.debug.body(player);
+        if(player)
+            player.body.debug = true;
 	    // this.game.debug.bodyInfo(player, 32, 320);
 	}
 
