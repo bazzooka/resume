@@ -1,10 +1,23 @@
-import {tile_size} from './Constantes';
+import {tile_size, isTouchDevice} from './Constantes';
 
 let Player = {
 	standAnim : [5],
 	walkAnim: [12, 20],
 
+	touchStart: {
+		startAt: 0,
+		x: 0,
+		y: 0
+	},
+
+	touchEnd: {
+		endAt: 0,
+		x: 0,
+		y: 0
+	},
+
 	init : function(game, position){
+		this.game = game;
 		this.player = game.add.sprite(position.x, position.y, 'player');
 		this.player.animations.add('stand', this.standAnim, 1, false);
 		this.player.animations.add('walk', this.walkAnim, 10, true);
@@ -22,10 +35,17 @@ let Player = {
 
     	//game.input.mouse.mouseWheelCallback = this.onMouseWheel;
 
+    	game.input.onUp.add(function(e){
+    		let clickDelay = e.timeUp - e.timeDown,
+    		deltaX = e.position.x - e.positionDown.x;
+			console.log("delay", clickDelay, "delta", deltaX);
+    	}, this);
+
 		return this.player; 
 	},
 
 	update: function(){
+
 		if (this.cursors && this.cursors.up.isDown){
         	this.player.body.moveUp(4000);
 		}

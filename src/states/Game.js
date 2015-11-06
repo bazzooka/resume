@@ -1,18 +1,8 @@
 import ResourceLoader from '../resourceLoader';
-import {tile_size, bounds} from '../constantes';
+import {tile_size, bounds, isTouchDevice} from '../constantes';
 import Player from '../Player';
 import BackgroundManager from '../BackgroundManager';
 
-
-
-var 
-	cloudLayer = null,
-	platformLayer = null,
-	flatLayer = null,
-	// player = null,
-	cursors = null,
-	spaceBar = null,
-    tiles = [];
 
 let isMouseWheel = false,
 	mouseWheeling = false;
@@ -25,16 +15,20 @@ class Game {
 
     initStage (){ 
     	this.game.stage.backgroundColor = '#d0f4f7';
-    	this.game.physics.startSystem(Phaser.Physics.P2JS);
     	this.game.world.setBounds(0, 0, bounds, bounds); 
     }
   
     loadMap () {  
-    	
         this.map  = BackgroundManager.init(this.game);
     }
  
-    initPhysics (){  
+    initPhysics (){
+
+        if(isTouchDevice){
+            this.game.physics.startSystem(Phaser.Physics.P2JS);
+        } else {
+            this.game.physics.startSystem(Phaser.Physics.P2JS);
+        }
 		this.map.setCollisionBetween(0, 200);
         // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
        	this.game.physics.p2.convertTilemap(this.map, BackgroundManager.getLayer('platform'));
@@ -67,6 +61,8 @@ class Game {
 	    //this.game.debug.body(player);
         // this.player.body.debug = true;
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
+
+        this.game.debug.pointer(this.game.input.activePointer);
 	}
 
 }
