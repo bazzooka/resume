@@ -27,7 +27,7 @@ let Player = {
 
 	update: function(){
 		if (this.cursors && this.cursors.up.isDown){
-        	this.player.body.moveUp(150);
+        	this.player.body.moveUp(4000);
 		}
 
 	    if (this.cursors && this.cursors.left.isDown){

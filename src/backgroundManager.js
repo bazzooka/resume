@@ -27,6 +27,8 @@ let BackgroundManager = {
 		this.background = game.add.tileSprite(0, bounds - this.background_height, bounds, this.background_height, 'background');
 		this.background.scrollFactorX = 0;
 
+		this.about_title = game.add.sprite(500, bounds - 500, 'about_title');
+
 		this.map = game.add.tilemap('map');
 		for(let i = 0, l = this.tilesetImages.length; i < l ; i++){
 			this.map.addTilesetImage(this.tilesetImages[i], this.tilesetImages[i]);

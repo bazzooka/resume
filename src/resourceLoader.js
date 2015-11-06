@@ -11,7 +11,7 @@ let ResourceLoader = {
         // game.load.image('background', 'assets/ground/PNG/background-50.png');
         game.load.image('background', 'assets/ground/Backgrounds/colored_grass.png');
 
-        // game.load.image('grass', 'assets/ground/grass_tile.png', 1026, 215);
+        game.load.image('about_title', 'assets/decoration/about.png', 1115, 783);
 	}
 
 }
