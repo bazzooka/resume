@@ -4,16 +4,13 @@ let Player = {
 	standAnim : [5],
 	walkAnim: [12, 20],
 
-	touchStart: {
-		startAt: 0,
-		x: 0,
-		y: 0
-	},
-
-	touchEnd: {
-		endAt: 0,
-		x: 0,
-		y: 0
+	touchParams: {
+		wasTouched: false,
+		start: null,
+		end: null,
+		deltaTime: 0,
+		delta: null,
+		speedX: 0
 	},
 
 	init : function(game, position){
@@ -36,9 +33,12 @@ let Player = {
     	//game.input.mouse.mouseWheelCallback = this.onMouseWheel;
 
     	game.input.onUp.add(function(e){
-    		let clickDelay = e.timeUp - e.timeDown,
-    		deltaX = e.position.x - e.positionDown.x;
-			console.log("delay", clickDelay, "delta", deltaX);
+    		this.touchParams.start = e.position;
+    		this.touchParams.end = e.positionDown;
+    		this.touchParams.deltaTime = e.timeUp - e.timeDown;
+    		this.touchParams.delta = {x : e.position.x - e.positionDown.x, y: e.position.y - e.positionDown.y};
+    		this.touchParams.speedX = this.touchParams.delta.x / this.touchParams.deltaTime;
+			this.touchParams.wasTouched = true;	
     	}, this);
 
 		return this.player; 
@@ -46,14 +46,24 @@ let Player = {
 
 	update: function(){
 
+		if(this.touchParams.wasTouched){
+			this.touchParams.wasTouched = false;
+			let velocityX = this.touchParams.speedX > 0 ? Math.min(1000, this.touchParams.speedX * 500) : Math.max(-1000, this.touchParams.speedX * 500),
+				velocityY = this.touchParams.delta.y * 10;
+			this.player.body.moveUp(-velocityY);
+			this.player.body.moveLeft(velocityX);
+		}
+
+
 		if (this.cursors && this.cursors.up.isDown){
-        	this.player.body.moveUp(4000);
+        	this.player.body.moveUp(200);
 		}
 
 	    if (this.cursors && this.cursors.left.isDown){
 	        this.player.body.moveLeft(400);
 	        this.player.scale.x = -1;
 	        this.player.play('walk');
+	        console.log(this.player.position.x);
 	    }
 	    else if (this.cursors && this.cursors.right.isDown){
 	        this.player.body.moveRight(400);

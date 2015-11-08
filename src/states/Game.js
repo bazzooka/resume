@@ -2,6 +2,8 @@ import ResourceLoader from '../resourceLoader';
 import {tile_size, bounds, isTouchDevice} from '../constantes';
 import Player from '../Player';
 import BackgroundManager from '../BackgroundManager';
+import TextManager from '../TextManager';
+import AboutStep from '../steps/aboutStep';
 
 
 let isMouseWheel = false,
@@ -11,6 +13,8 @@ let isMouseWheel = false,
 class Game {
 	preload() {
 		ResourceLoader.preload(this.game);
+
+        this.game.time.advancedTiming = true;
     }
 
     initStage (){ 
@@ -21,24 +25,30 @@ class Game {
     loadMap () {  
         this.map  = BackgroundManager.init(this.game);
     }
- 
+  
     initPhysics (){
 
-        if(isTouchDevice){
+        if(isTouchDevice){ 
             this.game.physics.startSystem(Phaser.Physics.P2JS);
         } else {
             this.game.physics.startSystem(Phaser.Physics.P2JS);
-        }
-		this.map.setCollisionBetween(0, 200);
+        } 
+		this.map.setCollisionBetween(0, 200); 
         // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
        	this.game.physics.p2.convertTilemap(this.map, BackgroundManager.getLayer('platform'));
         this.game.physics.p2.convertCollisionObjects(this.map, "collision");
         this.game.physics.p2.restitution = 0.1;
         this.game.physics.p2.gravity.y = 2000;
 
-	    this.game.physics.p2.enable(this.player);
+	    this.game.physics.p2.enable(this.player); 
 	    this.player.body.setRectangle(100, 140, 0, 50, 0);
-        this.player.body.fixedRotation = true;
+        this.player.body.fixedRotation = true; 
+    } 
+
+    createAboutText (){
+        new AboutStep(this.game);
+
+        
     }
 
     create() {
@@ -47,6 +57,11 @@ class Game {
     	this.loadMap();
     	this.player = Player.init(this.game, {x: tile_size * 5 , y: tile_size * 94});
     	this.initPhysics();
+
+        this.game.textManager.addTextCallback(this.createAboutText.bind(this));
+
+
+        // this.nameText = new WebText(this.game, "NAME", {x: 500, y: bounds - 300});
           
    		this.camera.follow(this.player);
     }
@@ -58,11 +73,13 @@ class Game {
 
     render() {
 
+        this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");   
+
 	    //this.game.debug.body(player);
         // this.player.body.debug = true;
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 
-        this.game.debug.pointer(this.game.input.activePointer);
+        //this.game.debug.pointer(this.game.input.activePointer);
 	}
 
 }

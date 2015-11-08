@@ -16,7 +16,6 @@ class Preload {
         /*
         this.load.image('logo', 'assets/logo.png');
          */
-         this.game.load.image('about_title', 'assets/decoration/about.png', 1115, 783);
     }
 
     create() {

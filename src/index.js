@@ -7,7 +7,7 @@ var game, App = {};
 App.start = function() {
     game = new Phaser.Game(
         960, 640,
-        Phaser.AUTO,
+        Phaser.CANVAS,
         'content'
     );
 
@@ -20,4 +20,5 @@ App.start = function() {
     return game;
 };
 
+window.WebFontConfig = {};
 window.GAME = App.start();
