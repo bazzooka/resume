@@ -1,4 +1,5 @@
 import {tile_size, isTouchDevice} from './Constantes';
+import Baby from './baby';
 
 let Player = {
 	standAnim : [5],
@@ -13,13 +14,18 @@ let Player = {
 		speedX: 0
 	},
 
-	init : function(game, position){
+	baby1: null,
+	baby2: null,
+
+	callbackOncePosition: [],	// callback to call when positionX > ?
+
+	init : function(game, layer, position){
 		this.game = game;
 		this.player = game.add.sprite(position.x, position.y, 'player');
 		this.player.animations.add('stand', this.standAnim, 1, false);
 		this.player.animations.add('walk', this.walkAnim, 10, true);
 
-
+		layer.add(this.player);
 
 		this.player.animations.play('stand');
 
@@ -41,7 +47,23 @@ let Player = {
 			this.touchParams.wasTouched = true;	
     	}, this);
 
-		return this.player; 
+		return this; 
+	},
+
+	addPositionCallback: function(position, callback, isOnce = true){
+		if(isOnce){
+			this.callbackOncePosition.push({positionX: position, callback: callback});
+		}
+	},
+
+	setStartingBabiesPosition: function(startPosition){
+		this.baby1 = new Baby(this.game, startPosition, this.layer, 1);
+		this.baby2 = new Baby(this.game, startPosition, this.layer, 2);
+
+		this.addPositionCallback(startPosition.x, () => {
+			this.baby1.follow(this.player);
+			this.baby2.follow(this.player);
+		}.bind(this));
 	},
 
 	update: function(){
@@ -56,22 +78,38 @@ let Player = {
 
 
 		if (this.cursors && this.cursors.up.isDown){
-        	this.player.body.moveUp(200);
+        	this.player.body.moveUp(5000);
 		}
 
 	    if (this.cursors && this.cursors.left.isDown){
 	        this.player.body.moveLeft(400);
-	        this.player.scale.x = -1;
-	        this.player.play('walk');
-	        console.log(this.player.position.x);
 	    }
-	    else if (this.cursors && this.cursors.right.isDown){
+	    else if (this.cursors && this.cursors.right.isDown){ 
 	        this.player.body.moveRight(400);
-	        this.player.scale.x = 1;
+	    }
+
+	    let positionX = this.player.position.x;
+	    for(let i = 0, l = this.callbackOncePosition.length; i < l; i++){
+	    	if(positionX > this.callbackOncePosition[i].positionX){
+	    		this.callbackOncePosition[i].callback();
+	    		this.callbackOncePosition.splice(i, 1);
+	    		break;
+	    	}
+	    }
+
+	    let velocityX = Math.round(this.player.body.velocity.destination[0]),
+	    	velocityY = Math.round(this.player.body.velocity.destination[1]);
+
+	    if(velocityX > 5){
+	    	this.player.scale.x = -1;
+	        this.player.play('walk');
+	    } else if(velocityX < -5){
+			this.player.scale.x = 1;
 	        this.player.play('walk');
 	    } else {
 	    	this.player.play('stand');
 	    }
+
 	}
 }
 

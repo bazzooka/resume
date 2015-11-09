@@ -16,7 +16,14 @@ let ResourceLoader = {
                 game.load.image('background', 'assets/ground/Backgrounds/colored_grass.png');
 
                 game.load.image('about_title', 'assets/decoration/about.png', 1115, 783);
-                game.load.image('triangle', 'assets/textures/triangle1.gif', 35, 35);
+                game.load.image('triangle', 'assets/decoration/triangle.png', 10, 14);
+                game.load.image('sign', 'assets/decoration/sign.png', 70, 70);
+                game.load.image('sign_round', 'assets/decoration/sign_round.png', 10, 10);
+                game.load.image('sign_fill', 'assets/decoration/sign_fill.png', 10, 10);
+                game.load.image('sign_foot', 'assets/decoration/sign_foot.png', 10, 10);
+                game.load.spritesheet('buttonRed', 'assets/decoration/buttonRed.png', 70, 70);
+                game.load.spritesheet('baby1', 'assets/decoration/baby1.png', 50, 50);
+                game.load.spritesheet('baby2', 'assets/decoration/baby2.png', 50, 50);
 	}
 
 }

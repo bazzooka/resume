@@ -20,10 +20,13 @@ class Game {
     initStage (){ 
     	this.game.stage.backgroundColor = '#d0f4f7';
     	this.game.world.setBounds(0, 0, bounds, bounds); 
+        this.bgLayer = this.game.add.group();
+        this.textLayer = this.game.add.group();
+        this.playerLayer = this.game.add.group();
     }
   
     loadMap () {  
-        this.map  = BackgroundManager.init(this.game);
+        this.map  = BackgroundManager.init(this.game, this.bgLayer);
     }
   
     initPhysics (){
@@ -40,13 +43,18 @@ class Game {
         this.game.physics.p2.restitution = 0.1;
         this.game.physics.p2.gravity.y = 2000;
 
-	    this.game.physics.p2.enable(this.player); 
-	    this.player.body.setRectangle(100, 140, 0, 50, 0);
-        this.player.body.fixedRotation = true; 
+	    this.game.physics.p2.enable(this.player.player); 
+	    this.player.player.body.setRectangle(100, 140, 0, 50, 0);
+        this.player.player.body.fixedRotation = true;  
     } 
 
     createAboutText (){
-        new AboutStep(this.game);
+        this.aboutStep = new AboutStep(
+            this.game, 
+            this.textLayer, 
+            this.player.addPositionCallback.bind(this.player),
+            this.player.setStartingBabiesPosition.bind(this.player)
+        );
 
         
     }
@@ -55,7 +63,7 @@ class Game {
     	
     	this.initStage();
     	this.loadMap();
-    	this.player = Player.init(this.game, {x: tile_size * 5 , y: tile_size * 94});
+    	this.player = Player.init(this.game, this.playerLayer, {x: tile_size * 5 , y: tile_size * 94});
     	this.initPhysics();
 
         this.game.textManager.addTextCallback(this.createAboutText.bind(this));
@@ -63,7 +71,7 @@ class Game {
 
         // this.nameText = new WebText(this.game, "NAME", {x: 500, y: bounds - 300});
           
-   		this.camera.follow(this.player);
+   		this.camera.follow(this.player.player);
     }
 
     update () {
