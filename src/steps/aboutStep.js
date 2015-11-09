@@ -177,4 +177,75 @@ AboutStep.prototype.createBabies = function(){
 	this.layer.add(intitule);
 }
 
+AboutStep.prototype.createHobbies = function(){
+	var position = {x: 500, y: bounds - 500};
+	var reponsePosition = {x: 550, y: bounds - 250};
+	var intituleBG = this.game.add.graphics(position.x, position.y);
+	var intitule = this.game.add.text(position.x, position.y, "Hobbies");
+	var reponseBG = this.game.add.graphics(reponsePosition.x, reponsePosition.y);
+	var reponse = this.game.add.text(reponsePosition.x, reponsePosition.y, "Joe");
+
+	var signLayer = this.game.add.group();
+	var signFootLayer = this.game.add.group();
+	
+	
+
+	intitule.font = 'Righteous';
+	intitule.fontSize = 35;
+	intitule.fill = "#FFFFFF";
+
+	intituleBG.beginFill(0xf58500);
+	intituleBG.drawRect(0, 0, intitule.getLocalBounds().width, intitule.getLocalBounds().height);
+	intituleBG.endFill();
+	
+	var leftBorder = this.game.add.tileSprite(position.x - triangleSize.w, position.y, triangleSize.w, intitule.getLocalBounds().height, 'triangle');
+	var rightBorder = this.game.add.tileSprite(position.x + intitule.getLocalBounds().width + triangleSize.w, position.y, 10, intitule.getLocalBounds().height, 'triangle');
+	rightBorder.scale.x = -1;
+
+
+	reponse.font = 'Righteous';
+	reponse.fontSize = 30;
+	reponse.fill = "#FFFFFF";
+
+	reponseBG.beginFill(0xae7640);
+	reponseBG.drawRect(-20, 0, reponse.getLocalBounds().width + 40, reponse.getLocalBounds().height);
+	reponseBG.endFill();
+
+
+	var sign_tr = this.game.add.sprite(reponsePosition.x + reponse.getLocalBounds().width + signSize.w + 10, reponsePosition.y, 'sign_round');
+	var sign_br = this.game.add.sprite(reponsePosition.x + reponse.getLocalBounds().width + signSize.w + 10, reponsePosition.y + reponse.getLocalBounds().height, 'sign_round');
+	var sign_tl = this.game.add.sprite(reponsePosition.x - signSize.w - 10, reponsePosition.y, 'sign_round');
+	var sign_bl = this.game.add.sprite(reponsePosition.x - signSize.w - 10, reponsePosition.y + reponse.getLocalBounds().height, 'sign_round');
+	sign_br.scale.y = -1;
+	sign_tl.scale.x = -1;
+	sign_bl.scale.x = -1;
+	sign_bl.scale.y = -1;
+
+	var signFillLeft = this.game.add.tileSprite(reponsePosition.x - signSize.w - 20, reponsePosition.y + signSize.h, signSize.w, reponse.getLocalBounds().height - 2 *signSize.h, "sign_fill");
+	var signFillRight = this.game.add.tileSprite(reponsePosition.x + reponse.getLocalBounds().width + signSize.w + 10, reponsePosition.y + signSize.h, signSize.w, reponse.getLocalBounds().height - 2 *signSize.h, "sign_fill");
+	var signFoot = this.game.add.tileSprite(reponsePosition.x + reponse.getLocalBounds().width /2, reponsePosition.y + signSize.h, signSize.w, bounds - reponsePosition.y - 128, "sign_foot");
+	
+
+	this.layer.add(intituleBG);
+	this.layer.add(leftBorder);
+	this.layer.add(rightBorder);
+	this.layer.add(intituleBG);
+	this.layer.add(intitule);
+
+	signFootLayer.add(signFoot);
+	signLayer.add(reponseBG);
+	signLayer.add(sign_tr);
+	signLayer.add(sign_br);
+	signLayer.add(sign_tl);
+	signLayer.add(sign_bl);
+	signLayer.add(signFillLeft);
+	signLayer.add(signFillRight);
+	signLayer.add(reponse);
+
+
+
+	this.layer.add(signFootLayer);
+	this.layer.add(signLayer);
+}
+
 export default AboutStep;

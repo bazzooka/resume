@@ -23,7 +23,7 @@ let Player = {
 		this.game = game;
 		this.player = game.add.sprite(position.x, position.y, 'player');
 		this.player.animations.add('stand', this.standAnim, 1, false);
-		this.player.animations.add('walk', this.walkAnim, 10, true);
+		this.player.animations.add('walk', this.walkAnim, 10, true);	
 
 		layer.add(this.player);
 
@@ -61,8 +61,10 @@ let Player = {
 		this.baby2 = new Baby(this.game, startPosition, this.layer, 2);
 
 		this.addPositionCallback(startPosition.x, () => {
-			this.baby1.follow(this.player);
-			this.baby2.follow(this.player);
+			this.baby1.createSpring(this.player);
+			this.baby2.createSpring(this.player);
+			//this.baby1.follow = true;
+			//this.baby2.follow = true;
 		}.bind(this));
 	},
 

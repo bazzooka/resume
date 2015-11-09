@@ -1,15 +1,14 @@
 let Baby = function(game, position, layer, numero){
 	this.game = game;
-	console.log(position.y + Math.random()*20);
+	this.follow = false;
 	this.sprite = this.game.add.sprite(position.x, position.y + numero * 75, "baby" + numero);
+
+	this.game.physics.p2.enable(this.sprite); 
+	this.sprite.body.data.gravityScale = 0;;
 }
 
-Baby.prototype.moveTo = function(position){
-	this.sprite.position.x = player.position.x;
-}
-
-Baby.prototype.stand = function(){
-	// this.sprite.position.x = this.sprite.position.x + Math.random()
+Baby.prototype.createSpring = function(player){
+	this.game.physics.p2.createSpring(player, this.sprite, 100, 10, 10);
 }
 
 export default Baby;

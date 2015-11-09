@@ -45,7 +45,7 @@ class Game {
 
 	    this.game.physics.p2.enable(this.player.player); 
 	    this.player.player.body.setRectangle(100, 140, 0, 50, 0);
-        this.player.player.body.fixedRotation = true;  
+        this.player.player.body.fixedRotation = true;
     } 
 
     createAboutText (){
