@@ -15,10 +15,8 @@ let BackgroundManager = {
 	}, {
 		"name": "cloud",
 		"scrollFactorX": 1.55
-	}, {
-		"name": "decors_1",
-		"scrollFactorX": 1.20
 	}],
+
 	layers: {},
 
 	init: function(game, layer){
@@ -50,12 +48,7 @@ let BackgroundManager = {
 	},
 
 	onResize: function(w, h){
-		for(var layer in this.layers){
-			if(this.layers.hasOwnProperty(layer) && "platform" === layer){
-				this.layers[layer].resize(w, h);
-				break;
-			}
-		}
+		this.getLayer('platform').resize(w, h);
 	},
 
 	getLayer: function(name){
