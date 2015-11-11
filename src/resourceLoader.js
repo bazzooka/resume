@@ -25,6 +25,8 @@ let ResourceLoader = {
                 game.load.spritesheet('baby1', 'assets/decoration/baby1.png', 50, 50);
                 game.load.spritesheet('baby2', 'assets/decoration/baby2.png', 50, 50);
                 game.load.spritesheet('baby3', 'assets/decoration/baby3.png', 50, 50);
+
+                game.load.spritesheet('level1', 'assets/decoration/level1.png', 512, 384);
 	}
 
 }
