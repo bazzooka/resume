@@ -38,7 +38,7 @@ let BackgroundManager = {
 
 		for(let i = 0, l = this.layersParams.length; i < l; i++){
 			let currentLayerParams = this.layersParams[i],
-				currentLayer = this.map.createLayer(currentLayerParams.name);
+				currentLayer = this.map.createLayer(currentLayerParams.name, game.width, game.height, layer);
 			this.layers[currentLayerParams.name] = currentLayer;
 			currentLayer.scrollFactorX = currentLayerParams.scrollFactorX;
 			if(currentLayerParams.isDefault){

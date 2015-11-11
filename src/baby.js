@@ -1,7 +1,10 @@
 let Baby = function(game, position, layer, numero){
 	this.game = game;
 	this.follow = false;
-	this.sprite = this.game.add.sprite(position.x, position.y + numero * 75, "baby" + numero);
+
+	let offsetY = (numero - 1 ) * 75;
+
+	this.sprite = this.game.add.sprite(position.x, position.y + offsetY, "baby" + numero);
 
 	this.game.physics.p2.enable(this.sprite); 
 	this.sprite.body.data.gravityScale = 0;;

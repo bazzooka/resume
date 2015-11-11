@@ -22,6 +22,7 @@ class Game {
     	this.game.world.setBounds(0, 0, bounds, bounds); 
         this.bgLayer = this.game.add.group();
         this.textLayer = this.game.add.group();
+        this.aboutLayer = this.game.add.group();
         this.playerLayer = this.game.add.group();
     }
   
@@ -49,11 +50,14 @@ class Game {
     } 
 
     createAboutText (){
+        this.textLayer.add(this.aboutLayer);
+        this.aboutLayer.position.x = 2000;
         this.aboutStep = new AboutStep(
             this.game, 
-            this.textLayer, 
+            this.aboutLayer, 
             this.player.addPositionCallback.bind(this.player),
-            this.player.setStartingBabiesPosition.bind(this.player)
+            this.player.setStartingBabiesPosition.bind(this.player),
+            this.player.setStartingWifePosition.bind(this.player)
         );
 
         

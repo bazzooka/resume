@@ -16,6 +16,7 @@ let Player = {
 
 	baby1: null,
 	baby2: null,
+	baby3: null,
 
 	callbackOncePosition: [],	// callback to call when positionX > ?
 
@@ -26,6 +27,7 @@ let Player = {
 		this.player.animations.add('walk', this.walkAnim, 10, true);	
 
 		layer.add(this.player);
+
 
 		this.player.animations.play('stand');
 
@@ -63,8 +65,14 @@ let Player = {
 		this.addPositionCallback(startPosition.x, () => {
 			this.baby1.createSpring(this.player);
 			this.baby2.createSpring(this.player);
-			//this.baby1.follow = true;
-			//this.baby2.follow = true;
+		}.bind(this));
+	},
+
+	setStartingWifePosition: function(startPosition, capturePosition){
+		this.baby3 = new Baby(this.game, startPosition, this.layer, 3);
+
+		this.addPositionCallback(capturePosition.x, () => {
+			this.baby3.createSpring(this.player);
 		}.bind(this));
 	},
 
