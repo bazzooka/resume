@@ -46,8 +46,16 @@ let BackgroundManager = {
 				currentLayer.resizeWorld();
 			}
 		}
-		//layer.add(this.map);
-		return this.map;
+		return this;
+	},
+
+	onResize: function(w, h){
+		for(var layer in this.layers){
+			if(this.layers.hasOwnProperty(layer) && "platform" === layer){
+				this.layers[layer].resize(w, h);
+				break;
+			}
+		}
 	},
 
 	getLayer: function(name){

@@ -24,6 +24,11 @@ class Game {
         this.textLayer = this.game.add.group();
         this.aboutLayer = this.game.add.group();
         this.playerLayer = this.game.add.group();
+        window.addEventListener("resize", function() {
+            let w = window.innerWidth,
+                h = window.innerHeight;
+            this.map.onResize(w, h);
+        }.bind(this));
     }
   
     loadMap () {  
@@ -37,10 +42,10 @@ class Game {
         } else {
             this.game.physics.startSystem(Phaser.Physics.P2JS);
         } 
-		this.map.setCollisionBetween(0, 200); 
+		this.map.map.setCollisionBetween(0, 200); 
         // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
-       	this.game.physics.p2.convertTilemap(this.map, BackgroundManager.getLayer('platform'));
-        this.game.physics.p2.convertCollisionObjects(this.map, "collision");
+       	this.game.physics.p2.convertTilemap(this.map.map, BackgroundManager.getLayer('platform'));
+        this.game.physics.p2.convertCollisionObjects(this.map.map, "collision");
         this.game.physics.p2.restitution = 0.1;
         this.game.physics.p2.gravity.y = 2000;
 

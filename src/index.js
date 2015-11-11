@@ -6,7 +6,7 @@ var game, App = {};
 
 App.start = function() {
     game = new Phaser.Game(
-        960, 640,
+        '100%', '100%',
         Phaser.CANVAS,
         'content'
     );
