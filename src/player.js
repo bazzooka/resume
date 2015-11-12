@@ -58,24 +58,6 @@ let Player = {
 		}
 	},
 
-	setStartingBabiesPosition: function(startPosition){
-		this.baby1 = new Baby(this.game, startPosition, this.layer, 1);
-		this.baby2 = new Baby(this.game, startPosition, this.layer, 2);
-
-		this.addPositionCallback(startPosition.x, () => {
-			this.baby1.createSpring(this.player);
-			this.baby2.createSpring(this.player);
-		}.bind(this));
-	},
-
-	setStartingWifePosition: function(startPosition, capturePosition){
-		this.baby3 = new Baby(this.game, startPosition, this.layer, 3);
-
-		this.addPositionCallback(capturePosition.x, () => {
-			this.baby3.createSpring(this.player);
-		}.bind(this));
-	},
-
 	update: function(){
 
 		if(this.touchParams.wasTouched){
@@ -88,14 +70,14 @@ let Player = {
 
 
 		if (this.cursors && this.cursors.up.isDown){
-        	this.player.body.moveUp(5000);
+        	this.player.body.moveUp(100);
 		}
 
 	    if (this.cursors && this.cursors.left.isDown){
-	        this.player.body.moveLeft(400);
+	        this.player.body.moveLeft(1000);
 	    }
 	    else if (this.cursors && this.cursors.right.isDown){ 
-	        this.player.body.moveRight(400);
+	        this.player.body.moveRight(1000);
 	    }
 
 	    let positionX = this.player.position.x;

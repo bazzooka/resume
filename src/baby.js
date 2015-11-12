@@ -11,7 +11,7 @@ let Baby = function(game, position, layer, numero){
 }
 
 Baby.prototype.createSpring = function(player){
-	this.game.physics.p2.createSpring(player, this.sprite, 100, 10, 10);
+	this.spring = this.game.physics.p2.createSpring(player, this.sprite, 100, 10, 10);
 }
 
 export default Baby;

@@ -3,7 +3,9 @@ import {tile_size, bounds, isTouchDevice} from '../constantes';
 import Player from '../Player';
 import BackgroundManager from '../BackgroundManager';
 import TextManager from '../TextManager';
+import BackPack from '../BackPack';
 import AboutStep from '../steps/aboutStep';
+import ExpertiseStep from '../steps/expertiseStep';
 
 
 let isMouseWheel = false,
@@ -22,8 +24,11 @@ class Game {
     	this.game.world.setBounds(0, 0, bounds, bounds); 
         this.bgLayer = this.game.add.group();
         this.textLayer = this.game.add.group();
+
         this.aboutLayer = this.game.add.group();
+        this.expertiseLayer = this.game.add.group();
         this.playerLayer = this.game.add.group();
+        this.backPackLayer = this.game.add.group();
         window.addEventListener("resize", function() {
             let w = window.innerWidth,
                 h = window.innerHeight;
@@ -54,28 +59,41 @@ class Game {
         this.player.player.body.fixedRotation = true;
     } 
 
-    createAboutText (){
+    createSteps (){
         this.textLayer.add(this.aboutLayer);
         this.aboutLayer.position.x = 2000;
         this.aboutStep = new AboutStep(
             this.game, 
             this.aboutLayer, 
             this.player.addPositionCallback.bind(this.player),
-            this.player.setStartingBabiesPosition.bind(this.player),
-            this.player.setStartingWifePosition.bind(this.player)
+            this.player.player
         );
 
+        this.expertiseLayer.position.x = 800;
+        this.expertiseStep = new ExpertiseStep(
+            this.game,
+            this.expertiseLayer,
+            this.player.addPositionCallback.bind(this.player),
+        )
         
+
+        
+    }
+
+    initBackPack (){
+        this.backPack = BackPack;
+        this.backPack.init(this.game, this.backPackLayer);
     }
 
     create() {
     	
     	this.initStage();
+        this.initBackPack();
     	this.loadMap();
     	this.player = Player.init(this.game, this.playerLayer, {x: tile_size * 5 , y: tile_size * 94});
     	this.initPhysics();
 
-        this.game.textManager.addTextCallback(this.createAboutText.bind(this));
+        this.game.textManager.addTextCallback(this.createSteps.bind(this));
 
 
         // this.nameText = new WebText(this.game, "NAME", {x: 500, y: bounds - 300});
@@ -97,6 +115,7 @@ class Game {
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 
         //this.game.debug.pointer(this.game.input.activePointer);
+        this.expertiseStep && this.expertiseStep.render();
 	}
 
 }

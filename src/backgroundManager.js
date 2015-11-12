@@ -7,7 +7,7 @@ let BackgroundManager = {
 	background_height: 1024,
 	tilesetImages: [
 		'ground',
-		'decors'
+		'levels'
 	],
 	layersParams: [{
 		"name": "platform",
@@ -17,28 +17,22 @@ let BackgroundManager = {
 		"name": "cloud",
 		"scrollFactorX": 1.55
 	}, {
-		"name": "decors_1",
+		"name": "levels",
 		"scrollFactorX": 1.05
 	}],
 
 	layers: {},
 
 	init: function(game, layer){
+		this.game = game;
 
 		// Init background
 		this.background = game.add.tileSprite(0, bounds - this.background_height, bounds, this.background_height, 'background');
 		layer.add(this.background);
 		this.background.scrollFactorX = 0;
 
-		this.about_title = game.add.sprite(500, bounds - 500, 'about_title');
-		layer.add(this.about_title);
+		this.addMasterSectionTitles(layer);
 
-		game.textManager.addTextCallback(function(){
-			var intitule = game.add.text(2000, bounds - 375, "DON'T TOUCH THE RED BUTTON");
-			intitule.font = 'Righteous';
-			intitule.fontSize = 15;
-			intitule.fill = "#FFFFFF";
-		}.bind(this));
 
 		this.map = game.add.tilemap('map');
 		for(let i = 0, l = this.tilesetImages.length; i < l ; i++){
@@ -56,6 +50,14 @@ let BackgroundManager = {
 			}
 		}
 		return this;
+	},
+
+	addMasterSectionTitles: function(layer){
+		this.about_title = this.game.add.sprite(Positions.aboutPosition.x, Positions.aboutPosition.y, 'about_title');
+		layer.add(this.about_title);
+
+		this.mainExpertise = this.game.add.sprite(Positions.mainExpertisePosition.x, Positions.mainExpertisePosition.y, 'main_expertise');
+		layer.add(this.mainExpertise);
 	},
 
 	onResize: function(w, h){

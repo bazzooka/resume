@@ -1,6 +1,6 @@
 import TextManager from './TextManager';
 
-let ResourceLoader = {
+let ResourceLoader = { 
 
 	preload: function(game){
                 game.textManager = new TextManager(game);
@@ -8,7 +8,7 @@ let ResourceLoader = {
                 game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js');
                 game.load.tilemap('map', 'map/map.json', null, Phaser.Tilemap.TILED_JSON);
                 game.load.spritesheet('ground', 'assets/ground/spritesheet_ground.png');
-                game.load.spritesheet('decors', 'assets/decoration/decor.png');
+                game.load.spritesheet('levels', 'assets/decoration/levels.png');
 
                 game.load.spritesheet('player', 'assets/player/spritesheet_players.png', 128, 256);
 
@@ -27,6 +27,11 @@ let ResourceLoader = {
                 game.load.spritesheet('baby3', 'assets/decoration/baby3.png', 50, 50);
 
                 game.load.spritesheet('level1', 'assets/decoration/level1.png', 512, 384);
+
+
+                game.load.image('backpack', 'assets/decoration/backpack.png', 68, 60);
+                game.load.image('main_expertise', 'assets/decoration/mainExpertise.png', 1537, 926);
+                game.load.spritesheet('boxExpertise', 'assets/decoration/boxExpertise.png', 128, 128);
 	}
 
 }

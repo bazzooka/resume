@@ -1,15 +1,16 @@
 import {bounds} from '../constantes';
+import Positions from '../Positions';
+import Baby from '../Baby';
 
 const triangleSize = {w: 10, h: 14};
 const signSize = {w: 10, h: 10};
 
-let AboutStep = function(game, layer, addPositionCallback, setStartingBabiesPosition, setStartingWifePosition){
+let AboutStep = function(game, layer, addPositionCallback, player){
 	this.game = game;
 	this.layer = layer;
 	this.repeatCounter = 1;
 	this.addPositionCallback = addPositionCallback;
-	this.setStartingBabiesPosition = setStartingBabiesPosition;
-	this.setStartingWifePosition = setStartingWifePosition;
+	this.player = player;
 	this.reponseHobbies = null;
 	this.createName();
 	this.createMarried();
@@ -142,7 +143,7 @@ AboutStep.prototype.createMarried = function(){
 	var rightBorder = this.game.add.tileSprite(position.x + intitule.getLocalBounds().width + triangleSize.w, position.y, 10, intitule.getLocalBounds().height, 'triangle');
 	rightBorder.scale.x = -1;
 
-	this.addPositionCallback(this.layer.position.x + position.x, function(){
+	this.addPositionCallback(this.layer.position.x + reponsePosition.x, function(){
 		buttonRed.frame = 1;
 		var reponse = this.game.add.text(position.x + 20, position.y + 150, "Married");
 		reponse.angle = -45;
@@ -151,8 +152,15 @@ AboutStep.prototype.createMarried = function(){
 		reponse.fill = "#FF0000";
 		this.layer.add(reponse);
 	}.bind(this));
+	
+	this.baby3 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width, y: bounds - window.innerHeight - 3*75}, this.layer, 3);
 
-	this.setStartingWifePosition({x: this.layer.position.x + position.x + intitule.getLocalBounds().width, y: position.y - 400}, {x: this.layer.position.x + reponsePosition.x, y: position.y + 200});
+	this.addPositionCallback(this.layer.position.x + reponsePosition.x, () => {
+		this.baby3.createSpring(this.player);
+	}.bind(this));
+
+
+
 	this.layer.add(intituleBG);
 	this.layer.add(leftBorder);
 	this.layer.add(rightBorder);
@@ -178,7 +186,28 @@ AboutStep.prototype.createBabies = function(){
 	var rightBorder = this.game.add.tileSprite(position.x + intitule.getLocalBounds().width + triangleSize.w, position.y, 10, intitule.getLocalBounds().height, 'triangle');
 	rightBorder.scale.x = -1;
 
-	this.setStartingBabiesPosition({x: this.layer.position.x + position.x + intitule.getLocalBounds().width /2, y: position.y + 200});
+	let startPosition = {x: this.layer.position.x + position.x + intitule.getLocalBounds().width /2, y: position.y + 200};
+	this.baby1 = new Baby(this.game, startPosition, this.layer, 1);
+	this.baby2 = new Baby(this.game, startPosition, this.layer, 2);
+
+	this.addPositionCallback(startPosition.x, () => {
+		this.baby1.createSpring(this.player);
+		this.baby2.createSpring(this.player);
+	}.bind(this));
+
+	this.addPositionCallback(Positions.mainExpertisePosition.x - 500, () => {
+
+		this.game.physics.p2.removeSpring(this.baby1.spring);
+		this.game.physics.p2.removeBody(this.baby1.sprite.body);
+		this.game.physics.p2.removeSpring(this.baby2.spring);
+		this.game.physics.p2.removeBody(this.baby2.sprite.body);
+		this.game.physics.p2.removeSpring(this.baby3.spring);
+		this.game.physics.p2.removeBody(this.baby3.sprite.body);
+
+		this.game.backPack.add(this.baby3.sprite, null, true, true);
+		this.game.backPack.add(this.baby2.sprite, null, true, true);
+		this.game.backPack.add(this.baby1.sprite, null, true, true);
+	}.bind(this));
 
 
 	this.layer.add(intituleBG);
