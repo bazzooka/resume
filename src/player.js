@@ -58,6 +58,20 @@ let Player = {
 		}
 	},
 
+	touchingDown: function(){
+    	var yAxis = p2.vec2.fromValues(0, 1);
+    	var result = false;
+    	for (var i = 0; i < this.game.physics.p2.world.narrowphase.contactEquations.length; i++) {
+        	var c = this.game.physics.p2.world.narrowphase.contactEquations[i];  // cycles through all the contactEquations until it finds our "someone"
+    		if (c.bodyA === this.player.body.data || c.bodyB === this.player.body.data)        {
+        		var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
+        		if (c.bodyA === this.player.body.data) d *= -1;
+        		if (d > 0.5) result = true;
+    		}
+    	}
+    	return result;
+	},
+
 	update: function(){
 
 		if(this.touchParams.wasTouched){
@@ -68,9 +82,9 @@ let Player = {
 			this.player.body.moveLeft(velocityX);
 		}
 
-
-		if (this.cursors && this.cursors.up.isDown){
-        	this.player.body.moveUp(100);
+		if (this.cursors && this.cursors.up.isDown && this.touchingDown()){
+			console.log("velocityY = ", this.player.body.touching);
+        	this.player.body.moveUp(900);
 		}
 
 	    if (this.cursors && this.cursors.left.isDown){

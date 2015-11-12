@@ -6,6 +6,7 @@ import TextManager from '../TextManager';
 import BackPack from '../BackPack';
 import AboutStep from '../steps/aboutStep';
 import ExpertiseStep from '../steps/expertiseStep';
+import ProgrammingStep from '../steps/programmingStep';
 
 
 let isMouseWheel = false,
@@ -27,6 +28,7 @@ class Game {
 
         this.aboutLayer = this.game.add.group();
         this.expertiseLayer = this.game.add.group();
+        this.programingLayer = this.game.add.group();
         this.playerLayer = this.game.add.group();
         this.backPackLayer = this.game.add.group();
         window.addEventListener("resize", function() {
@@ -73,7 +75,13 @@ class Game {
         this.expertiseStep = new ExpertiseStep(
             this.game,
             this.expertiseLayer,
-            this.player.addPositionCallback.bind(this.player),
+            this.player.addPositionCallback.bind(this.player)
+        )
+
+        this.programmingStep = new ProgrammingStep(
+            this.game, 
+            this.programingLayer,
+            this.player.addPositionCallback.bind(this.player)
         )
         
 
@@ -115,7 +123,6 @@ class Game {
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 
         //this.game.debug.pointer(this.game.input.activePointer);
-        this.expertiseStep && this.expertiseStep.render();
 	}
 
 }

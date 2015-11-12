@@ -32,6 +32,9 @@ let ResourceLoader = {
                 game.load.image('backpack', 'assets/decoration/backpack.png', 68, 60);
                 game.load.image('main_expertise', 'assets/decoration/mainExpertise.png', 1537, 926);
                 game.load.spritesheet('boxExpertise', 'assets/decoration/boxExpertise.png', 128, 128);
+
+
+                game.load.spritesheet('switch', 'assets/decoration/switch.png', 70, 70);
 	}
 
 }
