@@ -32,8 +32,8 @@ class Game {
         this.playerLayer = this.game.add.group();
         this.backPackLayer = this.game.add.group();
         window.addEventListener("resize", function() {
-            let w = window.innerWidth,
-                h = window.innerHeight;
+            let w = this.game.width,
+                h = this.game.height;
             this.map.onResize(w, h);
         }.bind(this));
     }
