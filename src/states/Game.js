@@ -44,11 +44,8 @@ class Game {
   
     initPhysics (){
 
-        if(isTouchDevice){ 
-            this.game.physics.startSystem(Phaser.Physics.P2JS);
-        } else {
-            this.game.physics.startSystem(Phaser.Physics.P2JS);
-        } 
+        this.game.physics.startSystem(Phaser.Physics.P2JS);
+        
 		this.map.map.setCollisionBetween(0, 200); 
         // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
        	this.game.physics.p2.convertTilemap(this.map.map, BackgroundManager.getLayer('platform'));
