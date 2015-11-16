@@ -30,8 +30,6 @@ let ResourceLoader = {
                 game.load.spritesheet('baby2', 'assets/decoration/baby2.png', 50, 50);
                 game.load.spritesheet('baby3', 'assets/decoration/baby3.png', 50, 50);
 
-                game.load.spritesheet('level1', 'assets/decoration/level1.png', 512, 384);
-
                 game.load.image('welcome', 'assets/decoration/welcome.png', 1024, 512);
 
                 game.load.image('backpack', 'assets/decoration/backpack.png', 68, 60);
@@ -39,6 +37,7 @@ let ResourceLoader = {
                 game.load.spritesheet('boxExpertise', 'assets/decoration/boxExpertise.png', 128, 128);
 
 
+                game.load.image('skills', 'assets/decoration/skills.png', 1149, 780);
                 game.load.spritesheet('switch', 'assets/decoration/switch.png', 70, 70);
                 game.load.image('gem_yellow', 'assets/decoration/hud_gem_yellow.png', 46, 36);
 	}

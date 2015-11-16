@@ -73,6 +73,9 @@ let BackgroundManager = {
 
 		this.mainExpertise = this.game.add.sprite(Positions.mainExpertisePosition.x, Positions.mainExpertisePosition.y, 'main_expertise');
 		layer.add(this.mainExpertise);
+
+		this.programing_title = this.game.add.sprite(Positions.waterPositions.x1, Positions.mainExpertisePosition.y, 'skills'); 
+		layer.add(this.programing_title);
 	},
 
 	onResize: function(w, h){

@@ -7,7 +7,7 @@ let ProgramingStep = function(game, layer, addPositionCallback){
 	this.layer = layer;
 	this.addPositionCallback = addPositionCallback;
 	this.x = Positions.waterPositions.x1 - 200;
-	this.y = Const.GROUND + 4 * Const.TILE_SIZE;
+	this.y = Positions.waterPositions.y;
 	this.createLevels();
 }
 
@@ -88,7 +88,6 @@ ProgramingStep.prototype.addSkill = function(skill){
 
 	this.addSkillLabel(skill);
 	this.addPositionCallback(position.x, () =>{
-		console.log("Flag");
 		mySwitch.frame = 2;
 		for(let i = 0, l = level; i < l; i++){
 			let gem = this.game.add.sprite(position.x + 10, this.y, "gem_yellow");

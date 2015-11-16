@@ -17,7 +17,7 @@ ExpertiseStep.prototype.createExpertiseBox = function(){
 		this.boxes.push(box);
 	}
 
-	this.addPositionCallback(Positions.mainExpertisePosition.x + Positions.expertiseBox.x + 1000, () => {
+	this.addPositionCallback(Positions.waterPositions.x1 - 200, () => {
 		var boxTweens = [];
 		for(var i = 0; i < this.boxes.length; i++){
 			this.game.physics.p2.removeBody(this.boxes[i].body);
