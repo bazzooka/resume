@@ -53,14 +53,21 @@ class Game {
         
 		this.map.map.setCollisionBetween(0, 200); 
         // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
-       	this.game.physics.p2.convertTilemap(this.map.map, BackgroundManager.getLayer('platform'));
-        this.game.physics.p2.convertCollisionObjects(this.map.map, "collision");
-        this.game.physics.p2.restitution = 0.1;
-        this.game.physics.p2.gravity.y = 2000;
+       	this.platform = this.game.physics.p2.convertTilemap(this.map.map, BackgroundManager.getLayer('platform'));
+        this.collisionsTiles = this.game.physics.p2.convertCollisionObjects(this.map.map, "collision");
+        // this.game.physics.p2.restitution = 0.0;
+        this.game.physics.p2.gravity.y = 1400;
+        for(let i = 0, l = this.platform.length; i < l; i++){
+            this.platform[i].data.damping = 0;
+            this.platform[i].data.angularDamping = 0;
+            
+        }
 
-	    this.game.physics.p2.enable(this.player.player); 
+	    this.game.physics.p2.enable(this.player.player);
+        this.player.player.anchor.setTo(0.5,0.5); 
 	    this.player.player.body.setRectangle(100, 140, 0, 50, 0);
         this.player.player.body.fixedRotation = true;
+        this.player.player.body.inertia = 1;
     } 
 
     createSteps (){
@@ -120,8 +127,9 @@ class Game {
 
         this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");   
 
-	    //this.game.debug.body(player);
-        // this.player.body.debug = true;
+	    this.player.player.body.debug = true;
+        this.platform.debugBody = true;
+        //this.map.body.debug = true;
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 
         //this.game.debug.pointer(this.game.input.activePointer);

@@ -78,7 +78,7 @@ let Player = {
 			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128);
 
 		// WATER
-	    
+	    this.player.body.velocity.x=0;  // reset player velocity every step
 	    if(!this.isInWater && isBetweenWaterPosition){
 	    	this.isInWater = true;
 	    	console.log("inWater");
@@ -103,15 +103,18 @@ let Player = {
 		let waterFriction = this.isInWater ? 0.5: 1;
 		if (this.cursors && this.cursors.up.isDown){
 			if(!this.isInWater && this.touchingDown()){
-				this.player.body.moveUp(this.moveVerticalForce * waterFriction);
+				// this.player.body.moveUp(this.moveVerticalForce * waterFriction);
+				this.player.body.velocity.y = -this.moveVerticalForce * waterFriction;
 			} else if(this.isInWater){
-				this.player.body.moveUp(this.moveVerticalForce * waterFriction);
+				// this.player.body.moveUp(this.moveVerticalForce * waterFriction);
+				this.player.body.velocity.y = -this.moveVerticalForce * waterFriction;
 			} 
 		}
 	    if (this.cursors && this.cursors.left.isDown){
-	        this.player.body.moveLeft(this.moveHorizontalForce * waterFriction);
-	    } else if (this.cursors && this.cursors.right.isDown){ 
-	        this.player.body.moveRight(this.moveHorizontalForce * waterFriction);
+	        // this.player.body.moveLeft(this.moveHorizontalForce * waterFriction);
+	        this.player.body.velocity.x = -this.moveHorizontalForce * waterFriction;
+	    } else if(this.cursors && this.cursors.right.isDown){
+	    	this.player.body.velocity.x = this.moveHorizontalForce * waterFriction;
 	    }
 
 	    // CALLBACK ON POSITION
