@@ -1,9 +1,9 @@
-import {tile_size, isTouchDevice} from './Constantes';
-import Baby from './baby';
-
+import Positions from './positions';
 let Player = {
 	standAnim : [5],
 	walkAnim: [12, 20],
+	moveVerticalForce: 5000,
+	moveHorizontalForce: 1000,
 
 	touchParams: {
 		wasTouched: false,
@@ -13,12 +13,11 @@ let Player = {
 		delta: null,
 		speedX: 0
 	},
-
-	baby1: null,
-	baby2: null,
-	baby3: null,
+	isInWater: false,
+	waterStart: 58,
 
 	callbackOncePosition: [],	// callback to call when positionX > ?
+	callbackOnPosition: [],	// callback to call when positionX > ?
 
 	init : function(game, layer, position){
 		this.game = game;
@@ -74,6 +73,7 @@ let Player = {
 
 	update: function(){
 
+		// TOUCH PARAMS
 		if(this.touchParams.wasTouched){
 			this.touchParams.wasTouched = false;
 			let velocityX = this.touchParams.speedX > 0 ? Math.min(1000, this.touchParams.speedX * 500) : Math.max(-1000, this.touchParams.speedX * 500),
@@ -82,18 +82,17 @@ let Player = {
 			this.player.body.moveLeft(velocityX);
 		}
 
-		if (this.cursors && this.cursors.up.isDown && this.touchingDown()){
-			console.log("velocityY = ", this.player.body.touching);
-        	this.player.body.moveUp(900);
+		// KEYBOARD
+		if (this.cursors && this.cursors.up.isDown /*&& this.touchingDown()*/){
+        	this.player.body.moveUp(this.moveVerticalForce); 
 		}
-
 	    if (this.cursors && this.cursors.left.isDown){
-	        this.player.body.moveLeft(1000);
-	    }
-	    else if (this.cursors && this.cursors.right.isDown){ 
-	        this.player.body.moveRight(1000);
+	        this.player.body.moveLeft(this.moveHorizontalForce);
+	    } else if (this.cursors && this.cursors.right.isDown){ 
+	        this.player.body.moveRight(this.moveHorizontalForce);
 	    }
 
+	    // CALLBACK ON POSITION
 	    let positionX = this.player.position.x;
 	    for(let i = 0, l = this.callbackOncePosition.length; i < l; i++){
 	    	if(positionX > this.callbackOncePosition[i].positionX){
@@ -101,6 +100,13 @@ let Player = {
 	    		this.callbackOncePosition.splice(i, 1);
 	    		break;
 	    	}
+	    }
+	    // WATER
+	    let isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2;
+	    if(!this.isInWater && isBetweenWaterPosition){
+	    	this.isInWater = true;
+	    } else if(this.isInWater && !isBetweenWaterPosition){
+	    	this.isInWater = false;
 	    }
 
 	    let velocityX = Math.round(this.player.body.velocity.destination[0]),

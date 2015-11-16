@@ -1,3 +1,9 @@
-export const tile_size = 128;
-export const bounds = 100 * tile_size;
-export const isTouchDevice = 'ontouchstart' in document.documentElement;
+let Const = {
+	TILE_SIZE: 128,  
+	ISTOUCHDEVICE: 'ontouchstart' in document.documentElement
+}
+
+Const.BOUNDS = 100 * Const.TILE_SIZE;
+Const.GROUND = Const.BOUNDS - 11 * Const.TILE_SIZE
+
+export default Const;

@@ -1,5 +1,3 @@
-import {bounds} from './constantes';
-
 let TextManager = function(game, texting, position){
 	var me = this;
 	this.game = game;

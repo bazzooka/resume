@@ -1,5 +1,4 @@
 import Positions from '../positions';
-import {bounds} from '../constantes';
 
 let ExpertiseStep = function(game, layer, addPositionCallback){
 	this.game = game; 

@@ -1,4 +1,4 @@
-import {bounds} from '../constantes';
+import Const from '../constantes';
 import Positions from '../Positions';
 import Baby from '../Baby';
 
@@ -20,7 +20,7 @@ let AboutStep = function(game, layer, addPositionCallback, player){
 
 AboutStep.prototype.oldTech = function(){
 	var text = null, grd = null;
-	text = this.game.add.text(500, bounds - 300, "NAME");
+	text = this.game.add.text(500, Const.BOUNDS - 300, "NAME");
 	//text.anchor.setTo(0.5);
 
 	text.font = 'Righteous';
@@ -43,8 +43,8 @@ AboutStep.prototype.oldTech = function(){
 }
 
 AboutStep.prototype.createName = function(){
-	var position = {x: 500, y: bounds - 500};
-	var reponsePosition = {x: 530, y: bounds - 250};
+	var position = {x: 1000, y: Const.GROUND - 350};
+	var reponsePosition = {x: 1025, y: Const.GROUND - 100};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Name");
 	var reponseBG = this.game.add.graphics(reponsePosition.x, reponsePosition.y);
@@ -52,7 +52,6 @@ AboutStep.prototype.createName = function(){
 
 	var signLayer = this.game.add.group();
 	var signFootLayer = this.game.add.group();
-	
 	
 
 	intitule.font = 'Righteous';
@@ -88,7 +87,7 @@ AboutStep.prototype.createName = function(){
 
 	var signFillLeft = this.game.add.tileSprite(reponsePosition.x - signSize.w - 20, reponsePosition.y + signSize.h, signSize.w, reponse.getLocalBounds().height - 2 *signSize.h, "sign_fill");
 	var signFillRight = this.game.add.tileSprite(reponsePosition.x + reponse.getLocalBounds().width + signSize.w + 10, reponsePosition.y + signSize.h, signSize.w, reponse.getLocalBounds().height - 2 *signSize.h, "sign_fill");
-	var signFoot = this.game.add.tileSprite(reponsePosition.x + reponse.getLocalBounds().width /2, reponsePosition.y + signSize.h, signSize.w, bounds - reponsePosition.y - 128, "sign_foot");
+	var signFoot = this.game.add.tileSprite(reponsePosition.x + reponse.getLocalBounds().width /2, reponsePosition.y + signSize.h, signSize.w, Const.BOUNDS - reponsePosition.y - 128, "sign_foot");
 	
 
 	this.layer.add(intituleBG);
@@ -117,8 +116,8 @@ AboutStep.prototype.createName = function(){
 }
 
 AboutStep.prototype.createMarried = function(){
-	var position = {x: 900, y: bounds - 500};
-	var reponsePosition = {x: 980, y: bounds - 128 - 70};
+	var position = {x: 1300, y: Const.GROUND - 350};
+	var reponsePosition = {x: 1380, y: Const.GROUND - 70};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Marital status");
 	var single = this.game.add.text(position.x, position.y, "Single");
@@ -153,7 +152,7 @@ AboutStep.prototype.createMarried = function(){
 		this.layer.add(reponse);
 	}.bind(this));
 	
-	this.baby3 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width, y: bounds - window.innerHeight - 3*75}, this.layer, 3);
+	this.baby3 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width, y: Const.GROUND - this.game.height - 3*75}, this.layer, 3);
 
 	this.addPositionCallback(this.layer.position.x + reponsePosition.x, () => {
 		this.baby3.createSpring(this.player);
@@ -169,8 +168,8 @@ AboutStep.prototype.createMarried = function(){
 } 
   
 AboutStep.prototype.createBabies = function(){
-	var position = {x: 1400, y: bounds - 500};
-	var reponsePosition = {x: 950, y: bounds - 128 - 70};
+	var position = {x: 1700, y: Const.GROUND - 350};
+	var reponsePosition = {x: 1750, y: Const.BOUNDS - 128 - 70};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Domestic babies");
 
@@ -195,8 +194,7 @@ AboutStep.prototype.createBabies = function(){
 		this.baby2.createSpring(this.player);
 	}.bind(this));
 
-	this.addPositionCallback(Positions.mainExpertisePosition.x - 500, () => {
-
+	this.addPositionCallback(Positions.mainExpertisePosition.x + 500, () => {
 		this.game.physics.p2.removeSpring(this.baby1.spring);
 		this.game.physics.p2.removeBody(this.baby1.sprite.body);
 		this.game.physics.p2.removeSpring(this.baby2.spring);
@@ -218,8 +216,8 @@ AboutStep.prototype.createBabies = function(){
 }
 
 AboutStep.prototype.createHobbies = function(){
-	var position = {x: 2000, y: bounds - 500};
-	var reponsePosition = {x: 1950, y: bounds - 250};
+	var position = {x: 2200, y: Const.GROUND - 350};
+	var reponsePosition = {x: 2200, y: Const.GROUND - 100};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Hobbies");
 	var reponseBG = this.game.add.graphics(reponsePosition.x, reponsePosition.y);
@@ -263,7 +261,7 @@ AboutStep.prototype.createHobbies = function(){
 
 	var signFillLeft = this.game.add.tileSprite(reponsePosition.x - signSize.w - 20, reponsePosition.y + signSize.h, signSize.w, this.reponseHobbies.getLocalBounds().height - 2 *signSize.h, "sign_fill");
 	var signFillRight = this.game.add.tileSprite(reponsePosition.x + this.reponseHobbies.getLocalBounds().width + signSize.w + 10, reponsePosition.y + signSize.h, signSize.w, this.reponseHobbies.getLocalBounds().height - 2 *signSize.h, "sign_fill");
-	var signFoot = this.game.add.tileSprite(reponsePosition.x + this.reponseHobbies.getLocalBounds().width /2, reponsePosition.y + signSize.h, signSize.w, bounds - reponsePosition.y - 128, "sign_foot");
+	var signFoot = this.game.add.tileSprite(reponsePosition.x + this.reponseHobbies.getLocalBounds().width /2, reponsePosition.y + signSize.h, signSize.w, Const.BOUNDS - reponsePosition.y - 128, "sign_foot");
 
 	//this.swapHobbies();
 	this.game.time.events.loop(Phaser.Timer.SECOND * 1, function(){

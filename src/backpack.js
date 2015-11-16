@@ -1,4 +1,4 @@
-import {bounds} from './constantes';
+import Const from './constantes';
 
 let BackPack = {
 	game: null, 
@@ -27,7 +27,7 @@ BackPack.add = function(sprite, frame = null, useBody = false, animate = true){
 	let toMove = useBody ? sprite.body: sprite;
 
 	if(animate){
-		let tween = this.game.add.tween(toMove).to({y:bounds - this.game.height - sprite.height}, 1000, "Linear", true);
+		let tween = this.game.add.tween(toMove).to({y:Const.GROUND - this.game.height - sprite.height}, 1000, "Linear", true);
 		tween.onComplete.add(() => {
 			this.addToBackPack(sprite, frame);
 		}, this);

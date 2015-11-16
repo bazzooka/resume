@@ -9,11 +9,15 @@ let ResourceLoader = {
                 game.load.tilemap('map', 'map/map.json', null, Phaser.Tilemap.TILED_JSON);
                 game.load.spritesheet('ground', 'assets/ground/spritesheet_ground.png');
                 game.load.spritesheet('levels', 'assets/decoration/levels.png');
+                game.load.spritesheet('water', 'assets/decoration/liquidWater.png');
 
                 game.load.spritesheet('player', 'assets/player/spritesheet_players.png', 128, 256);
 
                 // game.load.image('background', 'assets/ground/PNG/background-50.png');
                 game.load.image('background', 'assets/ground/Backgrounds/colored_grass.png');
+
+                game.load.image('js_resume_title', 'assets/decoration/JS-Resume.png', 1525, 934);
+                game.load.image('resume_title', 'assets/decoration/Resume.png', 1245, 783);
 
                 game.load.image('about_title', 'assets/decoration/about.png', 1115, 783);
                 game.load.image('triangle', 'assets/decoration/triangle.png', 10, 14);
@@ -28,6 +32,7 @@ let ResourceLoader = {
 
                 game.load.spritesheet('level1', 'assets/decoration/level1.png', 512, 384);
 
+                game.load.image('welcome', 'assets/decoration/welcome.png', 1024, 512);
 
                 game.load.image('backpack', 'assets/decoration/backpack.png', 68, 60);
                 game.load.image('main_expertise', 'assets/decoration/mainExpertise.png', 1537, 926);
@@ -35,6 +40,7 @@ let ResourceLoader = {
 
 
                 game.load.spritesheet('switch', 'assets/decoration/switch.png', 70, 70);
+                game.load.image('gem_yellow', 'assets/decoration/hud_gem_yellow.png', 46, 36);
 	}
 
 }

@@ -1,4 +1,4 @@
-import {bounds} from './constantes';
+import Const from './constantes';
 import Positions from './positions';
 
 let BackgroundManager = {
@@ -7,11 +7,15 @@ let BackgroundManager = {
 	background_height: 1024,
 	tilesetImages: [
 		'ground',
-		'levels'
+		'levels',
+		'water'
 	],
 	layersParams: [{
 		"name": "platform",
 		"isDefault": true,
+		"scrollFactorX": 1
+	}, {
+		"name": "water",
 		"scrollFactorX": 1
 	}, {
 		"name": "cloud",
@@ -23,15 +27,16 @@ let BackgroundManager = {
 
 	layers: {},
 
-	init: function(game, layer){
+	init: function(game, layers){
 		this.game = game;
 
 		// Init background
-		this.background = game.add.tileSprite(0, bounds - this.background_height, bounds, this.background_height, 'background');
-		layer.add(this.background);
+		console.log(Const.BOUNDS);
+		this.background = game.add.tileSprite(0, Const.GROUND - this.background_height + 128, Const.BOUNDS, this.background_height, 'background');
+		layers.bgLayer.add(this.background);
 		this.background.scrollFactorX = 0;
 
-		this.addMasterSectionTitles(layer);
+		this.addMasterSectionTitles(layers.bgLayer);
 
 
 		this.map = game.add.tilemap('map');
@@ -41,7 +46,7 @@ let BackgroundManager = {
 
 		for(let i = 0, l = this.layersParams.length; i < l; i++){
 			let currentLayerParams = this.layersParams[i],
-				currentLayer = this.map.createLayer(currentLayerParams.name, game.width, game.height, layer);
+				currentLayer = this.map.createLayer(currentLayerParams.name, game.width, game.height, layers.mapLayer);
 			this.layers[currentLayerParams.name] = currentLayer;
 			currentLayer.scrollFactorX = currentLayerParams.scrollFactorX;
 			if(currentLayerParams.isDefault){
@@ -53,6 +58,16 @@ let BackgroundManager = {
 	},
 
 	addMasterSectionTitles: function(layer){
+		this.js_title = this.game.add.sprite(Positions.jsTitlePosition.x, Positions.jsTitlePosition.y, 'js_resume_title');
+		this.js_title.scale.x = 0.5;
+		this.js_title.scale.y = 0.5;
+		layer.add(this.js_title);
+
+		this.resume_title = this.game.add.sprite(Positions.jsTitlePosition.x + 75, Positions.jsTitlePosition.y + 185, 'resume_title');
+		this.resume_title.scale.x = 0.5;
+		this.resume_title.scale.y = 0.5;
+		layer.add(this.resume_title);
+
 		this.about_title = this.game.add.sprite(Positions.aboutPosition.x, Positions.aboutPosition.y, 'about_title');
 		layer.add(this.about_title);
 

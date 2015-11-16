@@ -1,16 +1,20 @@
+"use strict";
+
 import ResourceLoader from '../resourceLoader';
-import {tile_size, bounds, isTouchDevice} from '../constantes';
+import Const from '../constantes';
+import Positions from '../positions';
 import Player from '../Player';
 import BackgroundManager from '../BackgroundManager';
 import TextManager from '../TextManager';
 import BackPack from '../BackPack';
+import WelcomeStep from '../steps/welcomeStep';
 import AboutStep from '../steps/aboutStep';
 import ExpertiseStep from '../steps/expertiseStep';
 import ProgrammingStep from '../steps/programmingStep';
 
 
 let isMouseWheel = false,
-	mouseWheeling = false;
+	mouseWheeling = false; 
  
 
 class Game {
@@ -22,14 +26,15 @@ class Game {
 
     initStage (){ 
     	this.game.stage.backgroundColor = '#d0f4f7';
-    	this.game.world.setBounds(0, 0, bounds, bounds); 
+    	this.game.world.setBounds(0, 0, Const.BOUNDS, Const.BOUNDS); 
         this.bgLayer = this.game.add.group();
         this.textLayer = this.game.add.group();
-
+        this.welcomeLayer = this.game.add.group();
         this.aboutLayer = this.game.add.group();
+        this.mapLayer = this.game.add.group();
         this.expertiseLayer = this.game.add.group();
         this.programingLayer = this.game.add.group();
-        this.playerLayer = this.game.add.group();
+        this.playerLayer = this.game.add.group(); 
         this.backPackLayer = this.game.add.group();
         window.addEventListener("resize", function() {
             let w = this.game.width,
@@ -39,7 +44,7 @@ class Game {
     }
   
     loadMap () {  
-        this.map  = BackgroundManager.init(this.game, this.bgLayer);
+        this.map  = BackgroundManager.init(this.game, {bgLayer : this.bgLayer, mapLayer: this.mapLayer});
     }
   
     initPhysics (){
@@ -59,8 +64,8 @@ class Game {
     } 
 
     createSteps (){
-        this.textLayer.add(this.aboutLayer);
-        this.aboutLayer.position.x = 2000;
+        // this.textLayer.add(this.aboutLayer);
+        this.aboutLayer.position.x = Positions.aboutLayerPosition.x;
         this.aboutStep = new AboutStep(
             this.game, 
             this.aboutLayer, 
@@ -68,7 +73,7 @@ class Game {
             this.player.player
         );
 
-        this.expertiseLayer.position.x = 800;
+        this.expertiseLayer.position.x = Positions.mainExpertisePosition.x;
         this.expertiseStep = new ExpertiseStep(
             this.game,
             this.expertiseLayer,
@@ -95,15 +100,15 @@ class Game {
     	this.initStage();
         this.initBackPack();
     	this.loadMap();
-    	this.player = Player.init(this.game, this.playerLayer, {x: tile_size * 5 , y: tile_size * 94});
+    	this.player = Player.init(this.game, this.playerLayer, {x: Const.TILE_SIZE * 5 , y: Const.GROUND - Const.TILE_SIZE * 5});
     	this.initPhysics();
 
         this.game.textManager.addTextCallback(this.createSteps.bind(this));
 
 
-        // this.nameText = new WebText(this.game, "NAME", {x: 500, y: bounds - 300});
+        // this.nameText = new WebText(this.game, "NAME", {x: 500, y: Const.BOUNDS - 300});
           
-   		this.camera.follow(this.player.player);
+   		this.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN);
     }
 
     update () {

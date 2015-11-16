@@ -1,9 +1,12 @@
-import {bounds} from './constantes';
+import Const from './constantes';
 
 let Positions = {
-	aboutPosition : {x: 500, y : bounds - 500},
-	mainExpertisePosition : {x: 4200, y : bounds - 500},
-	expertiseBox: {x: 800, y: bounds - 256}
+	jsTitlePosition : {x: 0, y : Const.GROUND - 275},
+	aboutPosition : {x: 1500, y : Const.GROUND - 275},
+	aboutLayerPosition: {x: 2000},
+	mainExpertisePosition : {x: 4500, y : Const.GROUND - 275},
+	expertiseBox: {x: 1500, y: Const.GROUND - 256},
+	waterPositions: {x1: 58 * Const.TILE_SIZE, x2: 75 * Const.TILE_SIZE}
 }
-
+ 
 export default Positions;
