@@ -84,10 +84,8 @@ let Player = {
 		// WATER
 	    if(!this.isInWater && isBetweenWaterPosition){
 	    	this.isInWater = true;
-	    	console.log("inWater");
 	    } else if(this.isInWater && !isBetweenWaterPosition){
 	    	this.isInWater = false;
-	    	console.log("!inWater");
 	    }
 
 

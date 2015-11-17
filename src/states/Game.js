@@ -1,7 +1,7 @@
 "use strict";
 
 import ResourceLoader from '../resourceLoader';
-import Const from '../constantes';
+import Const from '../constantes'; 
 import Positions from '../positions';
 import Player from '../Player';
 import BackgroundManager from '../BackgroundManager';
@@ -11,6 +11,7 @@ import WelcomeStep from '../steps/welcomeStep';
 import AboutStep from '../steps/aboutStep';
 import ExpertiseStep from '../steps/expertiseStep';
 import ProgrammingStep from '../steps/programmingStep';
+import ToolsStep from '../steps/toolsStep';
 
 
 let isMouseWheel = false,
@@ -36,6 +37,7 @@ class Game {
         this.mapLayer = this.game.add.group();
         this.expertiseLayer = this.game.add.group();
         this.programingLayer = this.game.add.group();
+        this.toolsLayer = this.game.add.group();
         this.playerLayer = this.game.add.group(); 
         this.backPackLayer = this.game.add.group();
 
@@ -123,6 +125,12 @@ class Game {
             this.programingLayer,
             this.player.addPositionCallback.bind(this.player)
         )
+
+        this.toolsStep = new ToolsStep(
+            this.game,
+            this.toolsLayer,
+            this.player.addPositionCallback.bind(this.player)
+        )
         
 
         
@@ -138,7 +146,7 @@ class Game {
     	this.initStage();
         this.initBackPack();
     	this.loadMap();
-    	this.player = Player.init(this.game, this.playerLayer, {x: Const.TILE_SIZE * 90 , y: Const.GROUND - Const.TILE_SIZE * 5});
+    	this.player = Player.init(this.game, this.playerLayer, {x: Const.TILE_SIZE * 5 , y: Const.GROUND - Const.TILE_SIZE * 5});
     	this.initPhysics();
 
         this.game.textManager.addTextCallback(this.createSteps.bind(this));

@@ -40,6 +40,10 @@ let ResourceLoader = {
                 game.load.image('skills', 'assets/decoration/skills.png', 1149, 780);
                 game.load.spritesheet('switch', 'assets/decoration/switch.png', 70, 70);
                 game.load.image('gem_yellow', 'assets/decoration/hud_gem_yellow.png', 46, 36);
+
+                game.load.image('tools', 'assets/decoration/tools.png', 1407, 780);
+                game.load.spritesheet('libraries', 'assets/decoration/libraries.png', 128, 128);
+                game.load.spritesheet('chain', 'assets/decoration/chain.png', 16, 26);
 	}
 
 }
