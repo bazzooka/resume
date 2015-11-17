@@ -27,6 +27,8 @@ class Game {
     initStage (){ 
     	this.game.stage.backgroundColor = '#d0f4f7';
     	this.game.world.setBounds(0, 0, Const.BOUNDS, Const.BOUNDS); 
+        
+        // Create Layer
         this.bgLayer = this.game.add.group();
         this.textLayer = this.game.add.group();
         this.welcomeLayer = this.game.add.group();
@@ -36,6 +38,7 @@ class Game {
         this.programingLayer = this.game.add.group();
         this.playerLayer = this.game.add.group(); 
         this.backPackLayer = this.game.add.group();
+
         window.addEventListener("resize", function() {
             let w = this.game.width,
                 h = this.game.height;
@@ -50,24 +53,48 @@ class Game {
     initPhysics (){
 
         this.game.physics.startSystem(Phaser.Physics.P2JS);
+
+        // Create Contact Materials
+        this.groundMaterial = this.game.physics.p2.createMaterial('ground');
+        this.playerMaterial = this.game.physics.p2.createMaterial('player');
         
 		this.map.map.setCollisionBetween(0, 200); 
         // LOOK AT http://test.xapient.net/phaser/tilemapexample/index-p2.html
+        // http://test.xapient.net/phaser/attm/
        	this.platform = this.game.physics.p2.convertTilemap(this.map.map, BackgroundManager.getLayer('platform'));
         this.collisionsTiles = this.game.physics.p2.convertCollisionObjects(this.map.map, "collision");
-        // this.game.physics.p2.restitution = 0.0;
         this.game.physics.p2.gravity.y = 1400;
-        for(let i = 0, l = this.platform.length; i < l; i++){
-            this.platform[i].data.damping = 0;
-            this.platform[i].data.angularDamping = 0;
-            
-        }
-
+        
 	    this.game.physics.p2.enable(this.player.player);
         this.player.player.anchor.setTo(0.5,0.5); 
-	    this.player.player.body.setRectangle(100, 140, 0, 50, 0);
+	    this.player.player.body.setRectangle(50, 140, 0, 50, 0);
         this.player.player.body.fixedRotation = true;
-        this.player.player.body.inertia = 1;
+
+        this.game.physics.p2.createContactMaterial(this.playerMaterial, this.groundMaterial, { friction: 2, restitution: 0  });
+        this.player.player.body.setMaterial(this.playerMaterial);
+
+        // Create collision group
+        this.groundCG = this.game.physics.p2.createCollisionGroup();
+        this.playerCG = this.game.physics.p2.createCollisionGroup();
+        this.boxCG = this.game.physics.p2.createCollisionGroup();
+        
+        this.player.player.body.setCollisionGroup(this.playerCG);
+        
+        for(let i = 0, l = this.platform.length; i < l; i++){
+            this.platform[i].setMaterial(this.groundMaterial);
+            // this.platform[i].debug = true;
+            this.platform[i].setCollisionGroup(this.groundCG);
+            this.platform[i].collides([this.playerCG, this.boxCG]);
+        }
+
+        for(let i = 0, l = this.collisionsTiles.length; i < l; i++){
+            this.collisionsTiles[i].setMaterial(this.groundMaterial);
+            // this.collisionsTiles[i].debug = true;
+            this.collisionsTiles[i].setCollisionGroup(this.groundCG);
+            this.collisionsTiles[i].collides([this.playerCG]);
+        }
+
+        this.player.player.body.collides([this.groundCG, this.boxCG]);
     } 
 
     createSteps (){
@@ -84,7 +111,11 @@ class Game {
         this.expertiseStep = new ExpertiseStep(
             this.game,
             this.expertiseLayer,
-            this.player.addPositionCallback.bind(this.player)
+            this.player.addPositionCallback.bind(this.player),
+            {
+                group: this.boxCG,
+                groups: [this.playerCG, this.groundCG, this.boxCG]
+            }
         )
 
         this.programmingStep = new ProgrammingStep(
@@ -127,9 +158,8 @@ class Game {
 
         this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");   
 
-	    this.player.player.body.debug = true;
-        this.platform.debugBody = true;
-        //this.map.body.debug = true;
+	    // this.player.player.body.debug = true;
+
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 
         //this.game.debug.pointer(this.game.input.activePointer);

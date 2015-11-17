@@ -1,10 +1,11 @@
 import Positions from '../positions';
 
-let ExpertiseStep = function(game, layer, addPositionCallback){
+let ExpertiseStep = function(game, layer, addPositionCallback, collisionsCG){
 	this.game = game; 
 	this.layer = layer;
 	this.addPositionCallback = addPositionCallback;
 	this.boxes = [];
+	this.collisionsCG = collisionsCG;
 	this.createExpertiseBox();
 }
 
@@ -14,6 +15,8 @@ ExpertiseStep.prototype.createExpertiseBox = function(){
 		box.frame = i;
 		this.game.physics.p2.enable(box);
 		box.body.offset.x = 100;
+		box.body.setCollisionGroup(this.collisionsCG.group);
+        box.body.collides(this.collisionsCG.groups);
 		this.boxes.push(box);
 	}
 

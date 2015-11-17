@@ -3,8 +3,8 @@ import Const from './constantes';
 let Player = {
 	standAnim : [5],
 	walkAnim: [12, 20],
-	moveVerticalForce: 500,
-	moveHorizontalForce: 1000,
+	moveVerticalForce: 600,
+	moveHorizontalForce: 500,
 
 	touchParams: {
 		wasTouched: false,
@@ -63,7 +63,7 @@ let Player = {
     	var result = false;
     	for (var i = 0; i < this.game.physics.p2.world.narrowphase.contactEquations.length; i++) {
         	var c = this.game.physics.p2.world.narrowphase.contactEquations[i];  // cycles through all the contactEquations until it finds our "someone"
-    		if (c.bodyA === this.player.body.data || c.bodyB === this.player.body.data)        {
+    		if (c.bodyA === this.player.body.data || c.bodyB === this.player.body.data){
         		var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
         		if (c.bodyA === this.player.body.data) d *= -1;
         		if (d > 0.5) result = true;
@@ -72,7 +72,9 @@ let Player = {
     	return result;
 	},
 
+
 	update: function(){
+		// console.log(this.touchingSide());
 		let positionX = this.player.position.x,
 			positionY = this.player.position.y,
 			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128);
