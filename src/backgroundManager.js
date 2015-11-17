@@ -31,8 +31,7 @@ let BackgroundManager = {
 		this.game = game;
 
 		// Init background
-		console.log(Const.BOUNDS);
-		this.background = game.add.tileSprite(0, Const.GROUND - this.background_height + 128, Const.BOUNDS, this.background_height, 'background');
+		this.background = game.add.tileSprite(0, Const.GROUND - this.background_height + 128, Const.BOUNDX, this.background_height, 'background');
 		layers.bgLayer.add(this.background);
 		this.background.scrollFactorX = 0;
 

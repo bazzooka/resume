@@ -138,7 +138,7 @@ class Game {
     	this.initStage();
         this.initBackPack();
     	this.loadMap();
-    	this.player = Player.init(this.game, this.playerLayer, {x: Const.TILE_SIZE * 5 , y: Const.GROUND - Const.TILE_SIZE * 5});
+    	this.player = Player.init(this.game, this.playerLayer, {x: Const.TILE_SIZE * 90 , y: Const.GROUND - Const.TILE_SIZE * 5});
     	this.initPhysics();
 
         this.game.textManager.addTextCallback(this.createSteps.bind(this));

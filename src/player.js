@@ -12,7 +12,8 @@ let Player = {
 		end: null,
 		deltaTime: 0,
 		delta: null,
-		speedX: 0
+		speedX: 0,
+		speedY: 0
 	},
 	isInWater: false,
 	waterStart: 58,
@@ -46,6 +47,7 @@ let Player = {
     		this.touchParams.deltaTime = e.timeUp - e.timeDown;
     		this.touchParams.delta = {x : e.position.x - e.positionDown.x, y: e.position.y - e.positionDown.y};
     		this.touchParams.speedX = this.touchParams.delta.x / this.touchParams.deltaTime;
+    		this.touchParams.speedY = this.touchParams.delta.y / this.touchParams.deltaTime;
 			this.touchParams.wasTouched = true;	
     	}, this);
 
@@ -80,7 +82,6 @@ let Player = {
 			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128);
 
 		// WATER
-	    this.player.body.velocity.x=0;  // reset player velocity every step
 	    if(!this.isInWater && isBetweenWaterPosition){
 	    	this.isInWater = true;
 	    	console.log("inWater");
@@ -95,10 +96,16 @@ let Player = {
 			this.touchParams.wasTouched = false;
 			let speedFriction = this.isInWater ? 250 : 500;
 			let velocityX = this.touchParams.speedX > 0 ? Math.min(1000, this.touchParams.speedX * speedFriction) : Math.max(-1000, this.touchParams.speedX * speedFriction),
-				velocityY = this.touchParams.delta.y * 10;
-			this.player.body.moveUp(-velocityY);
-			this.player.body.moveLeft(velocityX);
-			console.log(velocityX);
+				velocityY = Math.max(-1000, this.touchParams.speedY * speedFriction);
+			
+			console.log(velocityY)
+			if(!this.isInWater && this.touchingDown()){
+				this.player.body.moveUp(-velocityY);
+			} else if(this.isInWater){
+				this.player.body.moveUp(-velocityY);
+			} 
+			this.player.body.moveLeft(-velocityX);
+			console.log(-velocityX);
 		}
 
 		// KEYBOARD
