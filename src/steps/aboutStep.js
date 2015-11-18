@@ -202,9 +202,9 @@ AboutStep.prototype.createBabies = function(){
 		this.game.physics.p2.removeSpring(this.baby3.spring);
 		this.game.physics.p2.removeBody(this.baby3.sprite.body);
 
-		this.game.backPack.add(this.baby3.sprite, null, true, true);
-		this.game.backPack.add(this.baby2.sprite, null, true, true);
-		this.game.backPack.add(this.baby1.sprite, null, true, true);
+		this.game.backPack.add(this.baby3.sprite, null, true, true, "Wife");
+		this.game.backPack.add(this.baby2.sprite, null, true, true, "Troll 1");
+		this.game.backPack.add(this.baby1.sprite, null, true, true, "Troll 2");
 	}.bind(this));
 
 

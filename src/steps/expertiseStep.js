@@ -6,6 +6,7 @@ let ExpertiseStep = function(game, layer, addPositionCallback, collisionsCG){
 	this.addPositionCallback = addPositionCallback;
 	this.boxes = [];
 	this.collisionsCG = collisionsCG;
+	this.expertises = ["NodeJS", "JS", "CSS3", "HTML5"];
 	this.createExpertiseBox();
 }
 
@@ -24,7 +25,7 @@ ExpertiseStep.prototype.createExpertiseBox = function(){
 		var boxTweens = [];
 		for(var i = 0; i < this.boxes.length; i++){
 			this.game.physics.p2.removeBody(this.boxes[i].body);
-			this.game.backPack.add(this.boxes[i], i, true, true)
+			this.game.backPack.add(this.boxes[i], i, true, true, this.expertises[i])
 			this.game.add.tween(this.boxes[i].scale).to( { x: 0.5, y: 0.5 }, 5000, "Quart.easeOut", true);
 		}
 	});

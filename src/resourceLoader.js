@@ -44,6 +44,7 @@ let ResourceLoader = {
                 game.load.image('tools', 'assets/decoration/tools.png', 1407, 780);
                 game.load.spritesheet('libraries', 'assets/decoration/libraries.png', 128, 128);
                 game.load.spritesheet('chain', 'assets/decoration/chain.png', 16, 26);
+                game.load.spritesheet('clouds', 'assets/decoration/clouds.png', 128, 71);
 	}
 
 }

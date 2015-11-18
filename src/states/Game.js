@@ -71,15 +71,16 @@ class Game {
         this.player.player.anchor.setTo(0.5,0.5); 
 	    this.player.player.body.setRectangle(50, 140, 0, 50, 0);
         this.player.player.body.fixedRotation = true;
+        this.player.player.body.damping = 0.9;
 
-        this.game.physics.p2.createContactMaterial(this.playerMaterial, this.groundMaterial, { friction: 2, restitution: 0  });
+        this.game.physics.p2.createContactMaterial(this.playerMaterial, this.groundMaterial, { friction: 2, restitution: 0 });
         this.player.player.body.setMaterial(this.playerMaterial);
 
         // Create collision group
         this.groundCG = this.game.physics.p2.createCollisionGroup();
         this.playerCG = this.game.physics.p2.createCollisionGroup();
         this.boxCG = this.game.physics.p2.createCollisionGroup();
-        
+
         this.player.player.body.setCollisionGroup(this.playerCG);
         
         for(let i = 0, l = this.platform.length; i < l; i++){
@@ -129,7 +130,11 @@ class Game {
         this.toolsStep = new ToolsStep(
             this.game,
             this.toolsLayer,
-            this.player.addPositionCallback.bind(this.player)
+            this.player.addPositionCallback.bind(this.player),
+            {
+                group: this.boxCG,
+                groups: [this.playerCG, this.boxCG]
+            }
         )
         
 
@@ -146,7 +151,7 @@ class Game {
     	this.initStage();
         this.initBackPack();
     	this.loadMap();
-    	this.player = Player.init(this.game, this.playerLayer, {x: Const.TILE_SIZE * 5 , y: Const.GROUND - Const.TILE_SIZE * 5});
+    	this.player = Player.init(this.game, this.playerLayer, Positions.playerInitial);
     	this.initPhysics();
 
         this.game.textManager.addTextCallback(this.createSteps.bind(this));

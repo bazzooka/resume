@@ -1,10 +1,13 @@
 import Positions from '../positions';
 
-let ToolsStep = function(game, layer, addPositionCallback){
+let ToolsStep = function(game, layer, addPositionCallback, groups){
 	this.game = game; 
 	this.layer = layer;
 	this.addPositionCallback = addPositionCallback;
 	this.boxes = [];
+	this.tools = ["Sublime", "Gulp", "Grunt", "Sass", "Less", "Browserify", "Webpack", "Angular",
+    "Backbone", "RequireJS", "ES6", "IOT", "Google", "Phonegap", "React"];
+	this.groups = groups;
 	this.createToolsBox();
 }
 
@@ -12,31 +15,14 @@ ToolsStep.prototype.createToolsBox = function(){
 	let tools = {
 
 	}
-
+ 
 	for(var i = 0; i < 15; i++){
-		let box = this.game.add.sprite(0 +  i * 130, Positions.expertiseBox.y, 'libraries');
-		box.frame = i;
-		// this.game.physics.p2.enable(box);
-		// box.body.offset.x = 100;
-		// box.body.setCollisionGroup(this.collisionsCG.group);
-  //       box.body.collides(this.collisionsCG.groups);
-		this.boxes.push(box);
+		this.createRope(10, Positions.toolsLayerPosition.x + i * 140, Positions.toolsLayerPosition.y - 90, i);
 	}
-
-	// this.addPositionCallback(Positions.waterPositions.x1 - 200, () => {
-	// 	var boxTweens = [];
-	// 	for(var i = 0; i < this.boxes.length; i++){
-	// 		this.game.physics.p2.removeBody(this.boxes[i].body);
-	// 		this.game.backPack.add(this.boxes[i], i, true, true)
-	// 		this.game.add.tween(this.boxes[i].scale).to( { x: 0.5, y: 0.5 }, 5000, "Quart.easeOut", true);
-	// 	}
-	// });
-
-	this.createRope(10, 500, Positions.expertiseBox.y - 100);
 }
 
  
-ToolsStep.prototype.createRope = function(length, xAnchor, yAnchor) {
+ToolsStep.prototype.createRope = function(length, xAnchor, yAnchor, frame) {
 
     var lastRect;
     var height = 20;        //  Height for the physics body - your image height is 8px
@@ -56,6 +42,7 @@ ToolsStep.prototype.createRope = function(length, xAnchor, yAnchor) {
             newRect = this.game.add.sprite(x, y, 'chain', 0);
             lastRect.bringToTop();
         }
+        this.layer.add(newRect);
 
         //  Enable physicsbody
         this.game.physics.p2.enable(newRect, false);
@@ -67,7 +54,7 @@ ToolsStep.prototype.createRope = function(length, xAnchor, yAnchor) {
             newRect.body.static = true;
         } else {  
             //  Anchor the first one created
-            newRect.body.velocity.x = 400;      //  Give it a push :) just for fun
+            newRect.body.velocity.x = 5;      //  Give it a push :) just for fun
             newRect.body.mass = length / i;     //  Reduce mass for evey rope element
         }
 
@@ -81,9 +68,33 @@ ToolsStep.prototype.createRope = function(length, xAnchor, yAnchor) {
 
     }
 
-    let box = this.game.add.sprite(chainElement.x, chainElement.y, 'libraries');
-    box.frame = 1;
-    this.game.physics.p2.createRevoluteConstraint(chainElement, [0, -10], box, [0, 10], maxForce);
+    let box = this.game.add.sprite(lastRect.x, lastRect.y, 'libraries', frame);
+    this.game.physics.p2.enable(box, false);
+    box.body.setCollisionGroup(this.groups.group);
+    box.body.collides(this.groups.groups);
+    // box.body.setRectangle(width, height);
+    box.body.velocity.x = 5;      //  Give it a push :) just for fun
+    box.body.mass = 10;
+    this.layer.add(box);
+    
+	lastRect.bringToTop();
+    let constraint = this.game.physics.p2.createRevoluteConstraint(lastRect, [0, -10], box, [0, -64], maxForce);
+    this.boxes.push(box);
+
+    let cloud = this.game.add.sprite(lastRect.x - 64, yAnchor - 45, 'clouds', this.game.rnd.integerInRange(0, 2));
+    this.layer.add(cloud);
+
+    this.addPositionCallback(lastRect.x + 64, () =>{
+		box.body.data.gravityScale = -1;
+		setTimeout(() => {
+			this.game.physics.p2.removeConstraint(constraint);
+            setTimeout(() => {
+                this.game.backPack.addToBackPack(box, frame, this.tools[frame]);
+            }, 1500);
+            
+		}, 1500);
+	});
+
 
 }
 
