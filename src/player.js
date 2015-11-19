@@ -3,6 +3,9 @@ import Const from './constantes';
 let Player = {
 	standAnim : [5],
 	walkAnim: [12, 20],
+	flyStandAnim: [28, 36],
+	flyUpAnim: [12],
+	flyDownAnim: [60],
 	moveVerticalForce: 600,
 	moveHorizontalForce: 500,
 
@@ -17,23 +20,29 @@ let Player = {
 	},
 	isInWater: false,
 	waterStart: 58,
+	wasInFlyZone: false,
 
 	callbackOncePosition: [],	// callback to call when positionX > ?
 	callbackOnPosition: [],	// callback to call when positionX > ?
 
-	init : function(game, layer, position){
-		this.game = game;
-		this.player = game.add.sprite(position.x, position.y, 'player');
+	init : function(params){
+		this.game = params.game;
+		this.player = this.game.add.sprite(params.position.x, params.position.y, 'player');
 		this.player.animations.add('stand', this.standAnim, 1, false);
-		this.player.animations.add('walk', this.walkAnim, 10, true);	
+		this.player.animations.add('walk', this.walkAnim, 10, true);
+		this.player.animations.add('flyStand', this.flyStandAnim, 5, true);
+		this.player.animations.add('flyUp', this.flyUpAnim, 0, false);
+		this.player.animations.add('flyDown', this.flyDownAnim, 0, false);
 
-		layer.add(this.player);
+		params.layer.add(this.player);
 
 
-		this.player.animations.play('stand');
+		this.player.animations.play('walk');
 
-		this.cursors = game.input.keyboard.createCursorKeys();
-    	this.spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.animateDZ = params.animateDZ;
+
+		this.cursors = this.game.input.keyboard.createCursorKeys();
+    	this.spaceBar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     	this.spaceBar.onDown.add(function(key){
     		isMouseWheel = !isMouseWheel;
@@ -41,7 +50,7 @@ let Player = {
 
     	//game.input.mouse.mouseWheelCallback = this.onMouseWheel;
 
-    	game.input.onUp.add(function(e){
+    	this.game.input.onUp.add(function(e){
     		this.touchParams.start = e.position;
     		this.touchParams.end = e.positionDown;
     		this.touchParams.deltaTime = e.timeUp - e.timeDown;
@@ -79,7 +88,8 @@ let Player = {
 		// console.log(this.touchingSide());
 		let positionX = this.player.position.x,
 			positionY = this.player.position.y,
-			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128);
+			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128),
+			canFly = positionX > Positions.flyRegion.x1 && positionX < Positions.flyRegion.x2 && positionY > Positions.flyRegion.y1;
 
 		// WATER
 	    if(!this.isInWater && isBetweenWaterPosition){
@@ -88,6 +98,16 @@ let Player = {
 	    	this.isInWater = false;
 	    }
 
+	    // Can Fly ?
+	    if(canFly && !this.wasInFlyZone){
+	    	this.player.body.data.gravityScale = 0;
+	    	this.wasInFlyZone = true;
+	    	this.animateDZ(false);
+	    } else if(this.wasInFlyZone && !canFly) {
+			this.animateDZ(true);
+			this.wasInFlyZone = false;
+	    	this.player.body.data.gravityScale = 1;
+	    }
 
 		// TOUCH PARAMS
 		if(this.touchParams.wasTouched){
@@ -96,33 +116,50 @@ let Player = {
 			let velocityX = this.touchParams.speedX > 0 ? Math.min(1000, this.touchParams.speedX * speedFriction) : Math.max(-1000, this.touchParams.speedX * speedFriction),
 				velocityY = Math.max(-1000, this.touchParams.speedY * speedFriction);
 			
-			console.log(velocityY)
-			if(!this.isInWater && this.touchingDown()){
+			if(!canFly){
+				if(!this.isInWater && this.touchingDown()){
 				this.player.body.moveUp(-velocityY);
-			} else if(this.isInWater){
-				this.player.body.moveUp(-velocityY);
-			} 
-			this.player.body.moveLeft(-velocityX);
-			console.log(-velocityX);
+				} else if(this.isInWater){
+					this.player.body.moveUp(-velocityY);
+				} 
+				this.player.body.moveLeft(-velocityX);
+			} else {
+				console.log("Can fly touch device");
+			}
 		}
 
 		// KEYBOARD
-		let waterFriction = this.isInWater ? 0.5: 1;
-		if (this.cursors && this.cursors.up.isDown){
-			if(!this.isInWater && this.touchingDown()){
-				// this.player.body.moveUp(this.moveVerticalForce * waterFriction);
-				this.player.body.velocity.y = -this.moveVerticalForce * waterFriction;
-			} else if(this.isInWater){
-				// this.player.body.moveUp(this.moveVerticalForce * waterFriction);
-				this.player.body.velocity.y = -this.moveVerticalForce * waterFriction;
-			} 
+		let waterFriction = this.isInWater ? 0.5: 1,
+			airFriction = 0.2;
+
+		if(!canFly){
+			if (this.cursors && this.cursors.up.isDown){
+				if(!this.isInWater && this.touchingDown()){
+					// this.player.body.moveUp(this.moveVerticalForce * waterFriction);
+					this.player.body.velocity.y = -this.moveVerticalForce * waterFriction;
+				} else if(this.isInWater){
+					// this.player.body.moveUp(this.moveVerticalForce * waterFriction);
+					this.player.body.velocity.y = -this.moveVerticalForce * waterFriction;
+				}
+			}
+		} else if (this.cursors && this.cursors.up.isDown){
+			this.player.body.velocity.y = -this.moveVerticalForce * airFriction;
+		} else if (this.cursors && this.cursors.down.isDown){
+			this.player.body.velocity.y = this.moveVerticalForce * airFriction;
 		}
-	    if (this.cursors && this.cursors.left.isDown){
-	        // this.player.body.moveLeft(this.moveHorizontalForce * waterFriction);
-	        this.player.body.velocity.x = -this.moveHorizontalForce * waterFriction;
-	    } else if(this.cursors && this.cursors.right.isDown){
-	    	this.player.body.velocity.x = this.moveHorizontalForce * waterFriction;
-	    }
+		
+		if(!canFly){
+			if (this.cursors && this.cursors.left.isDown){
+			    // this.player.body.moveLeft(this.moveHorizontalForce * waterFriction);
+			    this.player.body.velocity.x = -this.moveHorizontalForce * waterFriction;
+			} else if(this.cursors && this.cursors.right.isDown){
+				this.player.body.velocity.x = this.moveHorizontalForce * waterFriction;
+			}
+		} else if (this.cursors && this.cursors.left.isDown){
+		    this.player.body.velocity.x = -this.moveHorizontalForce * airFriction;
+		} else if(this.cursors && this.cursors.right.isDown){
+			this.player.body.velocity.x = this.moveHorizontalForce * airFriction;
+		}
 
 	    // CALLBACK ON POSITION
 	    
@@ -137,15 +174,32 @@ let Player = {
 	    let velocityX = Math.round(this.player.body.velocity.destination[0]),
 	    	velocityY = Math.round(this.player.body.velocity.destination[1]);
 
-	    if(velocityX > 5){
-	    	this.player.scale.x = -1;
-	        this.player.play('walk');
-	    } else if(velocityX < -5){
-			this.player.scale.x = 1;
-	        this.player.play('walk');
+	    if(!canFly){
+    	    if(velocityX > 5){
+    	    	this.player.scale.x = -1;
+    	        this.player.play('walk');
+    	    } else if(velocityX < -5){
+    			this.player.scale.x = 1;
+    	        this.player.play('walk');
+    	    } else {
+    	    	this.player.play('stand');
+    	    }
 	    } else {
-	    	this.player.play('stand');
+	    	if(velocityX > 2){
+    	    	this.player.scale.x = -1;
+    	        this.player.play('flyStand');
+    	    } else if(velocityX < -2){
+    			this.player.scale.x = 1;
+    	        this.player.play('flyStand');
+    	    } else if(velocityY > 3) {
+    	    	this.player.play('flyUp');
+    	    } else if(velocityY < -3) {
+    	    	this.player.play('flyDown');
+    	    } else {
+    	    	this.player.play('flyStand');
+    	    }
 	    }
+	    
 
 	}
 }

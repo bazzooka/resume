@@ -146,20 +146,35 @@ class Game {
         this.backPack.init(this.game, this.backPackLayer);
     }
 
+    animateCameraDeadZone (toTightZone) {
+        if(this.deadZoneTween){
+            this.deadZoneTween.stop();
+        }
+
+        // CAMERA FOLLOW_TOPDOWN_TIGHT
+        let  helper = Math.max(this.game.width, this.game.height) / 8,
+            defaultDeadzone = {x: (this.game.width - helper) / 2, y: (this.game.height - helper) / 2, width: helper, height: helper},
+            flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
+            toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
+            fromDeadZone = this.game.camera.deadzone;
+
+        this.deadZoneTween = this.game.add.tween(fromDeadZone).to(toDeadZone, 1000, "Quart.easeOut", true)
+            .onUpdateCallback(function(){  
+                this.game.camera.deadzone = new Phaser.Rectangle(fromDeadZone.x, fromDeadZone.y, fromDeadZone.width, fromDeadZone.height);
+            }, this);
+    }
+
     create() {
     	
     	this.initStage();
         this.initBackPack();
     	this.loadMap();
-    	this.player = Player.init(this.game, this.playerLayer, Positions.playerInitial);
+    	this.player = Player.init({game: this.game, layer: this.playerLayer, position: Positions.playerInitial, animateDZ: this.animateCameraDeadZone});
     	this.initPhysics();
 
         this.game.textManager.addTextCallback(this.createSteps.bind(this));
-
-
-        // this.nameText = new WebText(this.game, "NAME", {x: 500, y: Const.BOUNDS - 300});
           
-   		this.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN);
+   		this.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
     }
 
     update () {
@@ -169,7 +184,11 @@ class Game {
 
     render() {
 
-        this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");   
+        this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");  
+        // var zone = this.game.camera.deadzone;
+        // this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
+        // this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
+
 
 	    // this.player.player.body.debug = true;
 
