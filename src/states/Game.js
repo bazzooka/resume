@@ -12,6 +12,7 @@ import AboutStep from '../steps/aboutStep';
 import ExpertiseStep from '../steps/expertiseStep';
 import ProgrammingStep from '../steps/programmingStep';
 import ToolsStep from '../steps/toolsStep';
+import ExperienceStep from '../steps/experienceStep';
 
 
 let isMouseWheel = false,
@@ -38,6 +39,7 @@ class Game {
         this.expertiseLayer = this.game.add.group();
         this.programingLayer = this.game.add.group();
         this.toolsLayer = this.game.add.group();
+        this.experienceLayer = this.game.add.group();
         this.playerLayer = this.game.add.group(); 
         this.backPackLayer = this.game.add.group();
 
@@ -135,6 +137,11 @@ class Game {
                 group: this.boxCG,
                 groups: [this.playerCG, this.boxCG]
             }
+        )
+
+        this.experienceStep = new ExperienceStep(
+            this.game,
+            this.experienceLayer
         )
         
 

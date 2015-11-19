@@ -64,7 +64,7 @@ BackPack.addToBackPack = function(sprite, frame, title){
 		item.frame = frame;
 	}
 
-	item.inputEnabled = true;
+	//item.inputEnabled = true;
 	if(title){
 		let text = me.game.add.text(positionX, positionY + 60, title);
 		text.font = 'Righteous';
