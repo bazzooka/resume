@@ -163,7 +163,6 @@ let Player = {
 		}
 
 	    // CALLBACK ON POSITION
-	    
 	    for(let i = 0, l = this.callbackOncePosition.length; i < l; i++){
 	    	if(positionX > this.callbackOncePosition[i].positionX){
 	    		this.callbackOncePosition[i].callback();

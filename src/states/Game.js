@@ -13,6 +13,7 @@ import ExpertiseStep from '../steps/expertiseStep';
 import ProgrammingStep from '../steps/programmingStep';
 import ToolsStep from '../steps/toolsStep';
 import ExperienceStep from '../steps/experienceStep';
+import ContactStep from '../steps/contactStep';
 
 
 let isMouseWheel = false,
@@ -40,6 +41,7 @@ class Game {
         this.programingLayer = this.game.add.group();
         this.toolsLayer = this.game.add.group();
         this.experienceLayer = this.game.add.group();
+        this.contactLayer = this.game.add.group();
         this.playerLayer = this.game.add.group(); 
         this.backPackLayer = this.game.add.group();
 
@@ -143,6 +145,11 @@ class Game {
             this.game,
             this.experienceLayer
         )
+
+        this.contactStep = new ContactStep(
+            this.game,
+            this.contactLayer
+        )
         
 
         
@@ -186,6 +193,7 @@ class Game {
 
     update () {
     	Player.update();
+        this.contactStep && this.contactStep.update(this.player.player);
 
     }
 
