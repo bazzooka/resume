@@ -12,14 +12,14 @@ export default [
 		"company": "Pharmacy",
 		"link": "https://www.youtube.com/watch?v=OMp2DiI8Vi4"
 	}, {
-		"start" : "January 2015",
-		"end": "Now",
+		"start" : "January 2014",
+		"end": "December 2015",
 		"title": "Javascript lead",
 		"company": "Société Générale",
 		"link": "http://www.societegenerale.com/"
 	}, {
 		"start" : "May 2012",
-		"end": "July 2013",
+		"end": "December 2013",
 		"title": "Javascript developer",
 		"company": "Chanel Mode",
 		"link": "http://www.chanel.com/fr_FR/mode.html"

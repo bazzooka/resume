@@ -9,22 +9,29 @@ let ExperienceStep = function(game, layer, addPositionCallback, groups){
 	this.addPositionCallback = addPositionCallback;
 
     for(var i = 0; i < this.experienceLimit; i++){
-        this.createExperience(Experiences[i], i);
+        this.createExperience(Experiences[i], i, i === this.experienceLimit - 1);
     }
 
     this.drawGrue();
 }
 
-ExperienceStep.prototype.createExperience = function(experience, index){
+ExperienceStep.prototype.createExperience = function(experience, index, isLast){
     let position = {x: Positions.flyRegion.x1 - 4.5 * Const.TILE_SIZE, y: (Const.GROUND - Const.TILE_SIZE * 6) - (index * 3) * Const.TILE_SIZE  },
+    attachesChain = this.game.add.graphics(position.x, position.y),
     background_1 = this.game.add.graphics(position.x, position.y),
     background_2 = this.game.add.graphics(position.x, position.y),
     background_link = this.game.add.graphics(position.x, position.y),
-    triangle = this.game.add.graphics(position.x, position.y);
+    triangle = this.game.add.graphics(position.x, position.y),
+    circleChain = this.game.add.graphics(position.x, position.y);
+
+
+    this.layer.add(attachesChain);
+    this.layer.add(circleChain);
 
     this.layer.add(background_1);
     this.layer.add(background_2);
     this.layer.add(background_link);
+    this.layer.add(triangle);
     
     let dates = this.game.add.text(position.x + 20, position.y + 20, experience.start + (experience.end ? " - " + experience.end : ""));
     dates.font = 'Righteous';
@@ -64,6 +71,16 @@ ExperienceStep.prototype.createExperience = function(experience, index){
     background_link.drawRect(10, 150, 185, 30);
     background_link.endFill();
 
+    circleChain.beginFill(0x000000, 0);
+    circleChain.lineStyle(5, 0x4E4E4E);
+    circleChain.drawCircle(190, -100, 20);
+    circleChain.endFill();
+
+    attachesChain.beginFill(0x000000, 0);
+    attachesChain.lineStyle(3, 0x4E4E4E);
+    attachesChain.drawPolygon([190, -100, 5, 5, 390, 5, 190, -100, 190, -200]);
+    attachesChain.endFill();
+
     let trianglePosition = {x: link.getLocalBounds().width + 40, y:157 };
     triangle.beginFill(0xFFFFFF);
     triangle.moveTo(trianglePosition.x, trianglePosition.y);
@@ -81,54 +98,9 @@ ExperienceStep.prototype.createExperience = function(experience, index){
 
 ExperienceStep.prototype.drawGrue = function(){
     // Freely inspired by http://fr.freepik.com/vecteurs-libre/chantier-de-construction_795668.htm
-    let position = {x: Positions.flyRegion.x2 + 2 * Const.TILE_SIZE, y: (Const.GROUND - Const.TILE_SIZE * 23)   },
-    motifColumn = this.game.add.graphics(position.x, position.y),
-    motifTransvers = this.game.add.graphics(position.x, position.y),
+    let position = {x: Positions.flyRegion.x2 + 2 * Const.TILE_SIZE, y: (Const.GROUND - Const.TILE_SIZE * 23)   };
 
-    columnPoints = [],
-    transversPoints = [],
-    columnNbPoints = 10,
-    transversNbPoints = 30,
-    height_ = -40,
-    width_ = 50;
-
-    // Draw column
-    for(let i = 0; i < columnNbPoints; i ++){
-        let x = i%2 === 0 ? 0 : width_;
-        let y = i * height_;
-        columnPoints.push(x);
-        columnPoints.push(y);
-    }
-
-    columnPoints.push(-2, (columnNbPoints-1) * height_);
-    columnPoints.push(-2, 0);
-    columnPoints.push(width_ + 5, 0);
-    columnPoints.push(width_ + 5, (columnNbPoints-1) * height_ - 2);
-
-    motifColumn.lineStyle(4, 0xffd900);
-    motifColumn.drawPolygon(columnPoints);
-
-    // Draw transvers
-    for(let i = 0; i < transversNbPoints; i ++){
-        let x = i%2 === 0 ? 0 : width_;
-        let y = i * height_;
-        transversPoints.push(x);
-        transversPoints.push(y);
-    }
-
-    transversPoints.push(-2, (transversNbPoints-1) * height_);
-    transversPoints.push(-2, 0);
-    transversPoints.push(width_ + 5, 30);
-    transversPoints.push(width_ + 5, (transversNbPoints-1) * height_ - 2);
-
-    motifTransvers.lineStyle(4, 0xffd900);
-    motifTransvers.drawPolygon(transversPoints);
-    motifTransvers.angle = 90;
-    motifTransvers.y += (columnNbPoints) * height_ - 15;
-    motifTransvers.x -= motifTransvers.height - Const.TILE_SIZE * 2;
-
-
-    // Draw transverse
+    this.game.add.sprite(position.x - this.game.cache.getImage('grue').width + Const.TILE_SIZE * 2 + 20, position.y - this.game.cache.getImage('grue').height, "grue");
 
 };
 

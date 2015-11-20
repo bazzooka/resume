@@ -130,7 +130,8 @@ let Player = {
 
 		// KEYBOARD
 		let waterFriction = this.isInWater ? 0.5: 1,
-			airFriction = 0.2;
+			airFrictionY = 2.2,
+			airFrictionX = 0.2;
 
 		if(!canFly){
 			if (this.cursors && this.cursors.up.isDown){
@@ -143,9 +144,9 @@ let Player = {
 				}
 			}
 		} else if (this.cursors && this.cursors.up.isDown){
-			this.player.body.velocity.y = -this.moveVerticalForce * airFriction;
+			this.player.body.velocity.y = -this.moveVerticalForce * airFrictionY;
 		} else if (this.cursors && this.cursors.down.isDown){
-			this.player.body.velocity.y = this.moveVerticalForce * airFriction;
+			this.player.body.velocity.y = this.moveVerticalForce * airFrictionY;
 		}
 		
 		if(!canFly){
@@ -156,9 +157,9 @@ let Player = {
 				this.player.body.velocity.x = this.moveHorizontalForce * waterFriction;
 			}
 		} else if (this.cursors && this.cursors.left.isDown){
-		    this.player.body.velocity.x = -this.moveHorizontalForce * airFriction;
+		    this.player.body.velocity.x = -this.moveHorizontalForce * airFrictionX;
 		} else if(this.cursors && this.cursors.right.isDown){
-			this.player.body.velocity.x = this.moveHorizontalForce * airFriction;
+			this.player.body.velocity.x = this.moveHorizontalForce * airFrictionX;
 		}
 
 	    // CALLBACK ON POSITION

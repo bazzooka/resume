@@ -104,40 +104,40 @@ class Game {
 
     createSteps (){
         // this.textLayer.add(this.aboutLayer);
-        this.aboutLayer.position.x = Positions.aboutLayerPosition.x;
-        this.aboutStep = new AboutStep(
-            this.game, 
-            this.aboutLayer, 
-            this.player.addPositionCallback.bind(this.player),
-            this.player.player
-        );
+        // this.aboutLayer.position.x = Positions.aboutLayerPosition.x;
+        // this.aboutStep = new AboutStep(
+        //     this.game, 
+        //     this.aboutLayer, 
+        //     this.player.addPositionCallback.bind(this.player),
+        //     this.player.player
+        // );
 
-        this.expertiseLayer.position.x = Positions.mainExpertisePosition.x;
-        this.expertiseStep = new ExpertiseStep(
-            this.game,
-            this.expertiseLayer,
-            this.player.addPositionCallback.bind(this.player),
-            {
-                group: this.boxCG,
-                groups: [this.playerCG, this.groundCG, this.boxCG]
-            }
-        )
+        // this.expertiseLayer.position.x = Positions.mainExpertisePosition.x;
+        // this.expertiseStep = new ExpertiseStep(
+        //     this.game,
+        //     this.expertiseLayer,
+        //     this.player.addPositionCallback.bind(this.player),
+        //     {
+        //         group: this.boxCG,
+        //         groups: [this.playerCG, this.groundCG, this.boxCG]
+        //     }
+        // )
 
-        this.programmingStep = new ProgrammingStep(
-            this.game, 
-            this.programingLayer,
-            this.player.addPositionCallback.bind(this.player)
-        )
+        // this.programmingStep = new ProgrammingStep(
+        //     this.game, 
+        //     this.programingLayer,
+        //     this.player.addPositionCallback.bind(this.player)
+        // )
 
-        this.toolsStep = new ToolsStep(
-            this.game,
-            this.toolsLayer,
-            this.player.addPositionCallback.bind(this.player),
-            {
-                group: this.boxCG,
-                groups: [this.playerCG, this.boxCG]
-            }
-        )
+        // this.toolsStep = new ToolsStep(
+        //     this.game,
+        //     this.toolsLayer,
+        //     this.player.addPositionCallback.bind(this.player),
+        //     {
+        //         group: this.boxCG,
+        //         groups: [this.playerCG, this.boxCG]
+        //     }
+        // )
 
         this.experienceStep = new ExperienceStep(
             this.game,
