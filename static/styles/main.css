@@ -32,18 +32,40 @@ body {
   overflow: hidden;
 }
 
-.contact-wrapper{
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform: translate3d(100%, 0, 0);
+.contact-wrapper {
+  position: absolute;
+  width: 726px;
+  height: 384px;
+  top: 0;
+  left: 0;
 }
 
-.contact-container {
-  background-image: url('../assets/decoration/canette.png');
-  background-repeat: no-repeat;
-  background-position: top left;
-  width:896px;
-  height: 100%;
-  background-size: contain;
+.input-container{
+  margin-bottom: 22px;
+}
+
+input {
+  height: 25px;
+  width: 325px;
+  border: none;
+  background: transparent;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  text-shadow: 1px 1px 1px white;
+}
+
+textarea {
+  resize: none;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  color: white;
+}
+
+textarea:focus {
+  outline: none;
+  text-shadow: 1px 1px 1px white;
 }

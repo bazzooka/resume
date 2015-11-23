@@ -6,9 +6,21 @@ let ContactStep = function(game, layer){
 	this.layer = layer;
     this.triggerPositionX = 128* Const.TILE_SIZE;
     this.defaultCameraPositionY = 0;
-    this.contactContainer = document.getElementById('contact-wrapper');
+    this.contactWrapper = document.getElementById('contact-wrapper');
 
-    let position = {x: Positions.flyRegion.x2 + 2 * Const.TILE_SIZE, y: (Const.GROUND - Const.TILE_SIZE * 23)   };
+    this.position = {x: Positions.flyRegion.x2 + 12 * Const.TILE_SIZE, y: (Const.GROUND - Const.TILE_SIZE * 23)- this.game.cache.getImage('canette').height   };
+
+    this.canette = this.game.add.sprite(this.position.x, this.position.y, "canette");
+    this.canetteBut = this.game.add.sprite(this.position.x + 75, this.position.y + 250, "canette-but");
+
+    this.layer.add(this.canette);
+    this.layer.add(this.canetteBut);
+
+    this.canetteBut.inputEnabled = true;
+    this.canetteBut.input.useHandCursor = true; //if you want a hand cursor
+    this.canetteBut.events.onInputDown.add(() => {
+        console.log("OK");
+    }, this);
 
    
 }
@@ -18,30 +30,12 @@ ContactStep.prototype.update = function(player){
     cameraPos = this.game.camera.position,
     view = this.game.camera.view;
 
-    if(view.x + view.width > this.triggerPositionX){
-        let deplacementX = -(view.x - this.triggerPositionX),
-        deplacementY = this.defaultCameraPositionY -this.game.camera.view.y + 3 * Const.TILE_SIZE; 
-
-        console.log(deplacementX);
-
-
-        this.contactContainer.style = "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)";
-    } else {
-        this.defaultCameraPositionY = this.game.camera.view.y;
+    if(view.x + view.width > this.position.x){
+        let deplacementX = -view.x + this.position.x + 235,
+            deplacementY = -view.y + this.position.y + 43;
+        this.contactWrapper.style = "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)";
     }
-
-
-
-//     if(this.graphicAnchor.position.x < player.position.x){
-//         let deplacementX = this.game.width - Math.min(this.game.width*2, player.position.x - this.graphicAnchor.worldPosition.x),
-//         deplacementY = this.defaultCameraPositionY -this.game.camera.view.y; 
-// console.log(deplacementX);
-//         this.contactContainer.style = "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)";
-//     } else {
-//         this.defaultCameraPositionY = this.game.camera.view.y;
-//     }
 }
-
 
 
 export default ContactStep;

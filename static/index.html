@@ -8,7 +8,20 @@
 <body>
 	<div id="content" class="content"></div>
 	<div id="contact-wrapper" class="contact-wrapper">
-		<div class="contact-container"></div>
+		<div class="contact-container">
+			<form id="contactForm">
+				<div class="input-container in-email">
+					<input type"email" name="email" required/>
+				</div>
+				<div class="input-container in-subject">
+					<input type"text" "name="subject" required/>
+				</div>
+				<div class="input-container in-message">
+					<textarea name="message" required rows="12" cols="44"></textarea>
+				</div>	
+			</form>
+
+		</div>
 	</div>
 	<script src="scripts/phaser.js"></script>
 	<script src="scripts/game.js"></script>

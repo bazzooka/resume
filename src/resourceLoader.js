@@ -47,6 +47,9 @@ let ResourceLoader = {
                 game.load.spritesheet('clouds', 'assets/decoration/clouds.png', 128, 71);
 
                 game.load.image('grue', 'assets/decoration/grue.png', 1058,398);
+
+                game.load.image('canette', 'assets/decoration/canette.png', 726,384);
+                game.load.image('canette-but', 'assets/decoration/canette-but.png', 97,38);
 	}
 
 }
