@@ -19,10 +19,34 @@ let ContactStep = function(game, layer){
     this.canetteBut.inputEnabled = true;
     this.canetteBut.input.useHandCursor = true; //if you want a hand cursor
     this.canetteBut.events.onInputDown.add(() => {
-        console.log("OK");
+        let formValid = this.checkForm()
+        if(formValid.length === 0){
+            // TODO SEND FORM
+        } else {
+            // TODO CLEAR FORM STYLE
+            // TODO MAKE FORMVALID STYLE ERRORS
+        }
     }, this);
+}
 
-   
+ContactStep.prototype.checkForm = function(){
+    let form = document.getElementById('contactForm'),
+        elements = form.elements,
+        errors = [],
+        re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
+    for(let i = 0, l = elements.length; i < l; i++){
+        let inputElt = elements[i],
+        name = inputElt.name,
+        value = inputElt.value;
+
+        if("message" === name || "email" === name || "subject" === name && "" === value){
+            errors.push({"message": "Must be fill !", field: inputElt});
+        } else if("email" === name && !re.test(email)){
+            errors.push({"message": "Champ email invalide", field: inputElt});
+        }
+    }
+    return errors;
 }
 
 ContactStep.prototype.update = function(player){
