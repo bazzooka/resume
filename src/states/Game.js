@@ -148,7 +148,8 @@ class Game {
 
         this.contactStep = new ContactStep(
             this.game,
-            this.contactLayer
+            this.contactLayer,
+            this.player
         )
         
 
@@ -193,7 +194,7 @@ class Game {
 
     update () {
     	Player.update();
-        this.contactStep && this.contactStep.update(this.player.player);
+        this.contactStep && this.contactStep.update();
 
     }
 

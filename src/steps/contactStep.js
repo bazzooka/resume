@@ -1,9 +1,10 @@
 import Positions from '../positions';
 import Const from '../constantes';
 
-let ContactStep = function(game, layer){
+let ContactStep = function(game, layer, player){
 	this.game = game; 
 	this.layer = layer;
+    this.player = player;
     this.triggerPositionX = 128* Const.TILE_SIZE;
     this.defaultCameraPositionY = 0;
     this.contactWrapper = document.getElementById('contact-wrapper');
@@ -13,20 +14,51 @@ let ContactStep = function(game, layer){
     this.canette = this.game.add.sprite(this.position.x, this.position.y, "canette");
     this.canetteBut = this.game.add.sprite(this.position.x + 75, this.position.y + 250, "canette-but");
 
+    this.errBg = this.game.add.graphics(this.position.x, this.position.y);
+    this.errBg.beginFill(0xae7640);
+    this.errBg.drawRect(-20, 0, 200, 100);
+    this.errBg.endFill();
+
+    this.errTxt = this.game.add.text(player.player.x, player.player.y, "SDFJKKSLDFJKLSDJFK \n SFKSJFKSDFKL");
+    this.errTxt.font = 'Righteous';
+    this.errTxt.fontSize = 20;
+    this.errTxt.width = 200;
+    this.errTxt.lineSpacing = -10;
+
     this.layer.add(this.canette);
     this.layer.add(this.canetteBut);
+    this.layer.add(this.errBg);
+    this.layer.add(this.errTxt);
+
+
 
     this.canetteBut.inputEnabled = true;
     this.canetteBut.input.useHandCursor = true; //if you want a hand cursor
     this.canetteBut.events.onInputDown.add(() => {
-        let formValid = this.checkForm()
+        let formValid = this.checkForm();
+
+        this.displayErrors(formValid);
+
         if(formValid.length === 0){
             // TODO SEND FORM
-        } else {
-            // TODO CLEAR FORM STYLE
-            // TODO MAKE FORMVALID STYLE ERRORS
+            // ADD INFOBULL FORM
+            // HIDE ERROR IF AIRPOSITION
         }
     }, this);
+}
+
+ContactStep.prototype.displayErrors = function(formValid){
+    let errs = "";
+    for(let i = 0, l = formValid.length; i < l; i++){
+        errs += "-" + formValid[i].message + "\n";
+    }
+    this.errTxt.text = errs;
+
+    if(formValid.length === 0){
+        this.errBg.alpha = 0;
+    } else {
+        this.errBg.alpha = 1;
+    }
 }
 
 ContactStep.prototype.checkForm = function(){
@@ -40,16 +72,16 @@ ContactStep.prototype.checkForm = function(){
         name = inputElt.name,
         value = inputElt.value;
 
-        if("message" === name || "email" === name || "subject" === name && "" === value){
-            errors.push({"message": "Must be fill !", field: inputElt});
-        } else if("email" === name && !re.test(email)){
-            errors.push({"message": "Champ email invalide", field: inputElt});
+        if(("message" === name || "email" === name || "subject" === name) && !value){
+            errors.push({"message": name + " must be fill", field: inputElt});
+        } else if("email" === name && !re.test(value)){
+            errors.push({"message": "invalid mail", field: inputElt});
         }
     }
     return errors;
 }
 
-ContactStep.prototype.update = function(player){
+ContactStep.prototype.update = function(){
     let deadzone = this.game.camera.deadzone,
     cameraPos = this.game.camera.position,
     view = this.game.camera.view;
@@ -59,6 +91,12 @@ ContactStep.prototype.update = function(player){
             deplacementY = -view.y + this.position.y + 43;
         this.contactWrapper.style = "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)";
     }
+    this.errTxt.position.x = this.player.player.position.x + 50;
+    this.errTxt.position.y = this.player.player.position.y - 100;
+
+    this.errBg.position.x = this.player.player.position.x + 50;
+    this.errBg.position.y = this.player.player.position.y - 110;
+
 }
 
 
