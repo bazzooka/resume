@@ -6,7 +6,7 @@ import Positions from '../positions';
 import Player from '../player';
 import BackgroundManager from '../backgroundManager';
 import TextManager from '../textManager';
-import BackPack from '../backPack';
+import BackPack from '../backpack';
 import WelcomeStep from '../steps/welcomeStep';
 import AboutStep from '../steps/aboutStep';
 import ExpertiseStep from '../steps/expertiseStep';
