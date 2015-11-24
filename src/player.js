@@ -42,11 +42,6 @@ let Player = {
 		this.animateDZ = params.animateDZ;
 
 		this.cursors = this.game.input.keyboard.createCursorKeys();
-    	this.spaceBar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-    	this.spaceBar.onDown.add(function(key){
-    		isMouseWheel = !isMouseWheel;
-    	});
 
     	//game.input.mouse.mouseWheelCallback = this.onMouseWheel;
 
