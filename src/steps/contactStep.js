@@ -50,7 +50,7 @@ let ContactStep = function(game, layer, player){
         if(formValid.length === 0){
             let request = new XMLHttpRequest(),
             data = this.getFormValues();
-            request.open('POST', 'http://www.omegasolutions.fr/', true);
+            request.open('POST', 'http://localhost:3002/mailForm', true);
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             request.send(data);
         }

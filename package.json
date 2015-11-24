@@ -28,6 +28,10 @@
     "yargs": "^3.16.1"
   },
   "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mailjet-sendemail": "^1.1.4",
+    "path": "^0.12.7",
     "phaser": "^2.4.1"
   }
 }
