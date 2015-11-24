@@ -1,5 +1,5 @@
 import Const from '../constantes';
-import Positions from '../Positions';
+import Positions from '../positions';
 import Baby from '../Baby';
 
 const triangleSize = {w: 10, h: 14};
