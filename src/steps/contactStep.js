@@ -19,6 +19,13 @@ let ContactStep = function(game, layer, player){
     this.errBg.drawRect(-20, 0, 200, 100);
     this.errBg.endFill();
 
+    this.errBulle = this.game.add.graphics(this.position.x, this.position.y);
+    this.errBulle.beginFill(0xae7640);
+    this.errBulle.moveTo(50, 100);
+    this.errBulle.bezierCurveTo(60, 105, 70, 120, 50, 130);
+    this.errBulle.bezierCurveTo(70, 120, 80, 105, 80, 100);
+    this.errBg.endFill();
+
     this.errTxt = this.game.add.text(player.player.x, player.player.y, "SDFJKKSLDFJKLSDJFK \n SFKSJFKSDFKL");
     this.errTxt.font = 'Righteous';
     this.errTxt.fontSize = 20;
@@ -29,6 +36,7 @@ let ContactStep = function(game, layer, player){
     this.layer.add(this.canetteBut);
     this.layer.add(this.errBg);
     this.layer.add(this.errTxt);
+    this.layer.add(this.errBulle);
 
 
 
@@ -40,11 +48,30 @@ let ContactStep = function(game, layer, player){
         this.displayErrors(formValid);
 
         if(formValid.length === 0){
-            // TODO SEND FORM
-            // ADD INFOBULL FORM
-            // HIDE ERROR IF AIRPOSITION
+            let request = new XMLHttpRequest(),
+            data = this.getFormValues();
+            request.open('POST', 'http://www.omegasolutions.fr/', true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.send(data);
         }
     }, this);
+}
+
+ContactStep.prototype.getFormValues = function(){
+    let form = document.getElementById('contactForm'),
+        elements = form.elements,
+        datas = "{";
+
+    for(let i = 0, l = elements.length; i < l; i++){
+        let inputElt = elements[i],
+        name = inputElt.name,
+        value = inputElt.value;
+
+        datas += '"' + name + '": ' + JSON.stringify(value) + ',' ;
+    }
+    datas += '"check": "Joe"}';
+    console.log(JSON.parse(datas));
+
 }
 
 ContactStep.prototype.displayErrors = function(formValid){
@@ -56,8 +83,11 @@ ContactStep.prototype.displayErrors = function(formValid){
 
     if(formValid.length === 0){
         this.errBg.alpha = 0;
+        this.errBulle.alpha = 0;
     } else {
         this.errBg.alpha = 1;
+        this.errTxt.alpha = 1;
+        this.errBulle.alpha = 1;
     }
 }
 
@@ -90,6 +120,10 @@ ContactStep.prototype.update = function(){
         let deplacementX = -view.x + this.position.x + 235,
             deplacementY = -view.y + this.position.y + 43;
         this.contactWrapper.style = "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)";
+    } else if(this.player.player.position.x < Positions.flyRegion.x1){
+        this.errTxt.alpha = 0;
+        this.errBg.alpha = 0;
+        this.errBulle.alpha = 0;
     }
     this.errTxt.position.x = this.player.player.position.x + 50;
     this.errTxt.position.y = this.player.player.position.y - 100;
@@ -97,6 +131,8 @@ ContactStep.prototype.update = function(){
     this.errBg.position.x = this.player.player.position.x + 50;
     this.errBg.position.y = this.player.player.position.y - 110;
 
+    this.errBulle.position.x = this.player.player.position.x + 15;
+    this.errBulle.position.y = this.player.player.position.y - 115;
 }
 
 
