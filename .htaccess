@@ -1,4 +1,3 @@
 RewriteEngine On
-RewriteRule /resume resume/build/index.html
 RewriteCond %{REQUEST_URI} !^/resume/build/
 RewriteRule (.*) /resume/build/$1
