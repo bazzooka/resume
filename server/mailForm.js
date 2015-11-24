@@ -17,21 +17,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.post('/mailForm', function(req, res){
-   console.log(req.body, req.body.subject, req.body.message);
+	console.log(req.body, req.body.subject, req.body.message);
+   	var email = req.body.email,
+   	subject = req.body.subject,
+   	message = req.body.message;
 
-    /*fs.readFile(path.join(__dirname, '/mailResources/promo.html'), 'utf8', function (err, html) {
-        if (err) {
-            return console.log(err);
-        }
-        mailjet.sendContent('pharma.mairie95310@gmail.com',
-            [email],
-            "Votre promo Suprapharm",
-            'html',
-            html.replace('#####', "http://omegasolutions.fr/pharma/products/" + src)
-        );
-        res.send(true);
-    });*/
-	res.send("Hello");
+   	mailjet.sendContent(email,
+        ['jonathan.souied@gmail.com'],
+        subject,
+        'html',
+        message
+    );
+    res.send(true);
 });
 
 app.listen(3002);
