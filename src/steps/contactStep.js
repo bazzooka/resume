@@ -50,7 +50,7 @@ let ContactStep = function(game, layer, player){
         if(formValid.length === 0){
             let request = new XMLHttpRequest(),
             data = this.getFormValues();
-            request.open('POST', 'http://localhost:3002/mailForm', true);
+            request.open('POST', 'http://omegasolutions.fr:3002/mailForm', true);
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             request.send(data);
         }
@@ -71,7 +71,7 @@ ContactStep.prototype.getFormValues = function(){
     }
     datas += '"check": "Joe"}';
     console.log(JSON.parse(datas));
-
+    return datas;
 }
 
 ContactStep.prototype.displayErrors = function(formValid){

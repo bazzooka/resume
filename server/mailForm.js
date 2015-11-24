@@ -7,6 +7,11 @@ var express = require('express'),
 
 var mailjet = new Mailjet('e5ba34606730214de84b5b356a160cac', 'd798165e707070e8e609e3555b2be263');
 
+app.use(function(req, res, next){
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	next();
+});
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
