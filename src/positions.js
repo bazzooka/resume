@@ -1,7 +1,7 @@
 import Const from './constantes';
 
 let Positions = {
-	playerInitial: {x: Const.TILE_SIZE * 117, y: Const.GROUND - Const.TILE_SIZE * 25 },
+	playerInitial: {x: Const.TILE_SIZE * 5, y: Const.GROUND - Const.TILE_SIZE * 5 },
 	jsTitlePosition : {x: 0, y : Const.GROUND - 275},
 	aboutPosition : {x: 1500, y : Const.GROUND - 275},
 	aboutLayerPosition: {x: 2000},

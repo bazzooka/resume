@@ -80,7 +80,6 @@ let Player = {
 
 
 	update: function(){
-		// console.log(this.touchingSide());
 		let positionX = this.player.position.x,
 			positionY = this.player.position.y,
 			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128),
