@@ -28,7 +28,7 @@ TextManager.prototype.addTextCallback = function(callback){
 	}
 }
 
-TextManager.createText = function(){
+TextManager.prototype.createText = function(){
 	for(let i = 0, l = this.callbackCreateText.length; i <l; i++){
 		this.callbackCreateText[i]();
 	}
