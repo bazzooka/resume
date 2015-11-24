@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.post('/mailForm', function(req, res){
-	console.log(req.body.email);
    	var email = req.body.email,
    	subject = req.body.subject,
    	message = req.body.message;

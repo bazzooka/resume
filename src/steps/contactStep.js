@@ -26,7 +26,7 @@ let ContactStep = function(game, layer, player){
     this.errBulle.bezierCurveTo(70, 120, 80, 105, 80, 100);
     this.errBg.endFill();
 
-    this.errTxt = this.game.add.text(player.player.x, player.player.y, "SDFJKKSLDFJKLSDJFK \n SFKSJFKSDFKL");
+    this.errTxt = this.game.add.text(player.player.x, player.player.y, "");
     this.errTxt.font = 'Righteous';
     this.errTxt.fontSize = 20;
     this.errTxt.width = 200;
@@ -37,6 +37,11 @@ let ContactStep = function(game, layer, player){
     this.layer.add(this.errBg);
     this.layer.add(this.errTxt);
     this.layer.add(this.errBulle);
+
+
+    this.errBg.alpha = 0;
+    this.errTxt.alpha = 0;
+    this.errBulle.alpha = 0;
 
 
 
@@ -53,6 +58,24 @@ let ContactStep = function(game, layer, player){
             request.open('POST', 'http://omegasolutions.fr:3002/mailForm', true);
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             request.send(data);
+
+            request.onload = function() {
+              if (this.status >= 200 && this.status < 400) {
+                let resp = this.response;
+                if(resp === "true"){
+                    this.errBg.alpha = 1;
+                    this.errTxt.alpha = 1;
+                    this.errBulle.alpha = 1;
+                    this.errTxt.text = "Well done !\nI'll keep you update..."
+                }
+              } else {
+                this.errBg.alpha = 1;
+                this.errTxt.alpha = 1;
+                this.errBulle.alpha = 1;
+                this.errTxt.text = "An error happen :(\nSend me an email @\njonathan.souied@gmail.com"
+
+              }
+            };
         }
     }, this);
 }
@@ -67,7 +90,6 @@ ContactStep.prototype.getFormValues = function(){
         name = inputElt.name,
         value = inputElt.value;
 
-        //datas += '"' + name + '": ' + JSON.stringify(value) + ',' ;
         datas += name + "="+ JSON.stringify(value) + "&";
     }
     return datas;
