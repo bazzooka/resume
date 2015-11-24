@@ -10,7 +10,7 @@ let TextManager = function(game, texting, position){
 	    //  For some reason if we don't the browser cannot render the text the first time it's created.
 	    active: function() {
 	    	console.log("Active");
-    		game.time.events.add(Phaser.Timer.SECOND, TextManager.createText, me);
+    		game.time.events.add(Phaser.Timer.SECOND, me.createText, me);
     	},
 
 	    //  The Google Fonts we want to load (specify as many as you like in the array)
