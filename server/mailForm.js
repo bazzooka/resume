@@ -3,9 +3,10 @@ var express = require('express'),
     path = require('path'),
     Mailjet = require('mailjet-sendemail'),
     app = express(),
-    publicPath = path.join(__dirname, 'public');
+    publicPath = path.join(__dirname, 'public'),
+    mailJetId = require('./mailJetId');
 
-var mailjet = new Mailjet('e5ba34606730214de84b5b356a160cac', 'd798165e707070e8e609e3555b2be263');
+var mailjet = new Mailjet(mailJetId.key1, mailJetId.key2);
 
 app.use(function(req, res, next){
 	res.header('Access-Control-Allow-Origin', '*');
@@ -22,11 +23,11 @@ app.post('/mailForm', function(req, res){
    	subject = req.body.subject,
    	message = req.body.message;
 
-   	mailjet.sendContent(email,
+   	mailjet.sendContent("jonathan.souied@gmail.com",
         ['jonathan.souied@gmail.com'],
         subject,
         'html',
-        message
+        '<div>Message from ' + email + '</div><div>' + message + '</div>'
     );
     res.send(true);
 });
