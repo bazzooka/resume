@@ -1,4 +1,4 @@
-import TextManager from './TextManager';
+import TextManager from './textManager';
 
 let ResourceLoader = { 
 
