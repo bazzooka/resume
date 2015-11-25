@@ -85,6 +85,10 @@ let Player = {
 			isBetweenWaterPosition = positionX > Positions.waterPositions.x1 && positionX < Positions.waterPositions.x2 && positionY > (Const.GROUND - 128),
 			canFly = positionX > Positions.flyRegion.x1 && positionX < Positions.flyRegion.x2 && positionY > Positions.flyRegion.y1;
 
+		let waterFriction = this.isInWater ? 0.5: 1,
+			airFrictionY = 2.2,
+			airFrictionX = 0.2;
+
 		// WATER
 	    if(!this.isInWater && isBetweenWaterPosition){
 	    	this.isInWater = true;
@@ -106,8 +110,8 @@ let Player = {
 		// TOUCH PARAMS
 		if(this.touchParams.wasTouched){
 			this.touchParams.wasTouched = false;
-			let speedFriction = this.isInWater ? 250 : 500;
-			let velocityX = this.touchParams.speedX > 0 ? Math.min(1000, this.touchParams.speedX * speedFriction) : Math.max(-1000, this.touchParams.speedX * speedFriction),
+			let speedFriction = this.isInWater ? 250 : 1000;
+			let velocityX = this.touchParams.speedX > 0 ? Math.min(1500, this.touchParams.speedX * speedFriction) : Math.max(-1000, this.touchParams.speedX * speedFriction),
 				velocityY = Math.max(-1000, this.touchParams.speedY * speedFriction);
 			
 			if(!canFly){
@@ -118,14 +122,13 @@ let Player = {
 				} 
 				this.player.body.moveLeft(-velocityX);
 			} else {
-				console.log("Can fly touch device");
+				this.player.body.velocity.y = velocityY * airFrictionY;
+				this.player.body.velocity.x = velocityX * airFrictionX;
 			}
 		}
 
 		// KEYBOARD
-		let waterFriction = this.isInWater ? 0.5: 1,
-			airFrictionY = 2.2,
-			airFrictionX = 0.2;
+		
 
 		if(!canFly){
 			if (this.cursors && this.cursors.up.isDown){
