@@ -22,7 +22,7 @@ let isMouseWheel = false,
 
 class Game {
 	preload() {
-		ResourceLoader.preload(this.game);
+		// ResourceLoader.preload(this.game);
 
         this.game.time.advancedTiming = true;
     }

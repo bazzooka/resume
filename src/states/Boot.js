@@ -2,6 +2,8 @@ class Boot {
 
     preload() {
         //this.load.spritesheet('ground', 'assets/ground/spritesheet_ground.png', 128, 128);
+        this.load.image('loaderBg', "assets/decoration/loader.png");
+        this.load.image('loaderActive', "assets/decoration/loaderF.png");
     }
 
     create() {
