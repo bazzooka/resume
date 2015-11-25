@@ -193,6 +193,11 @@ let Player = {
     	    	this.player.play('flyStand');
     	    }
 	    }
+
+	    // World left bound
+	    if(this.player.position.x < 0) {
+	    	this.player.body.moveRight(500);
+	    }
 	    
 
 	}
