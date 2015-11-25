@@ -6,7 +6,7 @@ var game, App = {};
 
 App.start = function() {
     game = new Phaser.Game(
-        window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio,
+        window.innerWidth , window.innerHeight,
         Phaser.CANVAS,
         'content'
     );

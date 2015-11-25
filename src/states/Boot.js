@@ -18,7 +18,7 @@ class Boot {
         }
 
         // this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        //this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // this.stage.scale.setScreenSize(true);
         //   this.game.scale.setScreenSize(true);
