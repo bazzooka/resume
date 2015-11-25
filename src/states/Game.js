@@ -14,8 +14,9 @@ import ProgrammingStep from '../steps/programmingStep';
 import ToolsStep from '../steps/toolsStep';
 import ExperienceStep from '../steps/experienceStep';
 import ContactStep from '../steps/contactStep';
+import ContactStepMobile from '../steps/contactStepMobile';
 
-
+ 
 let isMouseWheel = false,
 	mouseWheeling = false; 
  
@@ -146,11 +147,20 @@ class Game {
             this.experienceLayer
         )
 
-        this.contactStep = new ContactStep(
-            this.game,
-            this.contactLayer,
-            this.player
-        )
+        if(this.game.device.desktop){
+            this.contactStep = new ContactStep(
+                this.game,
+                this.contactLayer,
+                this.player
+            )
+        } else {
+            this.contactStep = new ContactStepMobile(
+                this.game,
+                this.contactLayer,
+                this.player
+            )
+        }
+        
         
 
         
