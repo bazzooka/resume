@@ -140,7 +140,7 @@ ContactStep.prototype.update = function(){
     if(view.x + view.width > this.position.x){
         let deplacementX = -view.x + this.position.x + 235,
             deplacementY = -view.y + this.position.y + 43;
-        this.contactWrapper.style = "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)";
+        this.contactWrapper.setAttribute("style", "transform: translate3d(" + deplacementX + "px, " + deplacementY+"px, 0)");
     } else if(this.player.player.position.x < Positions.flyRegion.x1){
         this.errTxt.alpha = 0;
         this.errBg.alpha = 0;

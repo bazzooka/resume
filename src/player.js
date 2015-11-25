@@ -110,8 +110,8 @@ let Player = {
 		// TOUCH PARAMS
 		if(this.touchParams.wasTouched){
 			this.touchParams.wasTouched = false;
-			let speedFriction = this.isInWater ? 250 : 1000;
-			let velocityX = this.touchParams.speedX > 0 ? Math.min(1500, this.touchParams.speedX * speedFriction) : Math.max(-1000, this.touchParams.speedX * speedFriction),
+			let speedFriction = this.isInWater ? 250 : 1300;
+			let velocityX = this.touchParams.speedX > 0 ? Math.min(1800, this.touchParams.speedX * speedFriction) : Math.max(-1800, this.touchParams.speedX * speedFriction),
 				velocityY = Math.max(-1000, this.touchParams.speedY * speedFriction);
 			
 			if(!canFly){
