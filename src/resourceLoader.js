@@ -1,11 +1,6 @@
-import TextManager from './textManager';
-
 let ResourceLoader = { 
 
-	preload: function(game){
-                game.textManager = new TextManager(game);
-
-                game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js');
+	preload: function(game){ 
                 game.load.tilemap('map', 'map/map.json', null, Phaser.Tilemap.TILED_JSON);
                 game.load.spritesheet('ground', 'assets/decoration/spritesheet_ground.png');
                 game.load.spritesheet('levels', 'assets/decoration/levels.png');

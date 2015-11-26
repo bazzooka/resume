@@ -20,5 +20,22 @@ App.start = function() {
     return game;
 };
 
-window.WebFontConfig = {};
-window.GAME = App.start();
+window.WebFontConfig = {
+    //  'active' means all requested fonts have finished loading
+    //  We set a 1 second delay before calling 'createText'.
+    //  For some reason if we don't the browser cannot render the text the first time it's created.
+    active: function() {
+        //console.log(me.createText);
+        //game.time.events.add(Phaser.Timer.SECOND, me.createText, me);
+        console.log("Start Game");
+        window.GAME = App.start();
+    },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Righteous', 'Reenie Beanie']
+    }
+};
+//window.GAME = App.start();
+
+

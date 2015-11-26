@@ -123,6 +123,9 @@ AboutStep.prototype.createMarried = function(){
 	var single = this.game.add.text(position.x, position.y, "Single");
 	var buttonRed = this.game.add.sprite(this.layer.position.x + reponsePosition.x, reponsePosition.y, "buttonRed");
 
+	this.layer.add(buttonRed);
+
+	
 	intitule.font = 'Righteous';
 	intitule.fontSize = 35;
 	intitule.fill = "#FFFFFF";

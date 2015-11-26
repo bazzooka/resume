@@ -5,7 +5,6 @@ import Const from '../constantes';
 import Positions from '../positions';
 import Player from '../player';
 import BackgroundManager from '../backgroundManager';
-import TextManager from '../textManager';
 import BackPack from '../backpack';
 import WelcomeStep from '../steps/welcomeStep';
 import AboutStep from '../steps/aboutStep';
@@ -146,7 +145,8 @@ class Game {
     } 
 
     createSteps (){
-        this.textLayer.add(this.aboutLayer);
+        //this.textLayer.add(this.aboutLayer);
+        console.log("Create steps");
         this.aboutLayer.position.x = Positions.aboutLayerPosition.x;
         this.aboutStep = new AboutStep(
             this.game, 
@@ -236,8 +236,7 @@ class Game {
     	this.loadMap();
     	this.player = Player.init({game: this.game, layer: this.playerLayer, position: Positions.playerInitial, animateDZ: this.animateCameraDeadZone});
     	this.initPhysics();
-
-        this.game.textManager.addTextCallback(this.createSteps.bind(this));
+        this.createSteps(); 
           
    		this.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
 
