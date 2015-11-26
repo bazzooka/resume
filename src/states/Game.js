@@ -61,15 +61,13 @@ class Game {
 
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
-        this.game.scale.setResizeCallback(function(){
-            this.onResize();
-        }, this);
+        // this.game.scale.setResizeCallback(function(){
+        //     this.onResize();
+        // }, this);
 
-        // window.addEventListener("resize", function() {
-        //     let w = this.game.width,
-        //         h = this.game.height;
-        //     this.map.onResize(w, h);
-        // }.bind(this));
+        window.addEventListener("resize", () => {
+            this.onResize();
+        });
 
         window.addEventListener('orientationchange', () => {
             this.onResize();
