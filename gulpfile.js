@@ -20,6 +20,7 @@ var BUILD_PATH = './build';
 var SCRIPTS_PATH = BUILD_PATH + '/scripts';
 var SOURCE_PATH = './src';
 var STATIC_PATH = './static';
+var STATIC_ASSETS_PATH = './static/assets';
 var ENTRY_FILE = SOURCE_PATH + '/index.js';
 var OUTPUT_FILE = 'game.js';
 
@@ -71,13 +72,13 @@ function copyStatic() {
 /**
  * Optimize images in /build
  */
-function optimizeImages() {
+function images() {
 //gulp.task('images', function(cb) {
-    return gulp.src([STATIC_PATH + '/**/*.png', STATIC_PATH + '/**/*.jpg', STATIC_PATH + '/**/*.gif', STATIC_PATH + '/**/*..jpeg']).pipe(imageop({
+    return gulp.src([STATIC_ASSETS_PATH + '/**/*.png', STATIC_ASSETS_PATH + '/**/*.jpg', STATIC_ASSETS_PATH + '/**/*.gif', STATIC_ASSETS_PATH + '/**/*.jpeg']).pipe(imageop({
         optimizationLevel: 5,
         progressive: true,
         interlaced: true
-    })).pipe(gulp.dest(BUILD_PATH));//.on('end', cb).on('error', cb);
+    })).pipe(gulp.dest(BUILD_PATH + '/assets'));//.on('end', cb).on('error', cb);
 }
 
 /**
@@ -160,7 +161,7 @@ function serve() {
 
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
-gulp.task('optimizeImages', ['copyStatic'], optimizeImages);
+gulp.task('images', ['copyStatic'], images);
 gulp.task('copyPhaser', ['copyStatic'], copyPhaser);
 gulp.task('build', ['copyPhaser'], build);
 gulp.task('fastBuild', build);
@@ -168,7 +169,7 @@ gulp.task('serve', ['build'], serve);
 gulp.task('watch-js', ['fastBuild'], browserSync.reload); // Rebuilds and reloads the project when executed.
 gulp.task('watch-static', ['copyPhaser'], browserSync.reload);
 gulp.task('deploy', ['cleanBuild', 'copyStatic', 'copyPhaser', 'build'] );
-gulp.task('deployFull', ['cleanBuild', 'copyStatic', 'copyPhaser', 'optimizeImages', 'build'] );
+gulp.task('deployFull', ['cleanBuild', 'copyStatic', 'copyPhaser', 'images', 'build'] );
 
 /**
  * The tasks are executed in the following order:
