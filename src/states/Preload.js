@@ -60,7 +60,7 @@ class Preload {
 
     create() {
         // (optionally) show the splash page or menu when the load completes
-        console.log("Hello");
+        console.log("Loading end... Enjoy :)");
         this.game.state.start('game', true, false);
     }
 

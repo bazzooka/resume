@@ -146,7 +146,6 @@ class Game {
 
     createSteps (){
         //this.textLayer.add(this.aboutLayer);
-        console.log("Create steps");
         this.aboutLayer.position.x = Positions.aboutLayerPosition.x;
         this.aboutStep = new AboutStep(
             this.game, 
