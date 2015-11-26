@@ -11,6 +11,7 @@ var babelify = require('babelify');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var imageop = require('gulp-image-optimization');
+var jsonminify = require('gulp-jsonminify');
 
 /**
  * Using different folders/file names? Change these constants:
@@ -79,6 +80,12 @@ function images() {
         progressive: true,
         interlaced: true
     })).pipe(gulp.dest(BUILD_PATH + '/assets'));//.on('end', cb).on('error', cb);
+}
+
+function jsonMin(){
+    return gulp.src([STATIC_PATH + '/map/*.json'])
+        .pipe(jsonminify())
+        .pipe(gulp.dest(BUILD_PATH + '/map'));
 }
 
 /**
@@ -162,14 +169,17 @@ function serve() {
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
 gulp.task('images', images);
+gulp.task('jsonMin', jsonMin);
 gulp.task('copyPhaser', ['copyStatic'], copyPhaser);
 gulp.task('build', ['copyPhaser'], build);
 gulp.task('fastBuild', build);
 gulp.task('serve', ['build'], serve);
 gulp.task('watch-js', ['fastBuild'], browserSync.reload); // Rebuilds and reloads the project when executed.
 gulp.task('watch-static', ['copyPhaser'], browserSync.reload);
+gulp.task('optimize', ['images', 'jsonMin']);
 gulp.task('deploy', ['cleanBuild', 'copyStatic', 'copyPhaser', 'build'] );
-gulp.task('deployFull', ['cleanBuild', 'copyStatic', 'copyPhaser', 'images', 'build'] );
+gulp.task('deployFull', ['cleanBuild', 'copyStatic', 'copyPhaser', 'optimize', 'build'] );
+
 
 /**
  * The tasks are executed in the following order:
