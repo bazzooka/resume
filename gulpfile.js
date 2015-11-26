@@ -10,8 +10,7 @@ var exorcist = require('exorcist');
 var babelify = require('babelify');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
-var imagemin = require('gulp-imagemin');
-var pngquant = require('imagemin-pngquant');
+var imageop = require('gulp-image-optimization');
 
 /**
  * Using different folders/file names? Change these constants:
@@ -72,14 +71,14 @@ function copyStatic() {
 /**
  * Optimize images in /build
  */
-function optimizeImages(){
-    return gulp.src(BUILD_PATH + '/**/*')
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
-        .pipe(gulp.dest(BUILD_PATH));}
+function optimizeImages() {
+//gulp.task('images', function(cb) {
+    return gulp.src([STATIC_PATH + '/**/*.png', STATIC_PATH + '/**/*.jpg', STATIC_PATH + '/**/*.gif', STATIC_PATH + '/**/*..jpeg']).pipe(imageop({
+        optimizationLevel: 5,
+        progressive: true,
+        interlaced: true
+    })).pipe(gulp.dest(BUILD_PATH));//.on('end', cb).on('error', cb);
+}
 
 /**
  * Copies required Phaser files from the './node_modules/Phaser' folder into the './build/scripts' folder.
@@ -161,14 +160,15 @@ function serve() {
 
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
-gulp.task('optimizeImages', ['copyStatic']);
+gulp.task('optimizeImages', ['copyStatic'], optimizeImages);
 gulp.task('copyPhaser', ['copyStatic'], copyPhaser);
 gulp.task('build', ['copyPhaser'], build);
 gulp.task('fastBuild', build);
 gulp.task('serve', ['build'], serve);
 gulp.task('watch-js', ['fastBuild'], browserSync.reload); // Rebuilds and reloads the project when executed.
 gulp.task('watch-static', ['copyPhaser'], browserSync.reload);
-gulp.task('deploy', ['cleanBuild', 'copyStatic', 'copyPhaser', 'optimizeImages', 'build'] );
+gulp.task('deploy', ['cleanBuild', 'copyStatic', 'copyPhaser', 'build'] );
+gulp.task('deployFull', ['cleanBuild', 'copyStatic', 'copyPhaser', 'optimizeImages', 'build'] );
 
 /**
  * The tasks are executed in the following order:
