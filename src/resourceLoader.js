@@ -7,14 +7,14 @@ let ResourceLoader = {
 
                 game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js');
                 game.load.tilemap('map', 'map/map.json', null, Phaser.Tilemap.TILED_JSON);
-                game.load.spritesheet('ground', 'assets/ground/spritesheet_ground.png');
+                game.load.spritesheet('ground', 'assets/decoration/spritesheet_ground.png');
                 game.load.spritesheet('levels', 'assets/decoration/levels.png');
                 game.load.spritesheet('water', 'assets/decoration/liquidWater.png');
 
                 game.load.spritesheet('player', 'assets/player/spritesheet_players.png', 128, 256);
 
                 // game.load.image('background', 'assets/ground/PNG/background-50.png');
-                game.load.image('background', 'assets/ground/Backgrounds/colored_grass.png');
+                game.load.image('background', 'assets/decoration/colored_grass.png');
 
                 game.load.image('js_resume_title', 'assets/decoration/JS-Resume.png', 1525, 934);
                 game.load.image('resume_title', 'assets/decoration/Resume.png', 1245, 783);
