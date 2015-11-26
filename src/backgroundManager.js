@@ -78,7 +78,11 @@ let BackgroundManager = {
 	},
 
 	onResize: function(w, h){
-		this.getLayer('platform').resize(w, h);
+		for(let layer in this.layers){
+			if(this.layers.hasOwnProperty(layer)){
+				this.layers[layer].resize(w, h);
+			}
+		}
 	},
 
 	getLayer: function(name){

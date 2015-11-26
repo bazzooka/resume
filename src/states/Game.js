@@ -33,6 +33,7 @@ class Game {
     	this.game.world.setBounds(0, 0, Const.BOUNDS, Const.BOUNDS); 
         
         // Create Layer
+        this.worldLayer = this.game.add.group();
         this.bgLayer = this.game.add.group();
         this.textLayer = this.game.add.group();
         this.welcomeLayer = this.game.add.group();
@@ -46,11 +47,50 @@ class Game {
         this.playerLayer = this.game.add.group(); 
         this.backPackLayer = this.game.add.group();
 
-        window.addEventListener("resize", function() {
-            let w = this.game.width,
-                h = this.game.height;
-            this.map.onResize(w, h);
-        }.bind(this));
+        this.worldLayer.add(this.bgLayer);
+        this.worldLayer.add(this.textLayer);
+        this.worldLayer.add(this.welcomeLayer);
+        this.worldLayer.add(this.aboutLayer);
+        this.worldLayer.add(this.mapLayer);
+        this.worldLayer.add(this.expertiseLayer);
+        this.worldLayer.add(this.programingLayer);
+        this.worldLayer.add(this.toolsLayer);
+        this.worldLayer.add(this.experienceLayer);
+        this.worldLayer.add(this.contactLayer);
+        this.worldLayer.add(this.playerLayer);
+        this.worldLayer.add(this.backPackLayer);
+
+        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
+        this.game.scale.setResizeCallback(function(){
+            this.onResize();
+        }, this);
+
+        // window.addEventListener("resize", function() {
+        //     let w = this.game.width,
+        //         h = this.game.height;
+        //     this.map.onResize(w, h);
+        // }.bind(this));
+
+        window.addEventListener('orientationchange', () => {
+            this.onResize();
+        });
+    }
+
+    onResize () {
+        // if(this.game.scale.isGamePortrait && window.devicePixelRatio > 1){
+        //     this.worldLayer.scale.setTo(1.2, 1.2);
+        //     this.game.camera.update();
+        //     this.map.onResize(window.innerWidth, window.innerHeight);
+        //     this.game.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
+        // } else {
+            this.scale.refresh();
+            this.game.camera.update();
+            this.map.onResize(window.innerWidth, window.innerHeight);
+            this.game.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
+        // }
+
+        
     }
   
     loadMap () {  
@@ -171,7 +211,7 @@ class Game {
         this.backPack.init(this.game, this.backPackLayer);
     }
 
-    animateCameraDeadZone (toTightZone) {
+    animateCameraDeadZone (toTightZone, timer=1000) {
         if(this.deadZoneTween){
             this.deadZoneTween.stop();
         }
@@ -183,7 +223,7 @@ class Game {
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
             fromDeadZone = this.game.camera.deadzone;
 
-        this.deadZoneTween = this.game.add.tween(fromDeadZone).to(toDeadZone, 1000, "Quart.easeOut", true)
+        this.deadZoneTween = this.game.add.tween(fromDeadZone).to(toDeadZone, timer, "Quart.easeOut", true)
             .onUpdateCallback(function(){  
                 this.game.camera.deadzone = new Phaser.Rectangle(fromDeadZone.x, fromDeadZone.y, fromDeadZone.width, fromDeadZone.height);
             }, this);
@@ -200,6 +240,8 @@ class Game {
         this.game.textManager.addTextCallback(this.createSteps.bind(this));
           
    		this.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
+
+        this.onResize();
     }
 
     update () {
