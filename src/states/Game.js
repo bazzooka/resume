@@ -221,7 +221,7 @@ class Game {
             h = window.innerHeight, 
             helper = Math.max(w, h) / 8,
             ratio = w / h,
-            offsetY = ratio > 1 ? h / ratio : 0,
+            offsetY = 0, //ratio > 1 ? h / ratio : 0,
             defaultDeadzone = {x: (w - helper) / 2, y: (h - helper) / 2 - offsetY, width: helper, height: helper},
             flyDeadZone = {x: helper * 6.5, y: (h - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
