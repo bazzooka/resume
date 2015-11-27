@@ -274,13 +274,13 @@ class Game {
 
     render() {
 
-        this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");  
-        var zone = this.game.camera.deadzone;
-        this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
-        this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
+        // this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");  
+        // var zone = this.game.camera.deadzone;
+        // this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
+        // this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
 
 
-	    this.player.player.body.debug = true;
+	    // this.player.player.body.debug = true;
 
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 
