@@ -38,7 +38,6 @@ class Game {
         this.welcomeLayer = this.game.add.group();
         this.aboutLayer = this.game.add.group();
         this.mapLayer = this.game.add.group();
-        this.levelLayer = this.game.add.group();
         this.expertiseLayer = this.game.add.group();
         this.programingLayer = this.game.add.group();
         this.toolsLayer = this.game.add.group();
@@ -109,7 +108,7 @@ class Game {
     }
   
     loadMap () {  
-        this.map  = BackgroundManager.init(this.game, {bgLayer : this.bgLayer, mapLayer: this.mapLayer, levelLayer: this.levelLayer});
+        this.map  = BackgroundManager.init(this.game, {bgLayer : this.bgLayer, mapLayer: this.mapLayer});
     }
   
     initPhysics (){

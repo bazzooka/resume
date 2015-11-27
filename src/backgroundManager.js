@@ -33,12 +33,16 @@ let BackgroundManager = {
 		layers.bgLayer.add(this.background);
 		this.background.scrollFactorX = 0;
 
+		this.addBackgroundDecorations(layers.bgLayer);
+
 		this.addMasterSectionTitles(layers.bgLayer);
 
 		this.map = game.add.tilemap('map');
 		for(let i = 0, l = this.tilesetImages.length; i < l ; i++){
 			this.map.addTilesetImage(this.tilesetImages[i], this.tilesetImages[i]);
 		}
+
+
 
 		for(let i = 0, l = this.layersParams.length; i < l; i++){
 			let currentLayerParams = this.layersParams[i],
@@ -50,7 +54,8 @@ let BackgroundManager = {
 				currentLayer.resizeWorld();
 			}
 		}
-		this.addLevelsTitles(layers.levelLayer);
+		this.addLevelsTitles(layers.bgLayer);
+		
 		return this;
 	},
 
@@ -88,6 +93,43 @@ let BackgroundManager = {
 
 		this.programing_title = this.game.add.sprite(Positions.waterPositions.x1, Positions.mainExpertisePosition.y, 'skills'); 
 		layer.add(this.programing_title);
+	},
+
+	addBackgroundDecorations : function(layer){
+		// let i = 10;
+		// setInterval(() => {
+		// 	this.tree1 = this.loadDecors(Positions.Backgrounds.Tree1, "backgrounds", 'tree0'+i+'.png');
+		// 	i++
+		// }, 2000);
+		this.tree3 = this.loadDecors(Positions.Backgrounds.Tree3, "backgrounds", 'tree10.png', {floor: Const.GROUND});
+		layer.add(this.tree3);
+		this.tree1 = this.loadDecors(Positions.Backgrounds.Tree1, "backgrounds", 'tree14.png', {floor: Const.GROUND});
+		layer.add(this.tree1);
+		this.tree2 = this.loadDecors(Positions.Backgrounds.Tree2, "backgrounds", 'tree15.png', {floor: Const.GROUND});
+		layer.add(this.tree2);
+
+		this.grass1 = this.loadDecors(Positions.Backgrounds.Grass1, "backgrounds", 'tree30.png', {floor: Const.GROUND});
+		layer.add(this.grass1);
+
+		// this.castle1 = this.loadDecors(Positions.Backgrounds.Castle1, "backgrounds", 'castle_grey.png');
+		// this.castle1.scale.setTo(2, 2);
+		// layer.add(this.castle1);
+
+		
+	},
+
+	loadDecors: function(position, frameName, frameData, opts){
+		let infos = this.game.cache.getFrameData(frameName).getFrameByName(frameData);
+
+		if(opts){
+			if(opts.floor){
+				position.y = opts.floor - infos.height;
+			}
+			
+		}
+		
+		return this.game.add.tileSprite(position.x, position.y, infos.width, infos.height, frameName, frameData);
+		
 	},
 
 	onResize: function(w, h){

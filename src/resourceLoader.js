@@ -7,6 +7,7 @@ let ResourceLoader = {
                 game.load.spritesheet('water', 'assets/decoration/liquidWater.png');
 
                 game.load.spritesheet('player', 'assets/player/spritesheet_players.png', 128, 256);
+                game.load.atlasXML('backgrounds', 'assets/decoration/bgElements_spritesheet.png', 'assets/decoration/bgElements_spritesheet.xml');
 
                 // game.load.image('background', 'assets/ground/PNG/background-50.png');
                 game.load.image('background', 'assets/decoration/colored_grass.png');
