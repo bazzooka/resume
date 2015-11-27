@@ -218,7 +218,7 @@ class Game {
 
         // CAMERA FOLLOW_TOPDOWN_TIGHT
         let  helper = Math.max(this.game.width, this.game.height) / 8,
-            defaultDeadzone = {x: (this.game.width - helper) / 2, y: (this.game.height - helper - 100) / 2, width: helper, height: helper},
+            defaultDeadzone = {x: (this.game.width - helper) / 2, y: (this.game.height - helper) / 2, width: helper, height: helper},
             flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
             fromDeadZone = this.game.camera.deadzone;
