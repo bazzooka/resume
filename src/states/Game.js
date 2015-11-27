@@ -221,7 +221,7 @@ class Game {
             h = window.innerHeight, 
             helper = Math.max(w, h) / 8,
             ratio = w / h,
-            offsetY = (!this.game.device.desktop && ratio > 1 && h < 400) ? h / (ratio * 1.2) : 0, // mobile in landscape
+            offsetY = (!this.game.device.desktop && ratio > 1 && h < 400) ? h / (ratio * 2) : 0, // mobile in landscape
             defaultDeadzone = {x: (w - helper) / 2, y: (h - helper) / 2 - offsetY, width: helper, height: helper},
             flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
