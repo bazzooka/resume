@@ -3,7 +3,7 @@ let ResourceLoader = {
 	preload: function(game){ 
                 game.load.tilemap('map', 'map/map.json', null, Phaser.Tilemap.TILED_JSON);
                 game.load.spritesheet('ground', 'assets/decoration/spritesheet_ground.png');
-                game.load.spritesheet('levels', 'assets/decoration/levels.png');
+                game.load.spritesheet('levels', 'assets/decoration/levels.png', 512, 384);
                 game.load.spritesheet('water', 'assets/decoration/liquidWater.png');
 
                 game.load.spritesheet('player', 'assets/player/spritesheet_players.png', 128, 256);

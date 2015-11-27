@@ -6,7 +6,7 @@ let Player = {
 	flyStandAnim: [28, 36],
 	flyUpAnim: [12],
 	flyDownAnim: [60],
-	moveVerticalForce: 600,
+	moveVerticalForce: 900,
 	moveHorizontalForce: 500,
 
 	touchParams: {

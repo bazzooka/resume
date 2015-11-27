@@ -20,15 +20,13 @@ let BackgroundManager = {
 	}, {
 		"name": "cloud",
 		"scrollFactorX": 1.55
-	}, {
-		"name": "levels",
-		"scrollFactorX": 1.05
 	}],
 
 	layers: {},
 
 	init: function(game, layers){
 		this.game = game;
+		this.groupLayers = layers;
 
 		// Init background
 		this.background = game.add.tileSprite(0, Const.GROUND - this.background_height + 128, Const.BOUNDX, this.background_height, 'background');
@@ -36,7 +34,6 @@ let BackgroundManager = {
 		this.background.scrollFactorX = 0;
 
 		this.addMasterSectionTitles(layers.bgLayer);
-
 
 		this.map = game.add.tilemap('map');
 		for(let i = 0, l = this.tilesetImages.length; i < l ; i++){
@@ -53,7 +50,30 @@ let BackgroundManager = {
 				currentLayer.resizeWorld();
 			}
 		}
+		this.addLevelsTitles(layers.levelLayer);
 		return this;
+	},
+
+	addLevelsTitles: function(layer){
+		this.level1 = this.game.add.sprite(Positions.Levels.Level1.x, Positions.Levels.Level1.y, 'levels');
+		this.level1.frame = 0;
+		layer.add(this.level1);
+
+		this.level2 = this.game.add.sprite(Positions.Levels.Level2.x, Positions.Levels.Level2.y, 'levels');
+		this.level2.frame = 1;
+		layer.add(this.level2);
+
+		this.level3 = this.game.add.sprite(Positions.Levels.Level3.x, Positions.Levels.Level3.y, 'levels');
+		this.level3.frame = 2;
+		layer.add(this.level3);
+
+		this.level4 = this.game.add.sprite(Positions.Levels.Level4.x, Positions.Levels.Level4.y, 'levels');
+		this.level4.frame = 3;
+		layer.add(this.level4);
+
+		this.level5 = this.game.add.sprite(Positions.Levels.Level5.x, Positions.Levels.Level5.y, 'levels');
+		this.level5.frame = 4;
+		layer.add(this.level5);
 	},
 
 	addMasterSectionTitles: function(layer){
@@ -79,14 +99,43 @@ let BackgroundManager = {
 
 	onResize: function(w, h){
 		this.background.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
-		this.background.position.y = Const.GROUND - (this.background_height * this.game.scaleFactor) + 128
-		for(let layer in this.layers){
-			if(this.layers.hasOwnProperty(layer)){
-				//this.layers[layer].resize(w, h);
-				// this.layers[layer].setScale(1.1, 1.1);
-				// this.layers[layer].anchor.y = 0.5;
-			}
+		this.background.position.y = Const.GROUND - (this.background_height * this.game.scaleFactor) + 128;
+
+		this.getLayer('platform').resizeWorld();
+
+		if(this.game.scaleFactor < 1){
+			this.level1.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.level1.y = Positions.Levels.Level1.y + 384 - 384 * this.game.scaleFactor;
+
+			this.level2.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.level2.y = Positions.Levels.Level2.y + 384 - 384 * this.game.scaleFactor;
+
+			this.level3.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.level3.y = Positions.Levels.Level3.y + 384 - 384 * this.game.scaleFactor;
+
+			this.level4.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.level4.y = Positions.Levels.Level4.y + 384 - 384 * this.game.scaleFactor;
+
+			this.level5.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.level5.y = Positions.Levels.Level5.y + 384 - 384 * this.game.scaleFactor;
 		}
+		
+
+		// for(let layer in this.layers){
+		// 	if(this.layers.hasOwnProperty(layer)){
+		// 		if("levels" === layer){
+		// 			this.layers[layer].setScale(0.7, 0.7);
+		// 			this.layers[layer].resize(w, h);
+		// 			// this.layers[layer].anchor.y = this.game.scaleFactor;
+					
+		// 			//this.layers[layer].cameraOffset.y += 200;
+		// 			// this.layers[layer].resize(w, h);
+		// 		}
+				
+		// 		// this.layers[layer].setScale(1.1, 1.1);
+		// 		// this.layers[layer].anchor.y = 0.5;
+		// 	}
+		// }
 	},
 
 	getLayer: function(name){
