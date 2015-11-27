@@ -81,10 +81,13 @@ class Game {
         //     this.map.onResize(window.innerWidth, window.innerHeight);
         //     this.game.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
         // } else {
-            this.scale.refresh();
-            this.game.camera.update();
+            
             this.map.onResize(window.innerWidth, window.innerHeight);
             this.game.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
+            this.animateCameraDeadZone(true, 0);
+
+            this.scale.refresh();
+            this.game.camera.update();
         // }
 
         
@@ -215,7 +218,7 @@ class Game {
 
         // CAMERA FOLLOW_TOPDOWN_TIGHT
         let  helper = Math.max(this.game.width, this.game.height) / 8,
-            defaultDeadzone = {x: (this.game.width - helper) / 2, y: (this.game.height - helper) / 2, width: helper, height: helper},
+            defaultDeadzone = {x: (this.game.width - helper) / 2, y: (this.game.height - helper - 100) / 2, width: helper, height: helper},
             flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
             fromDeadZone = this.game.camera.deadzone;
@@ -249,9 +252,9 @@ class Game {
     render() {
 
         this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");  
-        // var zone = this.game.camera.deadzone;
-        // this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
-        // this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
+        var zone = this.game.camera.deadzone;
+        this.game.context.fillStyle = 'rgba(255,0,0,0.6)';
+        this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
 
 
 	    // this.player.player.body.debug = true;
