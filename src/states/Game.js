@@ -81,6 +81,20 @@ class Game {
         //     this.map.onResize(window.innerWidth, window.innerHeight);
         //     this.game.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
         // } else {
+
+            let w = window.innerWidth,
+                h = window.innerHeight,
+                ratioW = w / h,
+                ratioH = h / w;
+
+            if((Math.round(ratioW) >= 2) || (Math.round(ratioH) >= 2)) {
+                this.game.scaleFactor = parseFloat(ratioH.toFixed(2));
+            } else {
+                this.game.scaleFactor = 1;
+            }
+            // this.game.scaleFactor = 1;
+             this.player.onResize(w, h);
+             this.resizePhysics();
             
             this.map.onResize(window.innerWidth, window.innerHeight);
             this.game.camera.follow(this.player.player, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
@@ -144,6 +158,11 @@ class Game {
 
         this.player.player.body.collides([this.groundCG, this.boxCG]);
     } 
+
+    resizePhysics (){
+        this.player.player.body.setRectangle(this.player.player.width, this.player.player.height * 0.7, 0, this.player.player.height * 0.15, 0);
+        this.player.player.body.setCollisionGroup(this.playerCG);
+    }
 
     createSteps (){
         //this.textLayer.add(this.aboutLayer);
@@ -221,8 +240,7 @@ class Game {
             h = window.innerHeight, 
             helper = Math.max(w, h) / 8,
             ratio = w / h,
-            offsetY = (!this.game.device.desktop && ratio > 1 && h < 400) ? h / (ratio * 2) : 0, // mobile in landscape
-            defaultDeadzone = {x: (w - helper) / 2, y: (h - helper) / 2 - offsetY, width: helper, height: helper},
+            defaultDeadzone = {x: (w - helper) / 2, y: (h - helper) / 2, width: helper, height: helper},
             flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
             fromDeadZone = this.game.camera.deadzone;
@@ -261,7 +279,7 @@ class Game {
         this.game.context.fillRect(zone.x, zone.y, zone.width, zone.height);
 
 
-	    // this.player.player.body.debug = true;
+	    this.player.player.body.debug = true;
 
 	    // this.game.debug.bodyInfo(this.player, 32, 320);
 

@@ -64,6 +64,10 @@ let Player = {
 		}
 	},
 
+	onResize: function(w, h){
+		this.player.scale.set(this.game.scaleFactor , this.game.scaleFactor );
+	},
+
 	touchingDown: function(){
     	var yAxis = p2.vec2.fromValues(0, 1);
     	var result = false;
@@ -173,20 +177,20 @@ let Player = {
 
 	    if(!canFly){
     	    if(velocityX > 5){
-    	    	this.player.scale.x = -1;
+    	    	this.player.scale.set(-this.game.scaleFactor , this.game.scaleFactor );
     	        this.player.play('walk');
     	    } else if(velocityX < -5){
-    			this.player.scale.x = 1;
+    			this.player.scale.set(this.game.scaleFactor , this.game.scaleFactor );
     	        this.player.play('walk');
     	    } else {
     	    	this.player.play('stand');
     	    }
 	    } else {
 	    	if(velocityX > 2){
-    	    	this.player.scale.x = -1;
+    	    	this.player.scale.set(-this.game.scaleFactor , this.game.scaleFactor );
     	        this.player.play('flyStand');
     	    } else if(velocityX < -2){
-    			this.player.scale.x = 1;
+    			this.player.scale.set(this.game.scaleFactor , this.game.scaleFactor );
     	        this.player.play('flyStand');
     	    } else if(velocityY > 3) {
     	    	this.player.play('flyUp');

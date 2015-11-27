@@ -78,9 +78,13 @@ let BackgroundManager = {
 	},
 
 	onResize: function(w, h){
+		this.background.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+		this.background.position.y = Const.GROUND - (this.background_height * this.game.scaleFactor) + 128
 		for(let layer in this.layers){
 			if(this.layers.hasOwnProperty(layer)){
-				this.layers[layer].resize(w, h);
+				//this.layers[layer].resize(w, h);
+				// this.layers[layer].setScale(1.1, 1.1);
+				// this.layers[layer].anchor.y = 0.5;
 			}
 		}
 	},
