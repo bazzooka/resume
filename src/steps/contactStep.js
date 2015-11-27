@@ -59,21 +59,21 @@ let ContactStep = function(game, layer, player){
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             request.send(data);
 
+            let me = this;
             request.onload = function() {
               if (this.status >= 200 && this.status < 400) {
                 let resp = this.response;
                 if(resp === "true"){
-                    this.errBg.alpha = 1;
-                    this.errTxt.alpha = 1;
-                    this.errBulle.alpha = 1;
-                    this.errTxt.text = "Well done !\nI'll keep you update..."
+                    me.errBg.alpha = 1;
+                    me.errTxt.alpha = 1;
+                    me.errBulle.alpha = 1;
+                    me.errTxt.text = "Well done !\nI'll keep you update..."
                 }
               } else {
-                this.errBg.alpha = 1;
-                this.errTxt.alpha = 1;
-                this.errBulle.alpha = 1;
-                this.errTxt.text = "An error happen :(\nSend me an email @\njonathan.souied@gmail.com"
-
+                me.errBg.alpha = 1;
+                me.errTxt.alpha = 1;
+                me.errBulle.alpha = 1;
+                me.errTxt.text = "An error happen :(\nSend me an email @\njonathan.souied@gmail.com"
               }
             };
         }

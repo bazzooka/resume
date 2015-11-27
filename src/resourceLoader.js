@@ -12,7 +12,6 @@ let ResourceLoader = {
                 game.load.image('background', 'assets/decoration/colored_grass.png');
 
                 game.load.image('js_resume_title', 'assets/decoration/JS-Resume.png', 1525, 934);
-                game.load.image('resume_title', 'assets/decoration/Resume.png', 1245, 783);
 
                 game.load.image('about_title', 'assets/decoration/about.png', 1115, 783);
                 game.load.image('triangle', 'assets/decoration/triangle.png', 10, 14);

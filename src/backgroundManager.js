@@ -78,14 +78,7 @@ let BackgroundManager = {
 
 	addMasterSectionTitles: function(layer){
 		this.js_title = this.game.add.sprite(Positions.jsTitlePosition.x, Positions.jsTitlePosition.y, 'js_resume_title');
-		this.js_title.scale.x = 0.5;
-		this.js_title.scale.y = 0.5;
 		layer.add(this.js_title);
-
-		this.resume_title = this.game.add.sprite(Positions.jsTitlePosition.x + 75, Positions.jsTitlePosition.y + 185, 'resume_title');
-		this.resume_title.scale.x = 0.5;
-		this.resume_title.scale.y = 0.5;
-		layer.add(this.resume_title);
 
 		this.about_title = this.game.add.sprite(Positions.aboutPosition.x, Positions.aboutPosition.y, 'about_title');
 		layer.add(this.about_title);
@@ -118,6 +111,12 @@ let BackgroundManager = {
 
 			this.level5.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
 			this.level5.y = Positions.Levels.Level5.y + 384 - 384 * this.game.scaleFactor;
+
+			this.js_title.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.js_title.y = Positions.jsTitlePosition.y + 255 - 255 * this.game.scaleFactor;
+
+			this.about_title.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
+			this.about_title.y = Positions.jsTitlePosition.y + 275 - 275 * this.game.scaleFactor;
 		}
 		
 

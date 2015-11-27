@@ -43,7 +43,7 @@ AboutStep.prototype.oldTech = function(){
 }
 
 AboutStep.prototype.createName = function(){
-	var position = {x: 1000, y: Const.GROUND - 350};
+	var position = {x: 1000, y: Const.GROUND - 200};
 	var reponsePosition = {x: 1025, y: Const.GROUND - 100};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Name");
@@ -116,7 +116,7 @@ AboutStep.prototype.createName = function(){
 }
 
 AboutStep.prototype.createMarried = function(){
-	var position = {x: 1300, y: Const.GROUND - 350};
+	var position = {x: 1320, y: Const.GROUND - 200};
 	var reponsePosition = {x: 1380, y: Const.GROUND - 70};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Marital status");
@@ -133,7 +133,7 @@ AboutStep.prototype.createMarried = function(){
 	single.font = 'Reenie Beanie';
 	single.fontSize = 50;
 	single.fill = "#FFFFFF";
-	single.position.y = position.y + 100;
+	single.position.y = position.y + 80;
 	single.position.x = position.x + 50;
 	this.layer.add(single);
 
@@ -147,7 +147,7 @@ AboutStep.prototype.createMarried = function(){
 
 	this.addPositionCallback(this.layer.position.x + reponsePosition.x, function(){
 		buttonRed.frame = 1;
-		var reponse = this.game.add.text(position.x + 20, position.y + 150, "Married");
+		var reponse = this.game.add.text(position.x + 30, position.y + 150, "Married");
 		reponse.angle = -45;
 		reponse.font = 'Reenie Beanie';
 		reponse.fontSize = 50;
@@ -171,8 +171,7 @@ AboutStep.prototype.createMarried = function(){
 } 
   
 AboutStep.prototype.createBabies = function(){
-	var position = {x: 1700, y: Const.GROUND - 350};
-	var reponsePosition = {x: 1750, y: Const.BOUNDS - 128 - 70};
+	var position = {x: 1700, y: Const.GROUND - 200};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Domestic babies");
 
@@ -188,7 +187,7 @@ AboutStep.prototype.createBabies = function(){
 	var rightBorder = this.game.add.tileSprite(position.x + intitule.getLocalBounds().width + triangleSize.w, position.y, 10, intitule.getLocalBounds().height, 'triangle');
 	rightBorder.scale.x = -1;
 
-	let startPosition = {x: this.layer.position.x + position.x + intitule.getLocalBounds().width /2, y: position.y + 200};
+	let startPosition = {x: this.layer.position.x + position.x + intitule.getLocalBounds().width /2, y: position.y + 100};
 	this.baby1 = new Baby(this.game, startPosition, this.layer, 1);
 	this.baby2 = new Baby(this.game, startPosition, this.layer, 2);
 
@@ -219,7 +218,7 @@ AboutStep.prototype.createBabies = function(){
 }
 
 AboutStep.prototype.createHobbies = function(){
-	var position = {x: 2200, y: Const.GROUND - 350};
+	var position = {x: 2200, y: Const.GROUND - 200};
 	var reponsePosition = {x: 2200, y: Const.GROUND - 100};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
 	var intitule = this.game.add.text(position.x, position.y, "Hobbies");
@@ -313,6 +312,10 @@ AboutStep.prototype.createHobbies = function(){
 
 	this.layer.add(signFootLayer);
 	this.layer.add(signLayer);
+}
+
+AboutStep.prototype.onResize = function(){
+
 }
 
 export default AboutStep;
