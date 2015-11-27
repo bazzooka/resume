@@ -101,7 +101,7 @@ let BackgroundManager = {
 		this.background.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
 		this.background.position.y = Const.GROUND - (this.background_height * this.game.scaleFactor) + 128;
 
-		this.getLayer('platform').resizeWorld();
+		this.getLayer('platform').resize(w, h);
 
 		if(this.game.scaleFactor < 1){
 			this.level1.scale.setTo(this.game.scaleFactor, this.game.scaleFactor);
