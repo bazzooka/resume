@@ -8,6 +8,7 @@ let Player = {
 	flyDownAnim: [60],
 	moveVerticalForce: 900,
 	moveHorizontalForce: 500,
+	touchVelocity: 1300,
 
 	touchParams: {
 		wasTouched: false,
@@ -66,6 +67,11 @@ let Player = {
 
 	onResize: function(w, h){
 		this.player.scale.set(this.game.scaleFactor , this.game.scaleFactor );
+		if(this.game.scaleFactor < 1){
+			this.touchVelocity = 1500;
+		} else {
+			this.touchVelocity = 1300;
+		}
 	},
 
 	touchingDown: function(){
@@ -114,9 +120,9 @@ let Player = {
 		// TOUCH PARAMS
 		if(this.touchParams.wasTouched){
 			this.touchParams.wasTouched = false;
-			let speedFriction = this.isInWater ? 250 : 1300;
+			let speedFriction = this.isInWater ? this.touchVelocity - 100 : this.touchVelocity;
 			let velocityX = this.touchParams.speedX > 0 ? Math.min(1800, this.touchParams.speedX * speedFriction) : Math.max(-1800, this.touchParams.speedX * speedFriction),
-				velocityY = Math.max(-1000, this.touchParams.speedY * speedFriction);
+				velocityY = Math.max(-1800, this.touchParams.speedY * speedFriction);
 			
 			if(!canFly){
 				if(!this.isInWater && this.touchingDown()){
@@ -132,8 +138,6 @@ let Player = {
 		}
 
 		// KEYBOARD
-		
-
 		if(!canFly){
 			if (this.cursors && this.cursors.up.isDown){
 				if(!this.isInWater && this.touchingDown()){
