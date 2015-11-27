@@ -217,11 +217,13 @@ class Game {
         }
 
         // CAMERA FOLLOW_TOPDOWN_TIGHT
-        let  helper = Math.max(this.game.width, this.game.height) / 8,
-            ratio = this.game.width / this.game.height,
-            offsetY = ratio > 1 ? this.game.height / ratio : 0,
-            defaultDeadzone = {x: (this.game.width - helper) / 2, y: (this.game.height - helper) / 2 - offsetY, width: helper, height: helper},
-            flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
+        let w = window.innerWidth,
+            h = window.innerHeight, 
+            helper = Math.max(w, h) / 8,
+            ratio = w / h,
+            offsetY = ratio > 1 ? h / ratio : 0,
+            defaultDeadzone = {x: (w - helper) / 2, y: (h - helper) / 2 - offsetY, width: helper, height: helper},
+            flyDeadZone = {x: helper * 6.5, y: (h - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
             fromDeadZone = this.game.camera.deadzone;
 
