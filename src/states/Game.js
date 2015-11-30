@@ -87,7 +87,7 @@ class Game {
                 ratioW = w / h,
                 ratioH = h / w;
 
-            if((Math.round(ratioW) >= 2) || (Math.round(ratioH) >= 2)) {
+            if(!this.game.device.desktop && ((Math.round(ratioW) >= 2) || (Math.round(ratioH) >= 2))) {
                 this.game.scaleFactor = parseFloat(ratioH.toFixed(2));
             } else {
                 this.game.scaleFactor = 1;
