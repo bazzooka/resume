@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Jonathan SOUIED - Resume</title>
-	<link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
-	<div id="content" class="content"></div>
-	<div id="contact-wrapper" class="contact-wrapper">
-		<div class="contact-container">
-			<form id="contactForm">
-				<div class="input-container in-email">
-					<input type"email" name="email" required/>
-				</div>
-				<div class="input-container in-subject">
-					<input type"text" name="subject" required/>
-				</div>
-				<div class="input-container in-message">
-					<textarea name="message" required rows="12" cols="44"></textarea>
-				</div>	
-			</form>
-
-		</div>
-	</div>
-	<script src="scripts/phaser.min.js"></script>
-	<script src="scripts/game.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jonathan SOUIED - Resume</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div id="content" class="content"></div>
+    <div id="contact-wrapper" class="contact-wrapper">
+      <div class="contact-container">
+        <form id="contactForm">
+          <div class="input-container in-email">
+            <input type"email" name="email" required/>
+          </div>
+          <div class="input-container in-subject">
+            <input type"text" name="subject" required/>
+          </div>
+          <div class="input-container in-message">
+            <textarea name="message" required rows="12" cols="44"></textarea>
+          </div>
+        </form>
+      </div>
+      <a id="cv" download="JS-CV.pdf" href="/cvs/JS-CV.pdf"></a>
+      <a id="mail" href="mailto:jonathan.souied+cv@gmail.com"></a>
+    </div>
+    <script src="scripts/phaser.min.js"></script>
+    <script src="scripts/game.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+  </body>
 </html>

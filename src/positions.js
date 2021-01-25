@@ -1,7 +1,7 @@
 import Const from './constantes';
 
 let Positions = {
-	playerInitial: {x: Const.TILE_SIZE * 5, y: Const.GROUND - Const.TILE_SIZE * 5 },
+	playerInitial: {x: Const.TILE_SIZE * 5+ 200, y: Const.GROUND - Const.TILE_SIZE * 5 },
 	Levels: {
 		Level1 : {x: 1200, y: Const.GROUND - 384},
 		Level2 : {x: 4700, y: Const.GROUND - 384},

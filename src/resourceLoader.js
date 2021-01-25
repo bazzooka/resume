@@ -40,6 +40,7 @@ let ResourceLoader = {
                 game.load.spritesheet('libraries', 'assets/decoration/libraries.png', 128, 128);
                 game.load.spritesheet('chain', 'assets/decoration/chain.png', 16, 26);
                 game.load.spritesheet('clouds', 'assets/decoration/clouds.png', 128, 71);
+                game.load.image('rock', 'assets/decoration/rock.png', 68, 68);
 
                 game.load.image('grue', 'assets/decoration/grue.png', 1058,398);
 

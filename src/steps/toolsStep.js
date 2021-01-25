@@ -5,8 +5,8 @@ let ToolsStep = function(game, layer, addPositionCallback, groups){
 	this.layer = layer;
 	this.addPositionCallback = addPositionCallback;
 	this.boxes = [];
-	this.tools = ["Sublime", "Gulp", "Grunt", "Sass", "Less", "Browserify", "Webpack", "Angular",
-    "Backbone", "RequireJS", "ES6", "IOT", "Google", "Phonegap", "React"];
+	this.tools = ["React", "Next", "React Native", "Vue", "Nuxt", "Apollo", "Redux", "Docker",
+    "Jenkins", "Ansible", "Kubernetes", "AWS", "Firebase", "OpenCV", "PyTorch"];
 	this.groups = groups;
 	this.createToolsBox();
 }

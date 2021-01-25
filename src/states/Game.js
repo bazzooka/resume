@@ -206,7 +206,7 @@ class Game {
             this.experienceLayer
         )
 
-        if(this.game.device.desktop){
+        if(false && this.game.device.desktop){
             this.contactStep = new ContactStep(
                 this.game,
                 this.contactLayer,
@@ -241,7 +241,7 @@ class Game {
             helper = Math.max(w, h) / 8,
             ratio = w / h,
             defaultDeadzone = {x: (w - helper) / 2, y: (h - helper) / 2, width: helper, height: helper},
-            flyDeadZone = {x: helper * 6.5, y: (this.game.height - helper) / 2, width: helper, height: helper},
+            flyDeadZone = {x: helper * 3, y: (this.game.height - helper) / 2, width: helper, height: helper},
             toDeadZone = toTightZone ? defaultDeadzone : flyDeadZone,
             fromDeadZone = this.game.camera.deadzone;
 
@@ -267,7 +267,7 @@ class Game {
 
     update () {
     	Player.update();
-        this.contactStep && this.contactStep.update();
+        //this.contactStep && this.contactStep.update();
 
     }
 

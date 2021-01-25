@@ -1,16 +1,31 @@
 export default [
 	{
+		"start" : "September 2018",
+		"end": "January 2021",
+		"title": "Mentor",
+		"company": "Stackerine",
+		"link": "http://stackerine.com"
+	},
+	{
+		"start" : "April 2016",
+		"end": "June 2018",
+		"title": "Lead Developer",
+		"company": "Agilience",
+		"link": "http://bnpparibas.com"
+	},
+	{
+		"start" : "January 2016",
+		"end": "March 2016",
+		"title": "Lead Developer",
+		"company": "Agilience",
+		"link": "http://www.agilience.com"
+	},
+	{
 		"start" : "2015",
-		"end": "Now",
+		"end": "2016",
 		"title": "Creative technologist",
 		"company": "Omega Solutions",
 		"link": "http://www.omegasolutions.fr"
-	}, {
-		"start" : "January 2015", 
-		"end": "Now ",
-		"title": "Purchase of a pharmacy",
-		"company": "Pharmacy",
-		"link": "https://www.youtube.com/watch?v=OMp2DiI8Vi4"
 	}, {
 		"start" : "January 2014",
 		"end": "December 2015",

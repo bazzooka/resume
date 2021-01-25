@@ -155,10 +155,17 @@ AboutStep.prototype.createMarried = function(){
 		this.layer.add(reponse);
 	}.bind(this));
 	
-	this.baby3 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width, y: Const.GROUND - this.game.height - 3*75}, this.layer, 3);
+
+	this.baby2 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width, y: Const.GROUND - this.game.height - 3*75}, this.layer, 2);
+	this.baby3 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width+ 10, y: Const.GROUND - this.game.height - 3*75 - 10}, this.layer, 2);
+	this.baby4 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width+20, y: Const.GROUND - this.game.height - 3*75 - 20}, this.layer, 3);
+	this.baby5 = new Baby(this.game, {x: this.layer.position.x + reponsePosition.x + intitule.getLocalBounds().width+ 30, y: Const.GROUND - this.game.height - 3*75 - 30}, this.layer, 3);
 
 	this.addPositionCallback(this.layer.position.x + reponsePosition.x, () => {
+		this.baby2.createSpring(this.player);
 		this.baby3.createSpring(this.player);
+		this.baby4.createSpring(this.player);
+		this.baby5.createSpring(this.player);
 	}.bind(this));
 
 
@@ -173,7 +180,7 @@ AboutStep.prototype.createMarried = function(){
 AboutStep.prototype.createBabies = function(){
 	var position = {x: 1700, y: Const.GROUND - 200};
 	var intituleBG = this.game.add.graphics(position.x, position.y);
-	var intitule = this.game.add.text(position.x, position.y, "Domestic babies");
+	var intitule = this.game.add.text(position.x, position.y, "Family");
 
 	intitule.font = 'Righteous';
 	intitule.fontSize = 35;
@@ -189,24 +196,32 @@ AboutStep.prototype.createBabies = function(){
 
 	let startPosition = {x: this.layer.position.x + position.x + intitule.getLocalBounds().width /2, y: position.y + 100};
 	this.baby1 = new Baby(this.game, startPosition, this.layer, 1);
-	this.baby2 = new Baby(this.game, startPosition, this.layer, 2);
 
 	this.addPositionCallback(startPosition.x, () => {
 		this.baby1.createSpring(this.player);
-		this.baby2.createSpring(this.player);
 	}.bind(this));
 
 	this.addPositionCallback(Positions.mainExpertisePosition.x + 500, () => {
 		this.game.physics.p2.removeSpring(this.baby1.spring);
 		this.game.physics.p2.removeBody(this.baby1.sprite.body);
+
 		this.game.physics.p2.removeSpring(this.baby2.spring);
 		this.game.physics.p2.removeBody(this.baby2.sprite.body);
+
 		this.game.physics.p2.removeSpring(this.baby3.spring);
 		this.game.physics.p2.removeBody(this.baby3.sprite.body);
 
-		this.game.backPack.add(this.baby3.sprite, null, true, true, "Wife");
+		this.game.physics.p2.removeSpring(this.baby4.spring);
+		this.game.physics.p2.removeBody(this.baby4.sprite.body);
+
+		this.game.physics.p2.removeSpring(this.baby5.spring);
+		this.game.physics.p2.removeBody(this.baby5.sprite.body);
+
+		this.game.backPack.add(this.baby1.sprite, null, true, true, "Wife");
 		this.game.backPack.add(this.baby2.sprite, null, true, true, "Troll 1");
-		this.game.backPack.add(this.baby1.sprite, null, true, true, "Troll 2");
+		this.game.backPack.add(this.baby3.sprite, null, true, true, "Troll 2");
+		this.game.backPack.add(this.baby4.sprite, null, true, true, "Troll 3");
+		this.game.backPack.add(this.baby5.sprite, null, true, true, "Troll 4");
 	}.bind(this));
 
 

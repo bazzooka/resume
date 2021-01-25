@@ -41,14 +41,14 @@ ProgramingStep.prototype.createLevels = function(){
 		},
 		level: 3
 	}, {
-		name: "PHOTOSHOP",
+		name: "Python",
 		position: {
 			x: this.x + 1500,
 			y: this.y - 70
 		},
 		level: 3
 	}, {
-		name: "C++",
+		name: "GraphQL",
 		position: {
 			x: this.x +1800,
 			y: this.y - 70
@@ -89,10 +89,11 @@ ProgramingStep.prototype.addSkill = function(skill){
 	this.addSkillLabel(skill);
 	this.addPositionCallback(position.x, () =>{
 		mySwitch.frame = 2;
-		for(let i = 0, l = level; i < l; i++){
-			let gem = this.game.add.sprite(position.x + 10, this.y, "gem_yellow");
+		for(let i = 0, l = 1; i < l; i++){
+			let gem = this.game.add.sprite(position.x - 40, this.y, "gem_yellow");
 			this.layer.add(gem);
-			this.game.add.tween(gem).to({y: this.y - (i + 1) * 50 - 70}, 1000, Phaser.Easing.Elastic.Out, true);
+			this.game.add.tween(gem).to({y: this.y - 250}, 1000, Phaser.Easing.Elastic.Out, true);
+			this.game.add.tween(gem.scale).to({ x: 3, y: 3}, 1000, Phaser.Easing.Elastic.Out, true);
 		}
 	});
 }

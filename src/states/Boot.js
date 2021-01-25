@@ -1,4 +1,4 @@
-class Boot {
+class   Boot {
 
     preload() {
         //this.load.spritesheet('ground', 'assets/ground/spritesheet_ground.png', 128, 128);
