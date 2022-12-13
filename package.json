@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "body-parser": "^1.14.1",
-    "express": "^4.13.3",
+    "express": "^4.17.3",
     "mailjet-sendemail": "^1.1.4",
     "path": "^0.12.7",
     "phaser": "^2.4.1"
